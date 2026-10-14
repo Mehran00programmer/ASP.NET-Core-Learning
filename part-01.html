@@ -1,0 +1,814 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#0d1117">
+<meta name="description" content="قسمت اول جزوه ASP.NET Core — برنامه‌نویسی سمت سرور و الگوی MVC">
+<meta name="author" content="مهران غلامی مقدم">
+<title>قسمت ۰۱ — برنامه‌نویسی سمت سرور و الگوی MVC</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%231f6feb'/><text x='50' y='70' font-size='62' text-anchor='middle' fill='white' font-family='monospace' font-weight='700'>م</text></svg>">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+
+<header class="doc-header">
+  <div class="page">
+    <div class="hero-badge" style="display:inline-block;font-family:var(--mono);font-size:11px;color:var(--accent);letter-spacing:1.5px;background:rgba(88,166,255,0.08);border:1px solid rgba(88,166,255,0.2);padding:4px 12px;border-radius:20px;margin-bottom:14px;">قسمت ۰۱</div>
+    <h1 class="doc-title">جزوه برنامه‌نویسی وب‌سایت‌های پویا با ساختار MVC</h1>
+    <p class="doc-subtitle">
+      در این قسمت با مفاهیم پایه‌ای برنامه‌نویسی سمت سرور آشنا می‌شویم، ضرورت استفاده از آن را بررسی
+      می‌کنیم و سپس الگوی معماری MVC را به‌عنوان ساختار اصلی یک برنامه وب پویا معرفی می‌کنیم. در
+      پایان نیز مراحل ساخت اولین پروژه عملی ASP.NET MVC مرور می‌شود.
+    </p>
+
+    <div class="author-card">
+      <div class="author-name">مهران غلامی مقدم</div>
+      <a class="author-link" href="https://github.com/Mehran00programmer" target="_blank" rel="noopener noreferrer" aria-label="گیت‌هاب مهران غلامی مقدم">
+        <svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
+          <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z"/>
+        </svg>
+        github.com/Mehran00programmer
+      </a>
+    </div>
+  </div>
+</header>
+
+<div class="page">
+
+  <aside class="toc-wrap">
+    <div class="toc-header">فهرست مطالب</div>
+    <ul class="toc-list">
+      <li><a class="toc-link" href="#s1"><span class="num">01</span><span>نیاز به زبان سمت سرور</span></a></li>
+      <li><a class="toc-link" href="#s2"><span class="num">02</span><span>الگوی طراحی MVC</span></a></li>
+      <li><a class="toc-link" href="#s3"><span class="num">03</span><span>چرخه پردازش درخواست</span></a></li>
+      <li><a class="toc-link" href="#s4"><span class="num">04</span><span>ساختار پروژه ASP.NET MVC</span></a></li>
+      <li><a class="toc-link" href="#s5"><span class="num">05</span><span>اولین پروژه عملی</span></a></li>
+      <li><a class="toc-link" href="#s6"><span class="num">06</span><span>مزایای استفاده از MVC</span></a></li>
+      <li><a class="toc-link" href="#s7"><span class="num">07</span><span>خلاصه مطالب</span></a></li>
+    </ul>
+  </aside>
+
+  <main>
+
+    <section class="section" id="s1">
+      <div class="section-head">
+        <span class="section-num">01</span>
+        <h2 class="section-title">نیاز به زبان سمت سرور</h2>
+      </div>
+
+      <p>
+        پیش از این، تمرکز ما روی <strong>برنامه‌نویسی سمت کلاینت</strong> بود؛ یعنی کدی که در مرورگر
+        کاربر اجرا می‌شود. با سه تکنولوژی اصلی <code>HTML</code>، <code>CSS</code> و <code>JavaScript</code>
+        می‌توانیم صفحاتی زیبا، واکنش‌گرا و حتی تعاملی بسازیم. اما این سه، یک محدودیت بنیادین دارند:
+        آن‌ها <strong>نمی‌توانند در سمت سرور کد اجرا کنند</strong>.
+      </p>
+
+      <h3>در وب دقیقاً چه اتفاقی می‌افتد؟</h3>
+      <p>
+        زمانی که آدرس یک وب‌سایت را در نوار آدرس مرورگر وارد می‌کنید، مرورگر یک
+        <strong>درخواست (Request)</strong> به سمت سرور ارسال می‌کند. سرور این درخواست را دریافت، پردازش
+        و پاسخ مناسب را برای مرورگر می‌فرستد. پاسخ نهایی چیزی نیست جز فایل‌های <code>HTML</code>،
+        <code>CSS</code> و <code>JavaScript</code> که مرورگر آن‌ها را تفسیر و به صفحه‌ای قابل مشاهده تبدیل می‌کند.
+      </p>
+
+      <div class="callout note">
+        <span class="callout-label">نکته کلیدی</span>
+        <p>
+          تا این مرحله، ما فقط می‌توانستیم داده‌ها را <em>دریافت</em> کنیم. اما اگر کاربر بخواهد داده‌ای
+          را <em>به سایت بفرستد</em> و آن را در سرور ذخیره کند — مانند ثبت‌نام، ثبت سفارش، ارسال نظر،
+          ویرایش پروفایل یا پرداخت — دیگر HTML و CSS به‌تنهایی کارساز نیستند.
+        </p>
+      </div>
+
+      <h3>توانمندی‌های یک زبان سمت سرور</h3>
+      <p>
+        با یادگیری یک زبان برنامه‌نویسی سمت سرور، درهای تازه‌ای به روی ما باز می‌شود. مهم‌ترین
+        توانایی‌هایی که به دست می‌آوریم عبارتند از:
+      </p>
+      <ul>
+        <li><strong>دریافت داده از کاربر:</strong> خواندن اطلاعات فرم‌ها، پارامترهای آدرس و کوکی‌ها.</li>
+        <li><strong>ذخیره‌سازی داده:</strong> نگه‌داشتن اطلاعات در دیتابیس، فایل یا حافظه سرور.</li>
+        <li><strong>ویرایش و حذف داده:</strong> به‌روزرسانی و حذف رکوردهای موجود در دیتابیس.</li>
+        <li><strong>بازیابی و ارسال داده:</strong> خواندن اطلاعات از دیتابیس و نمایش آن‌ها به کاربر.</li>
+        <li><strong>اعتبارسنجی و امنیت:</strong> بررسی صحت داده‌ها، مدیریت نشست‌ها و احراز هویت.</li>
+      </ul>
+
+      <div class="callout key">
+        <span class="callout-label">نکته امنیتی</span>
+        <p>
+          کدهای سمت سرور <strong>هرگز</strong> در مرورگر کاربر دیده نمی‌شوند. آن‌ها فقط در سرور اجرا
+          می‌شوند و صرفاً خروجی نهایی — که معمولاً HTML است — به مرورگر ارسال می‌شود. این ویژگی
+          باعث می‌شود منطق برنامه، الگوریتم‌ها و اطلاعات حساس، از دید کاربر پنهان بمانند.
+        </p>
+      </div>
+
+      <h3>تکنولوژی‌های مورد استفاده</h3>
+      <p>
+        زبان‌ها و تکنولوژی‌های متعددی برای برنامه‌نویسی سمت سرور وجود دارد. در این جزوه، تمرکز ما
+        روی مجموعه‌ای از محصولات مایکروسافت است:
+      </p>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>مورد</th>
+              <th>انتخاب</th>
+              <th>توضیح</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>زبان برنامه‌نویسی</td>
+              <td class="cell-ltr">C#</td>
+              <td>زبانی مدرن، شی‌گرا و قدرتمند از مایکروسافت</td>
+            </tr>
+            <tr>
+              <td>تکنولوژی</td>
+              <td class="cell-ltr">ASP.NET</td>
+              <td>فریم‌ورک مایکروسافت برای ساخت اپلیکیشن‌های وب</td>
+            </tr>
+            <tr>
+              <td>محیط توسعه</td>
+              <td class="cell-ltr">Visual Studio</td>
+              <td>IDE رسمی مایکروسافت برای توسعه .NET</td>
+            </tr>
+            <tr>
+              <td>الگوی معماری</td>
+              <td class="cell-ltr">MVC</td>
+              <td>الگوی جداسازی منطق، نمایش و کنترل</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="callout warn">
+        <span class="callout-label">توجه</span>
+        <p>
+          <code>ASP.NET</code> یک <strong>زبان برنامه‌نویسی نیست</strong>؛ بلکه یک
+          <strong>تکنولوژی یا فریم‌ورک</strong> است که توسط مایکروسافت ارائه شده. ما با
+          زبان <code>C#</code> کد می‌نویسیم و از <code>ASP.NET</code> برای تبدیل آن کد به یک وب‌سایت
+          قابل اجرا استفاده می‌کنیم.
+        </p>
+      </div>
+    </section>
+
+    <section class="section" id="s2">
+      <div class="section-head">
+        <span class="section-num">02</span>
+        <h2 class="section-title">الگوی طراحی MVC</h2>
+      </div>
+
+      <p>
+        <strong>MVC</strong> مخفف سه کلمه <code>Model</code> (مدل)، <code>View</code> (نمایش) و
+        <code>Controller</code> (کنترل‌کننده) است. این یک <strong>الگوی طراحی معماری</strong> است
+        که یک برنامه وب را به سه بخش مستقل تقسیم می‌کند. هدف اصلی این تقسیم‌بندی،
+        <strong>مدیریت پیچیدگی</strong> و <strong>جداسازی دغدغه‌ها</strong> است تا توسعه، نگهداری
+        و تست برنامه ساده‌تر شود.
+      </p>
+
+      <div class="diagram">
+        <svg viewBox="0 0 800 660" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="نمودار ساختار MVC">
+          <defs>
+            <marker id="mk-blue" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+              <polygon points="0 0, 8 3, 0 6" fill="#58a6ff"/>
+            </marker>
+            <marker id="mk-green" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+              <polygon points="0 0, 8 3, 0 6" fill="#3fb950"/>
+            </marker>
+            <marker id="mk-yellow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+              <polygon points="0 0, 8 3, 0 6" fill="#d29922"/>
+            </marker>
+          </defs>
+
+          <rect x="290" y="30" width="220" height="80" rx="10" fill="#161b22" stroke="#6e7681" stroke-width="1.5"/>
+          <text x="400" y="68" text-anchor="middle" fill="#e6edf3" font-family="JetBrains Mono, monospace" font-size="17" font-weight="600">User</text>
+          <text x="400" y="92" text-anchor="middle" fill="#8b949e" font-family="Vazirmatn, sans-serif" font-size="12.5">کاربر (مرورگر)</text>
+
+          <rect x="290" y="250" width="220" height="120" rx="10" fill="#161b22" stroke="#58a6ff" stroke-width="2.5"/>
+          <text x="400" y="305" text-anchor="middle" fill="#e6edf3" font-family="JetBrains Mono, monospace" font-size="19" font-weight="600">Controller</text>
+          <text x="400" y="333" text-anchor="middle" fill="#8b949e" font-family="Vazirmatn, sans-serif" font-size="13">کنترل‌کننده — مرکز</text>
+          <text x="400" y="355" text-anchor="middle" fill="#6e7681" font-family="JetBrains Mono, monospace" font-size="10.5">C#</text>
+
+          <rect x="60" y="480" width="200" height="110" rx="10" fill="#161b22" stroke="#3fb950" stroke-width="2"/>
+          <text x="160" y="525" text-anchor="middle" fill="#e6edf3" font-family="JetBrains Mono, monospace" font-size="18" font-weight="600">Model</text>
+          <text x="160" y="551" text-anchor="middle" fill="#8b949e" font-family="Vazirmatn, sans-serif" font-size="12.5">مدل</text>
+          <text x="160" y="573" text-anchor="middle" fill="#6e7681" font-family="JetBrains Mono, monospace" font-size="10">C#</text>
+
+          <rect x="540" y="480" width="200" height="110" rx="10" fill="#161b22" stroke="#d29922" stroke-width="2"/>
+          <text x="640" y="525" text-anchor="middle" fill="#e6edf3" font-family="JetBrains Mono, monospace" font-size="18" font-weight="600">View</text>
+          <text x="640" y="551" text-anchor="middle" fill="#8b949e" font-family="Vazirmatn, sans-serif" font-size="12.5">نمایش</text>
+          <text x="640" y="573" text-anchor="middle" fill="#6e7681" font-family="JetBrains Mono, monospace" font-size="10">HTML / CSS / JS</text>
+
+          <line x1="450" y1="112" x2="450" y2="246" stroke="#58a6ff" stroke-width="2" marker-end="url(#mk-blue)"/>
+          <rect x="400" y="168" width="100" height="24" fill="#161b22"/>
+          <text x="450" y="185" text-anchor="middle" fill="#58a6ff" font-family="Vazirmatn, sans-serif" font-size="12" font-weight="600">درخواست</text>
+
+          <line x1="350" y1="246" x2="350" y2="112" stroke="#3fb950" stroke-width="2" marker-end="url(#mk-green)"/>
+          <rect x="320" y="168" width="60" height="24" fill="#161b22"/>
+          <text x="350" y="185" text-anchor="middle" fill="#3fb950" font-family="Vazirmatn, sans-serif" font-size="12" font-weight="600">پاسخ</text>
+
+          <line x1="300" y1="374" x2="150" y2="478" stroke="#58a6ff" stroke-width="2" marker-end="url(#mk-blue)"/>
+          <rect x="180" y="413" width="90" height="24" fill="#161b22"/>
+          <text x="225" y="430" text-anchor="middle" fill="#58a6ff" font-family="Vazirmatn, sans-serif" font-size="11.5" font-weight="600">درخواست داده</text>
+
+          <line x1="240" y1="478" x2="390" y2="374" stroke="#3fb950" stroke-width="2" marker-end="url(#mk-green)"/>
+          <rect x="272" y="413" width="90" height="24" fill="#161b22"/>
+          <text x="317" y="430" text-anchor="middle" fill="#3fb950" font-family="Vazirmatn, sans-serif" font-size="11.5" font-weight="600">بازگشت داده</text>
+
+          <line x1="500" y1="374" x2="650" y2="478" stroke="#58a6ff" stroke-width="2" marker-end="url(#mk-blue)"/>
+          <rect x="540" y="413" width="90" height="24" fill="#161b22"/>
+          <text x="585" y="430" text-anchor="middle" fill="#58a6ff" font-family="Vazirmatn, sans-serif" font-size="11.5" font-weight="600">ارسال داده</text>
+
+          <line x1="560" y1="478" x2="410" y2="374" stroke="#d29922" stroke-width="2" marker-end="url(#mk-yellow)"/>
+          <rect x="415" y="413" width="95" height="24" fill="#161b22"/>
+          <text x="462" y="430" text-anchor="middle" fill="#d29922" font-family="Vazirmatn, sans-serif" font-size="11.5" font-weight="600">خروجی نهایی</text>
+
+          <text x="400" y="635" text-anchor="middle" fill="#58a6ff" font-family="Vazirmatn, sans-serif" font-size="12" font-weight="600">کاربر مستقیماً با Controller در ارتباط است؛ View و Model از طریق Controller مدیریت می‌شوند</text>
+        </svg>
+        <div class="diagram-caption">
+          کاربر درخواست را به Controller می‌فرستد و از او پاسخ می‌گیرد — View و Model هر دو تحت کنترل Controller هستند
+        </div>
+      </div>
+
+      <h3>سه جزء اصلی MVC</h3>
+
+      <h4>Model — مدل</h4>
+      <p>
+        <strong>مدل</strong> نماینده <strong>داده‌ها و منطق تجاری</strong> برنامه است. هر چیزی که
+        مربوط به ساختار داده‌ها، قوانین اعتبارسنجی، محاسبات و تعامل با دیتابیس باشد، در Model
+        قرار می‌گیرد. Model با زبان <code>C#</code> نوشته می‌شود و معمولاً کلاس‌هایی هستند که
+        ویژگی‌ها (Properties) و متدهای مربوط به داده را تعریف می‌کنند.
+      </p>
+      <p>
+        برای مثال، در یک فروشگاه اینترنتی، کلاس <code>Product</code> که شامل
+        <code>Id</code>، <code>Name</code>، <code>Price</code> و <code>Stock</code> است،
+        یک Model محسوب می‌شود.
+      </p>
+
+      <h4>View — نمایش</h4>
+      <p>
+        <strong>View</strong> همان چیزی است که <strong>کاربر نهایی می‌بیند</strong>. تمام صفحاتی
+        که با <code>HTML</code>، <code>CSS</code> و <code>JavaScript</code> ساخته می‌شوند در بخش
+        View قرار می‌گیرند. View مسئول نمایش داده‌ها به کاربر است و نباید منطق تجاری پیچیده‌ای
+        در آن قرار بگیرد. در ASP.NET MVC، View‌ها معمولاً با زبان نشانه‌گذاری
+        <code>Razor</code> (پسوند <code>.cshtml</code>) نوشته می‌شوند.
+      </p>
+
+      <h4>Controller — کنترل‌کننده</h4>
+      <p>
+        <strong>Controller</strong> قلب تپنده برنامه است و وظیفه <strong>برقراری ارتباط بین
+        Model و View</strong> را بر عهده دارد. وقتی کاربر درخواستی می‌فرستد، Controller آن را
+        دریافت می‌کند، در صورت نیاز به Model مراجعه می‌کند و سپس داده‌ها را به View می‌فرستد
+        تا نمایش داده شوند. Controller با زبان <code>C#</code> نوشته می‌شود.
+      </p>
+
+      <div class="callout key">
+        <span class="callout-label">قانون طلایی MVC</span>
+        <p>
+          Model و Controller با <code>C#</code> نوشته می‌شوند و View با
+          <code>HTML</code>/<code>CSS</code>/<code>JavaScript</code>. Controller هرگز مستقیماً
+          داده‌ها را نمایش نمی‌دهد و View هرگز مستقیماً به دیتابیس دسترسی ندارد. هر جزء فقط
+          وظیفه خودش را انجام می‌دهد.
+        </p>
+      </div>
+    </section>
+
+    <section class="section" id="s3">
+      <div class="section-head">
+        <span class="section-num">03</span>
+        <h2 class="section-title">چرخه پردازش درخواست</h2>
+      </div>
+
+      <p>
+        برای درک دقیق MVC، باید بدانیم وقتی کاربر یک آدرس را در مرورگر وارد می‌کند، در سرور
+        واقعاً چه اتفاقی می‌افتد. نکته مهم این است که <strong>View هیچ‌وقت درخواست نمی‌فرستد</strong>؛
+        View یک قالب روی سرور است که یک بار رندر می‌شود و به HTML تبدیل می‌شود. آنچه کاربر با آن
+        تعامل می‌کند، HTML نهایی است که مرورگر نمایش می‌دهد. درخواست بعدی هم از طرف
+        <strong>مرورگر</strong> به سرور ارسال می‌شود، نه از طرف View.
+      </p>
+
+      <div class="diagram">
+        <svg viewBox="0 0 780 800" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="چرخه پردازش درخواست در MVC">
+          <defs>
+            <marker id="mk-down" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto">
+              <polygon points="0 0, 7 3, 0 6" fill="#58a6ff"/>
+            </marker>
+          </defs>
+
+          <rect x="60" y="20" width="660" height="100" rx="10" fill="#161b22" stroke="#6e7681" stroke-width="1.5"/>
+          <circle cx="680" cy="70" r="20" fill="#0d1117" stroke="#58a6ff" stroke-width="2"/>
+          <text x="680" y="77" text-anchor="middle" fill="#58a6ff" font-family="JetBrains Mono, monospace" font-size="14" font-weight="600">1</text>
+          <text x="645" y="62" text-anchor="start" fill="#e6edf3" font-family="Vazirmatn, sans-serif" font-size="14.5" font-weight="600">کاربر آدرس را در مرورگر وارد می‌کند</text>
+          <text x="645" y="90" text-anchor="start" fill="#8b949e" font-family="Vazirmatn, sans-serif" font-size="12.5">یا روی یک لینک کلیک می‌کند / فرمی را ارسال می‌کند</text>
+
+          <line x1="390" y1="126" x2="390" y2="150" stroke="#58a6ff" stroke-width="2" marker-end="url(#mk-down)"/>
+
+          <rect x="60" y="154" width="660" height="100" rx="10" fill="#161b22" stroke="#d29922" stroke-width="2"/>
+          <circle cx="680" cy="204" r="20" fill="#0d1117" stroke="#58a6ff" stroke-width="2"/>
+          <text x="680" y="211" text-anchor="middle" fill="#58a6ff" font-family="JetBrains Mono, monospace" font-size="14" font-weight="600">2</text>
+          <text x="645" y="196" text-anchor="start" fill="#e6edf3" font-family="Vazirmatn, sans-serif" font-size="14.5" font-weight="600">مرورگر درخواست HTTP را به سرور ارسال می‌کند</text>
+          <text x="645" y="224" text-anchor="start" fill="#8b949e" font-family="Vazirmatn, sans-serif" font-size="12.5">آدرس درخواست‌شده در قالب یک Request به سرور می‌رسد</text>
+
+          <line x1="390" y1="260" x2="390" y2="284" stroke="#58a6ff" stroke-width="2" marker-end="url(#mk-down)"/>
+
+          <rect x="60" y="288" width="660" height="100" rx="10" fill="#161b22" stroke="#58a6ff" stroke-width="2"/>
+          <circle cx="680" cy="338" r="20" fill="#0d1117" stroke="#58a6ff" stroke-width="2"/>
+          <text x="680" y="345" text-anchor="middle" fill="#58a6ff" font-family="JetBrains Mono, monospace" font-size="14" font-weight="600">3</text>
+          <text x="645" y="330" text-anchor="start" fill="#e6edf3" font-family="Vazirmatn, sans-serif" font-size="14.5" font-weight="600">سیستم Routing درخواست را به Controller هدایت می‌کند</text>
+          <text x="645" y="358" text-anchor="start" fill="#8b949e" font-family="Vazirmatn, sans-serif" font-size="12.5">بر اساس الگوی آدرس، Controller و Action مناسب انتخاب می‌شود</text>
+
+          <line x1="390" y1="394" x2="390" y2="418" stroke="#58a6ff" stroke-width="2" marker-end="url(#mk-down)"/>
+
+          <rect x="60" y="422" width="660" height="100" rx="10" fill="#161b22" stroke="#3fb950" stroke-width="2"/>
+          <circle cx="680" cy="472" r="20" fill="#0d1117" stroke="#58a6ff" stroke-width="2"/>
+          <text x="680" y="479" text-anchor="middle" fill="#58a6ff" font-family="JetBrains Mono, monospace" font-size="14" font-weight="600">4</text>
+          <text x="645" y="464" text-anchor="start" fill="#e6edf3" font-family="Vazirmatn, sans-serif" font-size="14.5" font-weight="600">Controller در صورت نیاز با Model ارتباط می‌گیرد</text>
+          <text x="645" y="492" text-anchor="start" fill="#8b949e" font-family="Vazirmatn, sans-serif" font-size="12.5">Model داده‌ها را از دیتابیس می‌خواند و به Controller برمی‌گرداند</text>
+
+          <line x1="390" y1="528" x2="390" y2="552" stroke="#58a6ff" stroke-width="2" marker-end="url(#mk-down)"/>
+
+          <rect x="60" y="556" width="660" height="100" rx="10" fill="#161b22" stroke="#58a6ff" stroke-width="2"/>
+          <circle cx="680" cy="606" r="20" fill="#0d1117" stroke="#58a6ff" stroke-width="2"/>
+          <text x="680" y="613" text-anchor="middle" fill="#58a6ff" font-family="JetBrains Mono, monospace" font-size="14" font-weight="600">5</text>
+          <text x="645" y="598" text-anchor="start" fill="#e6edf3" font-family="Vazirmatn, sans-serif" font-size="14.5" font-weight="600">Controller داده‌ها را به View می‌فرستد تا رندر شود</text>
+          <text x="645" y="626" text-anchor="start" fill="#8b949e" font-family="Vazirmatn, sans-serif" font-size="12.5">View روی سرور اجرا و به HTML نهایی تبدیل می‌شود</text>
+
+          <line x1="390" y1="662" x2="390" y2="686" stroke="#58a6ff" stroke-width="2" marker-end="url(#mk-down)"/>
+
+          <rect x="60" y="690" width="660" height="100" rx="10" fill="#161b22" stroke="#d29922" stroke-width="2"/>
+          <circle cx="680" cy="740" r="20" fill="#0d1117" stroke="#58a6ff" stroke-width="2"/>
+          <text x="680" y="747" text-anchor="middle" fill="#58a6ff" font-family="JetBrains Mono, monospace" font-size="14" font-weight="600">6</text>
+          <text x="645" y="732" text-anchor="start" fill="#e6edf3" font-family="Vazirmatn, sans-serif" font-size="14.5" font-weight="600">HTML نهایی به مرورگر برگشته و به کاربر نمایش داده می‌شود</text>
+          <text x="645" y="760" text-anchor="start" fill="#8b949e" font-family="Vazirmatn, sans-serif" font-size="12.5">مرورگر HTML دریافتی را تفسیر و رندر می‌کند</text>
+        </svg>
+        <div class="diagram-caption">
+          چرخه کامل پردازش درخواست — از ورود آدرس تا نمایش نتیجه به کاربر
+        </div>
+      </div>
+
+      <h3>شرح گام‌ها</h3>
+
+      <ol class="flow">
+        <li>
+          <strong>کاربر آدرس را در مرورگر وارد می‌کند</strong>
+          <span>کاربر یک URL را در نوار آدرس مرورگر تایپ می‌کند، روی لینکی کلیک می‌کند یا فرمی را ارسال می‌کند.</span>
+        </li>
+        <li>
+          <strong>مرورگر درخواست HTTP را به سرور ارسال می‌کند</strong>
+          <span>مرورگر بر اساس آدرس، یک درخواست <code>HTTP</code> می‌سازد و آن را به سرور می‌فرستد.</span>
+        </li>
+        <li>
+          <strong>سیستم Routing درخواست را به Controller هدایت می‌کند</strong>
+          <span>در <code>ASP.NET MVC</code>، سیستم مسیریابی الگوی آدرس را بررسی کرده و آن را به Controller و Action مناسب هدایت می‌کند.</span>
+        </li>
+        <li>
+          <strong>Controller در صورت نیاز با Model ارتباط می‌گیرد</strong>
+          <span>اگر اکشن به داده نیاز داشته باشد، Controller از Model درخواست می‌کند. Model داده‌ها را از دیتابیس خوانده و به Controller برمی‌گرداند.</span>
+        </li>
+        <li>
+          <strong>Controller داده‌ها را به View می‌فرستد تا رندر شود</strong>
+          <span>Controller داده‌ها را به یک View می‌فرستد. View روی سرور اجرا شده و به HTML نهایی تبدیل می‌شود.</span>
+        </li>
+        <li>
+          <strong>HTML نهایی به مرورگر برگشته و به کاربر نمایش داده می‌شود</strong>
+          <span>مرورگر HTML دریافتی را تفسیر و به صفحه‌ای قابل مشاهده برای کاربر تبدیل می‌کند. برای درخواست بعدی، همین چرخه از ابتدا تکرار می‌شود.</span>
+        </li>
+      </ol>
+
+      <div class="callout note">
+        <span class="callout-label">نکته فنی</span>
+        <p>
+          نکته مهمی که گاهی در توضیحات ساده‌سازی‌شده نادیده گرفته می‌شود این است که
+          <strong>View هیچ‌وقت درخواست نمی‌فرستد</strong>. View یک قالب روی سرور است که صرفاً یک بار
+          رندر می‌شود. آنچه کاربر با آن تعامل دارد، HTML نهایی است که مرورگر نمایش داده. درخواست
+          بعدی هم مستقیم از طرف مرورگر به Controller می‌رود.
+        </p>
+      </div>
+
+      <div class="callout key">
+        <span class="callout-label">نکته مهم</span>
+        <p>
+          کاربر می‌تواند مستقیماً یک URL را در مرورگر وارد کند و بدون اینکه قبلاً هیچ صفحه‌ای از
+          سایت را دیده باشد، به Controller برود. همچنین در APIها که اصلاً View وجود ندارد،
+          درخواست مستقیم به Controller می‌رود و Controller به‌جای View، داده <code>JSON</code>
+          برمی‌گرداند. این نشان می‌دهد Controller کاملاً مستقل از View عمل می‌کند.
+        </p>
+      </div>
+    </section>
+
+    <section class="section" id="s4">
+      <div class="section-head">
+        <span class="section-num">04</span>
+        <h2 class="section-title">ساختار پروژه ASP.NET MVC</h2>
+      </div>
+
+      <p>
+        وقتی یک پروژه <code>ASP.NET MVC</code> جدید در <code>Visual Studio</code> ایجاد می‌کنید،
+        به‌صورت پیش‌فرض چند پوشه و فایل برای شما ساخته می‌شود. آشنایی با این ساختار برای شروع
+        کار ضروری است، چون MVC بر پایه <strong>قرارداد (Convention)</strong> کار می‌کند و
+        محل قرارگیری فایل‌ها اهمیت زیادی دارد.
+      </p>
+
+      <div class="ft-tree">
+        <ul>
+          <li>
+            <div class="ft-node ft-dir">
+              <svg class="ft-ico" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M2 4.5V12a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V6.5a1 1 0 0 0-1-1H7.5L6 4H3a1 1 0 0 0-1 .5z"/>
+              </svg>
+              <span class="ft-name">Controllers</span>
+            </div>
+            <ul>
+              <li>
+                <div class="ft-node ft-file">
+                  <svg class="ft-ico" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M9.5 1.5H4a1 1 0 0 0-1 1v11a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V5z"/>
+                    <path d="M9.5 1.5V5H13"/>
+                  </svg>
+                  <span class="ft-name">HomeController.cs</span>
+                  <span class="ft-cmt">کنترل‌کننده اصلی</span>
+                </div>
+              </li>
+            </ul>
+          </li>
+
+          <li>
+            <div class="ft-node ft-dir">
+              <svg class="ft-ico" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M2 4.5V12a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V6.5a1 1 0 0 0-1-1H7.5L6 4H3a1 1 0 0 0-1 .5z"/>
+              </svg>
+              <span class="ft-name">Models</span>
+            </div>
+            <ul>
+              <li>
+                <div class="ft-node ft-note">
+                  <span>کلاس‌های مدل اینجا قرار می‌گیرند</span>
+                </div>
+              </li>
+            </ul>
+          </li>
+
+          <li>
+            <div class="ft-node ft-dir">
+              <svg class="ft-ico" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M2 4.5V12a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V6.5a1 1 0 0 0-1-1H7.5L6 4H3a1 1 0 0 0-1 .5z"/>
+              </svg>
+              <span class="ft-name">Views</span>
+            </div>
+            <ul>
+              <li>
+                <div class="ft-node ft-dir">
+                  <svg class="ft-ico" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M2 4.5V12a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V6.5a1 1 0 0 0-1-1H7.5L6 4H3a1 1 0 0 0-1 .5z"/>
+                  </svg>
+                  <span class="ft-name">Home</span>
+                </div>
+                <ul>
+                  <li>
+                    <div class="ft-node ft-file">
+                      <svg class="ft-ico" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <path d="M9.5 1.5H4a1 1 0 0 0-1 1v11a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V5z"/>
+                        <path d="M9.5 1.5V5H13"/>
+                      </svg>
+                      <span class="ft-name">Index.cshtml</span>
+                      <span class="ft-cmt">صفحه اصلی</span>
+                    </div>
+                  </li>
+                  <li>
+                    <div class="ft-node ft-file">
+                      <svg class="ft-ico" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <path d="M9.5 1.5H4a1 1 0 0 0-1 1v11a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V5z"/>
+                        <path d="M9.5 1.5V5H13"/>
+                      </svg>
+                      <span class="ft-name">About.cshtml</span>
+                      <span class="ft-cmt">درباره ما</span>
+                    </div>
+                  </li>
+                </ul>
+              </li>
+              <li>
+                <div class="ft-node ft-dir">
+                  <svg class="ft-ico" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M2 4.5V12a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V6.5a1 1 0 0 0-1-1H7.5L6 4H3a1 1 0 0 0-1 .5z"/>
+                  </svg>
+                  <span class="ft-name">Shared</span>
+                </div>
+                <ul>
+                  <li>
+                    <div class="ft-node ft-file">
+                      <svg class="ft-ico" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <path d="M9.5 1.5H4a1 1 0 0 0-1 1v11a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V5z"/>
+                        <path d="M9.5 1.5V5H13"/>
+                      </svg>
+                      <span class="ft-name">_Layout.cshtml</span>
+                      <span class="ft-cmt">قالب اصلی</span>
+                    </div>
+                  </li>
+                  <li>
+                    <div class="ft-node ft-file">
+                      <svg class="ft-ico" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <path d="M9.5 1.5H4a1 1 0 0 0-1 1v11a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V5z"/>
+                        <path d="M9.5 1.5V5H13"/>
+                      </svg>
+                      <span class="ft-name">_ViewStart.cshtml</span>
+                      <span class="ft-cmt">تنظیمات اولیه</span>
+                    </div>
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          </li>
+
+          <li>
+            <div class="ft-node ft-dir">
+              <svg class="ft-ico" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M2 4.5V12a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V6.5a1 1 0 0 0-1-1H7.5L6 4H3a1 1 0 0 0-1 .5z"/>
+              </svg>
+              <span class="ft-name">App_Data</span>
+              <span class="ft-cmt">فایل‌های داده</span>
+            </div>
+          </li>
+
+          <li>
+            <div class="ft-node ft-dir">
+              <svg class="ft-ico" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M2 4.5V12a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V6.5a1 1 0 0 0-1-1H7.5L6 4H3a1 1 0 0 0-1 .5z"/>
+              </svg>
+              <span class="ft-name">Content</span>
+              <span class="ft-cmt">CSS و تصاویر</span>
+            </div>
+          </li>
+
+          <li>
+            <div class="ft-node ft-dir">
+              <svg class="ft-ico" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M2 4.5V12a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V6.5a1 1 0 0 0-1-1H7.5L6 4H3a1 1 0 0 0-1 .5z"/>
+              </svg>
+              <span class="ft-name">Scripts</span>
+              <span class="ft-cmt">فایل‌های JavaScript</span>
+            </div>
+          </li>
+
+          <li>
+            <div class="ft-node ft-file">
+              <svg class="ft-ico" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M9.5 1.5H4a1 1 0 0 0-1 1v11a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V5z"/>
+                <path d="M9.5 1.5V5H13"/>
+              </svg>
+              <span class="ft-name">Web.config</span>
+              <span class="ft-cmt">تنظیمات برنامه</span>
+            </div>
+          </li>
+
+          <li>
+            <div class="ft-node ft-file">
+              <svg class="ft-ico" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M9.5 1.5H4a1 1 0 0 0-1 1v11a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V5z"/>
+                <path d="M9.5 1.5V5H13"/>
+              </svg>
+              <span class="ft-name">Global.asax</span>
+              <span class="ft-cmt">رویدادهای برنامه</span>
+            </div>
+          </li>
+        </ul>
+      </div>
+
+      <h3>توضیح پوشه‌های مهم</h3>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>پوشه / فایل</th><th>کاربرد</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Controllers/</strong></td>
+              <td>محل قرارگیری کلاس‌های Controller. نام کلاس‌ها باید با پسوند <code>Controller</code> تمام شود.</td>
+            </tr>
+            <tr>
+              <td><strong>Models/</strong></td>
+              <td>کلاس‌های مدل که ساختار داده و منطق تجاری را تعریف می‌کنند.</td>
+            </tr>
+            <tr>
+              <td><strong>Views/</strong></td>
+              <td>فایل‌های نمایشی (<code>Razor View</code>) که خروجی HTML تولید می‌کنند.</td>
+            </tr>
+            <tr>
+              <td><strong>App_Data/</strong></td>
+              <td>محل ذخیره‌سازی فیزیکی داده‌ها (فایل‌های دیتابیس، XML و...).</td>
+            </tr>
+            <tr>
+              <td><strong>Content/</strong></td>
+              <td>فایل‌های ایستا مانند CSS، تصاویر و فونت‌ها.</td>
+            </tr>
+            <tr>
+              <td><strong>Scripts/</strong></td>
+              <td>فایل‌های JavaScript پروژه.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="callout note">
+        <span class="callout-label">قرارداد پیش‌فرض (Convention over Configuration)</span>
+        <p>
+          <code>ASP.NET MVC</code> بر پایه «قرارداد» کار می‌کند. اگر Controller شما
+          <code>HomeController</code> نام داشته باشد، به‌صورت خودکار به دنبال View‌های مربوطه
+          در پوشه <code>Views/Home/</code> می‌گردد. این یعنی نیازی به تنظیم دستی مسیرها
+          ندارید و می‌توانید روی منطق برنامه تمرکز کنید.
+        </p>
+      </div>
+    </section>
+
+    <section class="section" id="s5">
+      <div class="section-head">
+        <span class="section-num">05</span>
+        <h2 class="section-title">اولین پروژه عملی</h2>
+      </div>
+
+      <p>
+        پس از آشنایی با مفاهیم نظری، حالا مراحل ساخت یک پروژه ساده <code>ASP.NET MVC</code>
+        را مرور می‌کنیم.
+      </p>
+
+      <h3>پیش‌نیازها</h3>
+      <ul>
+        <li><strong>Visual Studio</strong> نسخه ۲۰۱۰ یا بالاتر — یا <code>Visual Web Developer Express</code>.</li>
+        <li><strong>.NET Framework</strong> نصب‌شده روی سیستم‌عامل.</li>
+        <li>آشنایی مقدماتی با زبان <code>C#</code> و مفاهیم شی‌گرایی.</li>
+      </ul>
+
+      <h3>مراحل ساخت پروژه</h3>
+      <ol class="flow">
+        <li>
+          <strong>اجرای Visual Studio</strong>
+          <span>برنامه را اجرا کنید و از منوی <code>File</code> گزینه <code>New Project</code> را انتخاب کنید.</span>
+        </li>
+        <li>
+          <strong>انتخاب زبان برنامه‌نویسی</strong>
+          <span>در پنجره باز شده، از سمت چپ زبان <code>Visual C#</code> را انتخاب کنید.</span>
+        </li>
+        <li>
+          <strong>انتخاب قالب پروژه</strong>
+          <span>از قالب‌های موجود، <code>ASP.NET MVC Web Application</code> را انتخاب کنید.</span>
+        </li>
+        <li>
+          <strong>نام‌گذاری پروژه</strong>
+          <span>نام پروژه را وارد کنید (مثلاً <code>Movies</code>) و روی <code>OK</code> کلیک کنید.</span>
+        </li>
+        <li>
+          <strong>ساخت خودکار پروژه</strong>
+          <span>پروژه به‌صورت خودکار با یک قالب پیش‌فرض ساخته می‌شود که شامل یک صفحه <code>Hello World</code> است.</span>
+        </li>
+      </ol>
+
+      <h3>اجرای پروژه</h3>
+      <p>
+        برای اجرای پروژه کافی است روی دکمه <strong>Play</strong> (فلش سبز) در نوار ابزار کلیک
+        کنید یا کلید <code>F5</code> را بزنید. مرورگر به‌صورت خودکار باز می‌شود و آدرس
+        <code>localhost</code> را نمایش می‌دهد که به کامپیوتر محلی خودتان اشاره می‌کند.
+      </p>
+
+      <div class="callout warn">
+        <span class="callout-label">توجه</span>
+        <p>
+          در <code>ASP.NET MVC</code>، برخلاف <code>Web Forms</code>، چرخه صفحه
+          (<code>Page Life Cycle</code>) به آن شکل کلاسیک وجود ندارد. درخواست‌ها مستقیماً از
+          طریق <strong>روتینگ (Routing)</strong> به Controller هدایت می‌شوند و اکشن‌ها
+          پردازش را انجام می‌دهند.
+        </p>
+      </div>
+    </section>
+
+    <section class="section" id="s6">
+      <div class="section-head">
+        <span class="section-num">06</span>
+        <h2 class="section-title">مزایای استفاده از MVC</h2>
+      </div>
+
+      <p>
+        MVC به دلیل <strong>جداسازی دغدغه‌ها</strong> (<code>Separation of Concerns</code>)
+        مزایای متعددی دارد که آن را به انتخاب مناسبی برای برنامه‌های وب پویا تبدیل می‌کند.
+      </p>
+
+      <div class="card-grid">
+        <div class="card">
+          <div class="card-title">قابلیت نگهداری بالا</div>
+          <div class="card-desc">
+            هر بخش (Model، View، Controller) یک وظیفه مشخص دارد و تغییر در یکی، بخش‌های دیگر
+            را تحت تأثیر قرار نمی‌دهد.
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-title">تست‌پذیری</div>
+          <div class="card-desc">
+            Model و Controller را می‌توان به‌صورت مستقل از View تست کرد. این کار کیفیت کد را
+            بسیار افزایش می‌دهد.
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-title">کار تیمی بهتر</div>
+          <div class="card-desc">
+            تیم طراحی UI می‌تواند روی View کار کند و تیم بک‌اند روی Model و Controller،
+            بدون تداخل.
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-title">مقیاس‌پذیری</div>
+          <div class="card-desc">
+            پروژه‌های بزرگ را می‌توان به‌راحتی بین اعضای تیم تقسیم کرد و توسعه داد.
+          </div>
+        </div>
+      </div>
+
+      <div class="callout key">
+        <span class="callout-label">مقایسه با Web Forms</span>
+        <p>
+          در <code>Web Forms</code>، منطق برنامه با ظاهر صفحه کاملاً درهم تنیده بود و همین
+          موضوع نگهداری و تست را دشوار می‌کرد. اما در <code>MVC</code>، این دو کاملاً از هم
+          جدا هستند و همین موضوع باعث می‌شود MVC برای پروژه‌های پویا و مدرن انتخاب بهتری
+          باشد.
+        </p>
+      </div>
+    </section>
+
+    <section class="section" id="s7">
+      <div class="section-head">
+        <span class="section-num">07</span>
+        <h2 class="section-title">خلاصه مطالب</h2>
+      </div>
+
+      <p>
+        در این قسمت با مفاهیم بنیادین برنامه‌نویسی سمت سرور و الگوی معماری MVC آشنا شدیم. جدول
+        زیر خلاصه‌ای از مهم‌ترین نکات مطرح‌شده است.
+      </p>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>مفهوم</th><th>خلاصه</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>سمت سرور</strong></td>
+              <td>زبان‌های سمت سرور امکان ذخیره، ویرایش و بازیابی داده‌ها را می‌دهند. کدهای آن‌ها در مرورگر دیده نمی‌شوند.</td>
+            </tr>
+            <tr>
+              <td><strong>ASP.NET</strong></td>
+              <td>یک تکنولوژی مایکروسافتی است (نه یک زبان) که با C# در Visual Studio کار می‌کند.</td>
+            </tr>
+            <tr>
+              <td><strong>الگوی MVC</strong></td>
+              <td>برنامه را به سه بخش Model (داده‌ها)، View (نمایش) و Controller (کنترل‌کننده) تقسیم می‌کند.</td>
+            </tr>
+            <tr>
+              <td><strong>Controller</strong></td>
+              <td>واسطه بین Model و View است. درخواست‌ها را دریافت و به بخش مناسب هدایت می‌کند.</td>
+            </tr>
+            <tr>
+              <td><strong>Model</strong></td>
+              <td>نماینده داده‌ها و منطق تجاری برنامه است. با C# نوشته می‌شود.</td>
+            </tr>
+            <tr>
+              <td><strong>View</strong></td>
+              <td>خروجی HTML/CSS/JS است که کاربر می‌بیند.</td>
+            </tr>
+            <tr>
+              <td><strong>ساختار پروژه</strong></td>
+              <td>پوشه‌های اصلی: Controllers، Models، Views، App_Data</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <nav class="part-nav">
+      <span class="part-nav-btn disabled">
+        <span class="arrow">&#8594;</span>
+        قسمت قبلی
+      </span>
+      <a class="part-nav-btn home" href="index.html">
+        فهرست مطالب
+      </a>
+      <a class="part-nav-btn" href="part-02.html">
+        قسمت بعدی
+        <span class="arrow">&#8592;</span>
+      </a>
+    </nav>
+
+  </main>
+</div>
+
+<footer class="doc-footer">
+  <div class="footer-name">مهران غلامی مقدم</div>
+  <div>
+    <a class="footer-link" href="https://github.com/Mehran00programmer" target="_blank" rel="noopener noreferrer">github.com/Mehran00programmer</a>
+  </div>
+</footer>
+
+<script src="assets/app.js"></script>
+
+</body>
+</html>
