@@ -1,56 +1,210 @@
 (function () {
-  var allLinks = document.querySelectorAll('.toc-link');
-  if (!allLinks.length) return;
+  'use strict';
 
-  var sections = [];
-  allLinks.forEach(function (l) {
-    var sec = document.querySelector(l.getAttribute('href'));
-    if (sec && sections.indexOf(sec) === -1) sections.push(sec);
+  /* ============ THEME TOGGLE ============ */
+  var THEME_KEY = 'aspnet-notes-theme';
+  var root = document.documentElement;
+
+  function getPreferredTheme() {
+    var stored = null;
+    try { stored = localStorage.getItem(THEME_KEY); } catch (e) {}
+    if (stored === 'light' || stored === 'dark') return stored;
+    if (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches) {
+      return 'light';
+    }
+    return 'dark';
+  }
+
+  function applyTheme(theme) {
+    root.setAttribute('data-theme', theme);
+    try { localStorage.setItem(THEME_KEY, theme); } catch (e) {}
+  }
+
+  applyTheme(getPreferredTheme());
+
+  document.addEventListener('click', function (e) {
+    var toggle = e.target.closest('.theme-toggle');
+    if (!toggle) return;
+    var current = root.getAttribute('data-theme') || 'dark';
+    var next = current === 'dark' ? 'light' : 'dark';
+    applyTheme(next);
   });
 
-  allLinks.forEach(function (link) {
-    link.addEventListener('click', function (e) {
-      var target = document.querySelector(link.getAttribute('href'));
-      if (!target) return;
-      e.preventDefault();
+  /* ============ READING PROGRESS ============ */
+  var progressBar = document.querySelector('.reading-progress-bar');
+  if (progressBar) {
+    var updateProgress = function () {
+      var scrollTop = window.scrollY;
+      var docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      var percent = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+      progressBar.style.width = Math.min(100, Math.max(0, percent)) + '%';
+    };
+    window.addEventListener('scroll', updateProgress, { passive: true });
+    window.addEventListener('resize', updateProgress);
+    updateProgress();
+  }
 
-      var offset = 20;
-      var top = target.getBoundingClientRect().top + window.scrollY - offset;
+  /* ============ BACK TO TOP ============ */
+  var backBtn = document.querySelector('.back-to-top');
+  if (backBtn) {
+    var toggleBackBtn = function () {
+      if (window.scrollY > 400) {
+        backBtn.classList.add('visible');
+      } else {
+        backBtn.classList.remove('visible');
+      }
+    };
+    window.addEventListener('scroll', toggleBackBtn, { passive: true });
+    backBtn.addEventListener('click', function () {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+    toggleBackBtn();
+  }
 
-      window.scrollTo({
-        top: top,
-        behavior: 'smooth'
+  /* ============ TOC SCROLL SPY ============ */
+  var tocLinks = document.querySelectorAll('.toc-link');
+  if (tocLinks.length) {
+    var sections = [];
+    tocLinks.forEach(function (l) {
+      var sec = document.querySelector(l.getAttribute('href'));
+      if (sec && sections.indexOf(sec) === -1) sections.push(sec);
+    });
+
+    tocLinks.forEach(function (link) {
+      link.addEventListener('click', function (e) {
+        var target = document.querySelector(link.getAttribute('href'));
+        if (!target) return;
+        e.preventDefault();
+        var offset = 20;
+        var top = target.getBoundingClientRect().top + window.scrollY - offset;
+        window.scrollTo({ top: top, behavior: 'smooth' });
+        if (history.pushState) {
+          history.pushState(null, '', link.getAttribute('href'));
+        }
       });
+    });
 
-      if (history.pushState) {
-        history.pushState(null, '', link.getAttribute('href'));
+    var onScroll = function () {
+      var pos = window.scrollY + 120;
+      var current = 0;
+      for (var i = 0; i < sections.length; i++) {
+        if (sections[i].offsetTop <= pos) current = i;
+      }
+      tocLinks.forEach(function (l) {
+        var target = l.getAttribute('href');
+        var isActive = sections[current] && ('#' + sections[current].id) === target;
+        l.classList.toggle('active', isActive);
+      });
+    };
+
+    var ticking = false;
+    window.addEventListener('scroll', function () {
+      if (!ticking) {
+        window.requestAnimationFrame(function () {
+          onScroll();
+          ticking = false;
+        });
+        ticking = true;
+      }
+    }, { passive: true });
+
+    onScroll();
+  }
+
+  /* ============ FADE IN ON SCROLL ============ */
+  var fadeEls = document.querySelectorAll('.fade-in');
+  if (fadeEls.length && 'IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          io.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+    fadeEls.forEach(function (el) { io.observe(el); });
+  } else {
+    fadeEls.forEach(function (el) { el.classList.add('visible'); });
+  }
+
+  /* ============ SEARCH FILTER ============ */
+  var searchInput = document.querySelector('.search-input');
+  if (searchInput) {
+    var cards = document.querySelectorAll('.part-card');
+    var emptyState = document.querySelector('.search-empty');
+
+    var filterCards = function () {
+      var query = searchInput.value.trim().toLowerCase();
+      var visibleCount = 0;
+      cards.forEach(function (card) {
+        var text = (card.textContent || '').toLowerCase();
+        var match = !query || text.indexOf(query) !== -1;
+        card.classList.toggle('hidden', !match);
+        if (match) visibleCount++;
+      });
+      if (emptyState) {
+        emptyState.classList.toggle('visible', visibleCount === 0);
+      }
+    };
+
+    searchInput.addEventListener('input', filterCards);
+  }
+
+  /* ============ CODE COPY BUTTONS ============ */
+  document.querySelectorAll('.code-block').forEach(function (block) {
+    var header = block.querySelector('.code-block-header');
+    var pre = block.querySelector('pre');
+    if (!header || !pre) return;
+
+    var btn = document.createElement('button');
+    btn.className = 'code-copy';
+    btn.type = 'button';
+    btn.setAttribute('aria-label', 'کپی کد');
+    btn.innerHTML = '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="5" width="9" height="9" rx="1.5"/><path d="M11 5V3.5a1 1 0 0 0-1-1H3.5a1 1 0 0 0-1 1V10a1 1 0 0 0 1 1H5"/></svg><span>کپی</span>';
+
+    btn.addEventListener('click', function () {
+      var text = pre.innerText;
+      var done = function () {
+        btn.classList.add('copied');
+        var label = btn.querySelector('span');
+        var original = label.textContent;
+        label.textContent = 'کپی شد';
+        setTimeout(function () {
+          btn.classList.remove('copied');
+          label.textContent = original;
+        }, 1600);
+      };
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(done, done);
+      } else {
+        var ta = document.createElement('textarea');
+        ta.value = text;
+        document.body.appendChild(ta);
+        ta.select();
+        try { document.execCommand('copy'); } catch (e) {}
+        document.body.removeChild(ta);
+        done();
       }
     });
+
+    header.appendChild(btn);
   });
 
-  function onScroll() {
-    var pos = window.scrollY + 120;
-    var current = 0;
-    for (var i = 0; i < sections.length; i++) {
-      if (sections[i].offsetTop <= pos) current = i;
-    }
-    allLinks.forEach(function (l) {
-      var target = l.getAttribute('href');
-      var isActive = sections[current] && ('#' + sections[current].id) === target;
-      l.classList.toggle('active', isActive);
+  /* ============ KEYBOARD NAVIGATION (parts) ============ */
+  var prevBtn = document.querySelector('.part-nav .part-nav-btn:not(.home):not(.disabled):first-child');
+  var nextBtn = document.querySelector('.part-nav .part-nav-btn:not(.home):not(.disabled):last-child');
+  var prevHref = prevBtn && prevBtn.tagName === 'A' ? prevBtn.getAttribute('href') : null;
+  var nextHref = nextBtn && nextBtn.tagName === 'A' ? nextBtn.getAttribute('href') : null;
+
+  if (prevHref || nextHref) {
+    document.addEventListener('keydown', function (e) {
+      if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+      if (e.key === 'ArrowRight' && prevHref) {
+        window.location.href = prevHref;
+      } else if (e.key === 'ArrowLeft' && nextHref) {
+        window.location.href = nextHref;
+      }
     });
   }
 
-  var ticking = false;
-  window.addEventListener('scroll', function () {
-    if (!ticking) {
-      window.requestAnimationFrame(function () {
-        onScroll();
-        ticking = false;
-      });
-      ticking = true;
-    }
-  }, { passive: true });
-
-  onScroll();
 })();
