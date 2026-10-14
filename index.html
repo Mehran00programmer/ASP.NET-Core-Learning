@@ -4,14 +4,17 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="theme-color" content="#0d1117">
-<meta name="description" content="جزوه برنامه‌نویسی ASP.NET Core — مجموعه آموزشی ۴۰ قسمتی به قلم مهران غلامی مقدم">
+<meta name="description" content="جزوه برنامه‌نویسی ASP.NET Core — مجموعه آموزشی ۴۰ قسمتی درباره ASP.NET Core، MVC و برنامه‌نویسی سمت سرور. نوشته مهران غلامی مقدم.">
 <meta name="author" content="مهران غلامی مقدم">
+<meta name="keywords" content="ASP.NET Core, MVC, C#, برنامه‌نویسی وب, آموزش ASP.NET, جزوه فارسی">
 <meta property="og:title" content="جزوه برنامه‌نویسی ASP.NET Core">
 <meta property="og:description" content="مجموعه آموزشی ۴۰ قسمتی درباره ASP.NET Core، MVC و برنامه‌نویسی سمت سرور">
 <meta property="og:type" content="website">
 <meta property="og:locale" content="fa_IR">
+<meta property="og:url" content="https://mehran00programmer.github.io/ASP.NET-Core-Learning/">
 <title>جزوه ASP.NET Core — فهرست مطالب</title>
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%231f6feb'/><text x='50' y='70' font-size='62' text-anchor='middle' fill='white' font-family='monospace' font-weight='700'>م</text></svg>">
+<link rel="canonical" href="https://mehran00programmer.github.io/ASP.NET-Core-Learning/">
 <link rel="stylesheet" href="assets/style.css">
 </head>
 <body>
@@ -32,6 +35,65 @@
 </header>
 
 <div class="page">
+
+  <section class="about-section fade-in">
+    <h2 class="about-section-title">درباره این جزوه</h2>
+    <p>
+      این جزوه حاصل تلاش برای ساخت یک مرجع فارسی، منظم و کاربردی درباره <strong>ASP.NET Core</strong> است.
+      هدف اصلی این است که مسیر یادگیری از مفاهیم پایه سمت سرور تا ساخت اپلیکیشن‌های واقعی، به‌صورت
+      گام‌به‌گام و ساختارمند پوشش داده شود.
+    </p>
+    <p>
+      این مجموعه برای کسانی طراحی شده که می‌خواهند برنامه‌نویسی وب را از پایه یاد بگیرند، بدون اینکه
+      در انبوهی از منابع پراکنده سردرگم شوند. هر قسمت روی یک موضوع مشخص تمرکز دارد و پیش‌نیاز
+      قسمت‌های بعدی را فراهم می‌کند.
+    </p>
+    <div class="about-features">
+      <div class="about-feature">
+        <svg class="about-feature-check" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 8 7 12 13 4"/></svg>
+        <span>ساختار گام‌به‌گام و منظم</span>
+      </div>
+      <div class="about-feature">
+        <svg class="about-feature-check" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 8 7 12 13 4"/></svg>
+        <span>مثال‌های عملی و پروژه محور</span>
+      </div>
+      <div class="about-feature">
+        <svg class="about-feature-check" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 8 7 12 13 4"/></svg>
+        <span>نمودارها و توضیحات تصویری</span>
+      </div>
+      <div class="about-feature">
+        <svg class="about-feature-check" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 8 7 12 13 4"/></svg>
+        <span>تمرین‌های پایان هر قسمت</span>
+      </div>
+    </div>
+  </section>
+
+  <div class="meta-row fade-in">
+    <div class="meta-box">
+      <span class="meta-box-label">Last Update</span>
+      <span class="meta-box-value">قسمت ۰۱ — منتشر شده</span>
+    </div>
+    <div class="meta-box">
+      <span class="meta-box-label">Progress</span>
+      <span class="meta-box-value">۱ از ۴۰ قسمت آماده</span>
+      <div class="overall-progress-track">
+        <div class="overall-progress-fill" style="width: 2.5%;"></div>
+      </div>
+      <div class="overall-progress-text">
+        <span>2.5%</span>
+        <span>40 parts</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="search-wrap fade-in">
+    <svg class="search-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="7" cy="7" r="5"/>
+      <path d="M11 11l3.5 3.5"/>
+    </svg>
+    <input type="text" class="search-input" placeholder="جستجو در عنوان قسمت‌ها..." aria-label="جستجو در قسمت‌ها">
+  </div>
+
   <section class="parts-list">
     <div class="parts-list-header">
       <h2 class="parts-list-title">فهرست قسمت‌ها</h2>
@@ -40,7 +102,7 @@
 
     <div class="parts-grid">
 
-      <a class="part-card ready" href="part-01.html">
+      <a class="part-card ready fade-in" href="part-01.html">
         <div class="part-card-num">01</div>
         <div class="part-card-body">
           <div class="part-card-title">برنامه‌نویسی سمت سرور و الگوی MVC</div>
@@ -49,7 +111,7 @@
         <div class="part-card-status">آماده</div>
       </a>
 
-      <div class="part-card locked">
+      <div class="part-card locked fade-in">
         <div class="part-card-num">02</div>
         <div class="part-card-body">
           <div class="part-card-title">به‌زودی</div>
@@ -58,7 +120,7 @@
         <div class="part-card-status">در راه</div>
       </div>
 
-      <div class="part-card locked">
+      <div class="part-card locked fade-in">
         <div class="part-card-num">03</div>
         <div class="part-card-body">
           <div class="part-card-title">به‌زودی</div>
@@ -67,7 +129,7 @@
         <div class="part-card-status">در راه</div>
       </div>
 
-      <div class="part-card locked">
+      <div class="part-card locked fade-in">
         <div class="part-card-num">04</div>
         <div class="part-card-body">
           <div class="part-card-title">به‌زودی</div>
@@ -76,7 +138,7 @@
         <div class="part-card-status">در راه</div>
       </div>
 
-      <div class="part-card locked">
+      <div class="part-card locked fade-in">
         <div class="part-card-num">05</div>
         <div class="part-card-body">
           <div class="part-card-title">به‌زودی</div>
@@ -85,7 +147,7 @@
         <div class="part-card-status">در راه</div>
       </div>
 
-      <div class="part-card locked">
+      <div class="part-card locked fade-in">
         <div class="part-card-num">06</div>
         <div class="part-card-body">
           <div class="part-card-title">به‌زودی</div>
@@ -94,7 +156,7 @@
         <div class="part-card-status">در راه</div>
       </div>
 
-      <div class="part-card locked">
+      <div class="part-card locked fade-in">
         <div class="part-card-num">07</div>
         <div class="part-card-body">
           <div class="part-card-title">به‌زودی</div>
@@ -103,7 +165,7 @@
         <div class="part-card-status">در راه</div>
       </div>
 
-      <div class="part-card locked">
+      <div class="part-card locked fade-in">
         <div class="part-card-num">08</div>
         <div class="part-card-body">
           <div class="part-card-title">به‌زودی</div>
@@ -112,7 +174,7 @@
         <div class="part-card-status">در راه</div>
       </div>
 
-      <div class="part-card locked">
+      <div class="part-card locked fade-in">
         <div class="part-card-num">09</div>
         <div class="part-card-body">
           <div class="part-card-title">به‌زودی</div>
@@ -121,7 +183,7 @@
         <div class="part-card-status">در راه</div>
       </div>
 
-      <div class="part-card locked">
+      <div class="part-card locked fade-in">
         <div class="part-card-num">10</div>
         <div class="part-card-body">
           <div class="part-card-title">به‌زودی</div>
@@ -130,7 +192,7 @@
         <div class="part-card-status">در راه</div>
       </div>
 
-      <div class="part-card locked">
+      <div class="part-card locked fade-in">
         <div class="part-card-num">11</div>
         <div class="part-card-body">
           <div class="part-card-title">به‌زودی</div>
@@ -139,7 +201,7 @@
         <div class="part-card-status">در راه</div>
       </div>
 
-      <div class="part-card locked">
+      <div class="part-card locked fade-in">
         <div class="part-card-num">12</div>
         <div class="part-card-body">
           <div class="part-card-title">به‌زودی</div>
@@ -148,7 +210,7 @@
         <div class="part-card-status">در راه</div>
       </div>
 
-      <div class="part-card locked">
+      <div class="part-card locked fade-in">
         <div class="part-card-num">13</div>
         <div class="part-card-body">
           <div class="part-card-title">به‌زودی</div>
@@ -157,7 +219,7 @@
         <div class="part-card-status">در راه</div>
       </div>
 
-      <div class="part-card locked">
+      <div class="part-card locked fade-in">
         <div class="part-card-num">14</div>
         <div class="part-card-body">
           <div class="part-card-title">به‌زودی</div>
@@ -166,7 +228,7 @@
         <div class="part-card-status">در راه</div>
       </div>
 
-      <div class="part-card locked">
+      <div class="part-card locked fade-in">
         <div class="part-card-num">15</div>
         <div class="part-card-body">
           <div class="part-card-title">به‌زودی</div>
@@ -175,7 +237,7 @@
         <div class="part-card-status">در راه</div>
       </div>
 
-      <div class="part-card locked">
+      <div class="part-card locked fade-in">
         <div class="part-card-num">16</div>
         <div class="part-card-body">
           <div class="part-card-title">به‌زودی</div>
@@ -184,7 +246,7 @@
         <div class="part-card-status">در راه</div>
       </div>
 
-      <div class="part-card locked">
+      <div class="part-card locked fade-in">
         <div class="part-card-num">17</div>
         <div class="part-card-body">
           <div class="part-card-title">به‌زودی</div>
@@ -193,7 +255,7 @@
         <div class="part-card-status">در راه</div>
       </div>
 
-      <div class="part-card locked">
+      <div class="part-card locked fade-in">
         <div class="part-card-num">18</div>
         <div class="part-card-body">
           <div class="part-card-title">به‌زودی</div>
@@ -202,7 +264,7 @@
         <div class="part-card-status">در راه</div>
       </div>
 
-      <div class="part-card locked">
+      <div class="part-card locked fade-in">
         <div class="part-card-num">19</div>
         <div class="part-card-body">
           <div class="part-card-title">به‌زودی</div>
@@ -211,7 +273,7 @@
         <div class="part-card-status">در راه</div>
       </div>
 
-      <div class="part-card locked">
+      <div class="part-card locked fade-in">
         <div class="part-card-num">20</div>
         <div class="part-card-body">
           <div class="part-card-title">به‌زودی</div>
@@ -220,7 +282,7 @@
         <div class="part-card-status">در راه</div>
       </div>
 
-      <div class="part-card locked">
+      <div class="part-card locked fade-in">
         <div class="part-card-num">21</div>
         <div class="part-card-body">
           <div class="part-card-title">به‌زودی</div>
@@ -229,7 +291,7 @@
         <div class="part-card-status">در راه</div>
       </div>
 
-      <div class="part-card locked">
+      <div class="part-card locked fade-in">
         <div class="part-card-num">22</div>
         <div class="part-card-body">
           <div class="part-card-title">به‌زودی</div>
@@ -238,7 +300,7 @@
         <div class="part-card-status">در راه</div>
       </div>
 
-      <div class="part-card locked">
+      <div class="part-card locked fade-in">
         <div class="part-card-num">23</div>
         <div class="part-card-body">
           <div class="part-card-title">به‌زودی</div>
@@ -247,7 +309,7 @@
         <div class="part-card-status">در راه</div>
       </div>
 
-      <div class="part-card locked">
+      <div class="part-card locked fade-in">
         <div class="part-card-num">24</div>
         <div class="part-card-body">
           <div class="part-card-title">به‌زودی</div>
@@ -256,7 +318,7 @@
         <div class="part-card-status">در راه</div>
       </div>
 
-      <div class="part-card locked">
+      <div class="part-card locked fade-in">
         <div class="part-card-num">25</div>
         <div class="part-card-body">
           <div class="part-card-title">به‌زودی</div>
@@ -265,7 +327,7 @@
         <div class="part-card-status">در راه</div>
       </div>
 
-      <div class="part-card locked">
+      <div class="part-card locked fade-in">
         <div class="part-card-num">26</div>
         <div class="part-card-body">
           <div class="part-card-title">به‌زودی</div>
@@ -274,7 +336,7 @@
         <div class="part-card-status">در راه</div>
       </div>
 
-      <div class="part-card locked">
+      <div class="part-card locked fade-in">
         <div class="part-card-num">27</div>
         <div class="part-card-body">
           <div class="part-card-title">به‌زودی</div>
@@ -283,7 +345,7 @@
         <div class="part-card-status">در راه</div>
       </div>
 
-      <div class="part-card locked">
+      <div class="part-card locked fade-in">
         <div class="part-card-num">28</div>
         <div class="part-card-body">
           <div class="part-card-title">به‌زودی</div>
@@ -292,7 +354,7 @@
         <div class="part-card-status">در راه</div>
       </div>
 
-      <div class="part-card locked">
+      <div class="part-card locked fade-in">
         <div class="part-card-num">29</div>
         <div class="part-card-body">
           <div class="part-card-title">به‌زودی</div>
@@ -301,7 +363,7 @@
         <div class="part-card-status">در راه</div>
       </div>
 
-      <div class="part-card locked">
+      <div class="part-card locked fade-in">
         <div class="part-card-num">30</div>
         <div class="part-card-body">
           <div class="part-card-title">به‌زودی</div>
@@ -310,7 +372,7 @@
         <div class="part-card-status">در راه</div>
       </div>
 
-      <div class="part-card locked">
+      <div class="part-card locked fade-in">
         <div class="part-card-num">31</div>
         <div class="part-card-body">
           <div class="part-card-title">به‌زودی</div>
@@ -319,7 +381,7 @@
         <div class="part-card-status">در راه</div>
       </div>
 
-      <div class="part-card locked">
+      <div class="part-card locked fade-in">
         <div class="part-card-num">32</div>
         <div class="part-card-body">
           <div class="part-card-title">به‌زودی</div>
@@ -328,7 +390,7 @@
         <div class="part-card-status">در راه</div>
       </div>
 
-      <div class="part-card locked">
+      <div class="part-card locked fade-in">
         <div class="part-card-num">33</div>
         <div class="part-card-body">
           <div class="part-card-title">به‌زودی</div>
@@ -337,7 +399,7 @@
         <div class="part-card-status">در راه</div>
       </div>
 
-      <div class="part-card locked">
+      <div class="part-card locked fade-in">
         <div class="part-card-num">34</div>
         <div class="part-card-body">
           <div class="part-card-title">به‌زودی</div>
@@ -346,7 +408,7 @@
         <div class="part-card-status">در راه</div>
       </div>
 
-      <div class="part-card locked">
+      <div class="part-card locked fade-in">
         <div class="part-card-num">35</div>
         <div class="part-card-body">
           <div class="part-card-title">به‌زودی</div>
@@ -355,7 +417,7 @@
         <div class="part-card-status">در راه</div>
       </div>
 
-      <div class="part-card locked">
+      <div class="part-card locked fade-in">
         <div class="part-card-num">36</div>
         <div class="part-card-body">
           <div class="part-card-title">به‌زودی</div>
@@ -364,7 +426,7 @@
         <div class="part-card-status">در راه</div>
       </div>
 
-      <div class="part-card locked">
+      <div class="part-card locked fade-in">
         <div class="part-card-num">37</div>
         <div class="part-card-body">
           <div class="part-card-title">به‌زودی</div>
@@ -373,7 +435,7 @@
         <div class="part-card-status">در راه</div>
       </div>
 
-      <div class="part-card locked">
+      <div class="part-card locked fade-in">
         <div class="part-card-num">38</div>
         <div class="part-card-body">
           <div class="part-card-title">به‌زودی</div>
@@ -382,7 +444,7 @@
         <div class="part-card-status">در راه</div>
       </div>
 
-      <div class="part-card locked">
+      <div class="part-card locked fade-in">
         <div class="part-card-num">39</div>
         <div class="part-card-body">
           <div class="part-card-title">به‌زودی</div>
@@ -391,7 +453,7 @@
         <div class="part-card-status">در راه</div>
       </div>
 
-      <div class="part-card locked">
+      <div class="part-card locked fade-in">
         <div class="part-card-num">40</div>
         <div class="part-card-body">
           <div class="part-card-title">به‌زودی</div>
@@ -401,15 +463,44 @@
       </div>
 
     </div>
+
+    <div class="search-empty">
+      هیچ قسمتی با این عنوان پیدا نشد.
+    </div>
   </section>
 </div>
 
 <footer class="doc-footer">
+  <div class="footer-nav">
+    <a href="index.html">فهرست</a>
+    <a href="about.html">درباره من</a>
+    <a href="all-parts.html">همه قسمت‌ها</a>
+    <a href="https://github.com/Mehran00programmer/ASP.NET-Core-Learning" target="_blank" rel="noopener noreferrer">گیت‌هاب</a>
+  </div>
   <div class="footer-name">مهران غلامی مقدم</div>
   <div>
     <a class="footer-link" href="https://github.com/Mehran00programmer" target="_blank" rel="noopener noreferrer">github.com/Mehran00programmer</a>
   </div>
 </footer>
+
+<button class="back-to-top" type="button" aria-label="بازگشت به بالا">
+  <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M8 13V3"/>
+    <polyline points="3 8 8 3 13 8"/>
+  </svg>
+</button>
+
+<button class="theme-toggle" type="button" aria-label="تغییر تم">
+  <svg class="icon-moon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M14 9.5A6 6 0 0 1 6.5 2 6 6 0 1 0 14 9.5z"/>
+  </svg>
+  <svg class="icon-sun" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="8" cy="8" r="3"/>
+    <path d="M8 1v2M8 13v2M1 8h2M13 8h2M3 3l1.5 1.5M11.5 11.5L13 13M13 3l-1.5 1.5M4.5 11.5L3 13"/>
+  </svg>
+</button>
+
+<script src="assets/app.js"></script>
 
 </body>
 </html>
