@@ -1,7 +1,6 @@
 (function () {
   'use strict';
 
-  /* ============ THEME TOGGLE ============ */
   var THEME_KEY = 'aspnet-notes-theme';
   var root = document.documentElement;
 
@@ -30,7 +29,6 @@
     applyTheme(next);
   });
 
-  /* ============ READING PROGRESS ============ */
   var progressBar = document.querySelector('.reading-progress-bar');
   if (progressBar) {
     var updateProgress = function () {
@@ -44,14 +42,16 @@
     updateProgress();
   }
 
-  /* ============ BACK TO TOP ============ */
   var backBtn = document.querySelector('.back-to-top');
+  var themeToggleBtn = document.querySelector('.theme-toggle');
   if (backBtn) {
     var toggleBackBtn = function () {
       if (window.scrollY > 400) {
         backBtn.classList.add('visible');
+        if (themeToggleBtn) themeToggleBtn.classList.remove('alone');
       } else {
         backBtn.classList.remove('visible');
+        if (themeToggleBtn) themeToggleBtn.classList.add('alone');
       }
     };
     window.addEventListener('scroll', toggleBackBtn, { passive: true });
@@ -61,7 +61,6 @@
     toggleBackBtn();
   }
 
-  /* ============ TOC SCROLL SPY ============ */
   var tocLinks = document.querySelectorAll('.toc-link');
   if (tocLinks.length) {
     var sections = [];
@@ -111,7 +110,6 @@
     onScroll();
   }
 
-  /* ============ FADE IN ON SCROLL ============ */
   var fadeEls = document.querySelectorAll('.fade-in');
   if (fadeEls.length && 'IntersectionObserver' in window) {
     var io = new IntersectionObserver(function (entries) {
@@ -127,7 +125,6 @@
     fadeEls.forEach(function (el) { el.classList.add('visible'); });
   }
 
-  /* ============ SEARCH FILTER ============ */
   var searchInput = document.querySelector('.search-input');
   if (searchInput) {
     var cards = document.querySelectorAll('.part-card');
@@ -150,7 +147,6 @@
     searchInput.addEventListener('input', filterCards);
   }
 
-  /* ============ CODE COPY BUTTONS ============ */
   document.querySelectorAll('.code-block').forEach(function (block) {
     var header = block.querySelector('.code-block-header');
     var pre = block.querySelector('pre');
@@ -190,7 +186,6 @@
     header.appendChild(btn);
   });
 
-  /* ============ KEYBOARD NAVIGATION (parts) ============ */
   var prevBtn = document.querySelector('.part-nav .part-nav-btn:not(.home):not(.disabled):first-child');
   var nextBtn = document.querySelector('.part-nav .part-nav-btn:not(.home):not(.disabled):last-child');
   var prevHref = prevBtn && prevBtn.tagName === 'A' ? prevBtn.getAttribute('href') : null;
