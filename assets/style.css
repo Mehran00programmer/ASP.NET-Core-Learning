@@ -170,7 +170,10 @@ pre, .code-block {
   justify-content: center;
   box-shadow: var(--shadow);
   z-index: 900;
-  transition: background .15s ease, border-color .15s ease, transform .15s ease;
+  transition: background .15s ease, border-color .15s ease, transform .15s ease, left .3s ease;
+}
+.theme-toggle.alone {
+  left: 24px;
 }
 .theme-toggle:hover {
   border-color: var(--accent-dim);
@@ -612,70 +615,6 @@ li strong { color: var(--heading); }
 .callout.warn  .callout-label { color: var(--yellow); }
 .callout.key   { border-right-color: var(--green); }
 .callout.key   .callout-label { color: var(--green); }
-
-.prereq-box,
-.objectives-box {
-  background: var(--bg-alt);
-  border: 1px solid var(--border);
-  border-radius: 10px;
-  padding: 16px 18px;
-  margin: 18px 0;
-}
-.prereq-box {
-  border-right: 3px solid var(--yellow);
-}
-.objectives-box {
-  border-right: 3px solid var(--green);
-}
-.prereq-title,
-.objectives-title {
-  font-size: 13.5px;
-  font-weight: 700;
-  color: var(--heading);
-  margin-bottom: 10px;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-.prereq-title { color: var(--yellow); }
-.objectives-title { color: var(--green); }
-.prereq-list,
-.objectives-list {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-}
-.prereq-list li,
-.objectives-list li {
-  display: flex;
-  align-items: flex-start;
-  gap: 10px;
-  font-size: 13.5px;
-  color: var(--text-dim);
-  line-height: 1.85;
-  margin-bottom: 8px;
-  padding: 0;
-}
-.prereq-list li:last-child,
-.objectives-list li:last-child { margin-bottom: 0; }
-.prereq-list li::before {
-  content: '→';
-  color: var(--yellow);
-  font-family: var(--mono);
-  flex-shrink: 0;
-  font-size: 14px;
-  line-height: 1.85;
-}
-.objectives-list li::before {
-  content: '✓';
-  color: var(--green);
-  font-family: var(--mono);
-  flex-shrink: 0;
-  font-weight: 700;
-  line-height: 1.85;
-}
-.prereq-list code,
-.objectives-list code { font-size: 12px; }
 
 .table-wrap {
   margin: 16px 0;
@@ -1345,6 +1284,7 @@ td.cell-ltr {
 
   .back-to-top { bottom: 18px; left: 18px; width: 42px; height: 42px; }
   .theme-toggle { bottom: 18px; left: 68px; width: 42px; height: 42px; }
+  .theme-toggle.alone { left: 18px; }
 
   .ft-tree { padding: 12px 10px; }
   .ft-tree ul ul { padding-left: 16px; }
