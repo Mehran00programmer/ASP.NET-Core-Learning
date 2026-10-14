@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://mehran00programmer.github.io/ASP.NET-Core-Learning/sitemap.xml
