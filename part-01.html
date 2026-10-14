@@ -4,13 +4,18 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="theme-color" content="#0d1117">
-<meta name="description" content="قسمت اول جزوه ASP.NET Core — برنامه‌نویسی سمت سرور و الگوی MVC">
+<meta name="description" content="قسمت اول جزوه ASP.NET Core — برنامه‌نویسی سمت سرور، الگوی معماری MVC، چرخه پردازش درخواست و ساختار پروژه.">
 <meta name="author" content="مهران غلامی مقدم">
 <title>قسمت ۰۱ — برنامه‌نویسی سمت سرور و الگوی MVC</title>
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%231f6feb'/><text x='50' y='70' font-size='62' text-anchor='middle' fill='white' font-family='monospace' font-weight='700'>م</text></svg>">
+<link rel="canonical" href="https://mehran00programmer.github.io/ASP.NET-Core-Learning/part-01.html">
 <link rel="stylesheet" href="assets/style.css">
 </head>
 <body>
+
+<div class="reading-progress">
+  <div class="reading-progress-bar"></div>
+</div>
 
 <header class="doc-header">
   <div class="page">
@@ -36,8 +41,35 @@
 
 <div class="page">
 
-  <aside class="toc-wrap">
-    <div class="toc-header">فهرست مطالب</div>
+  <div class="prereq-box fade-in">
+    <div class="prereq-title">
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px;"><path d="M8 1v14M1 8h14"/></svg>
+      پیش‌نیازهای این قسمت
+    </div>
+    <ul class="prereq-list">
+      <li>آشنایی مقدماتی با <code>HTML</code> و <code>CSS</code></li>
+      <li>آشنایی مقدماتی با <code>JavaScript</code></li>
+      <li>آشنایی ابتدایی با زبان <code>C#</code></li>
+      <li>نصب <code>Visual Studio</code> روی سیستم</li>
+    </ul>
+  </div>
+
+  <div class="objectives-box fade-in">
+    <div class="objectives-title">
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px;"><circle cx="8" cy="8" r="6"/><circle cx="8" cy="8" r="2"/></svg>
+      اهداف یادگیری این قسمت
+    </div>
+    <ul class="objectives-list">
+      <li>درک ضرورت استفاده از زبان سمت سرور در برنامه‌نویسی وب</li>
+      <li>آشنایی با الگوی معماری MVC و سه جزء اصلی آن</li>
+      <li>درک چرخه کامل پردازش درخواست در ASP.NET MVC</li>
+      <li>آشنایی با ساختار پوشه‌ها و فایل‌های یک پروژه ASP.NET MVC</li>
+      <li>ساخت اولین پروژه عملی ASP.NET MVC در Visual Studio</li>
+    </ul>
+  </div>
+
+  <aside class="toc-wrap fade-in">
+    <div class="toc-header">فهرست مطالب این قسمت</div>
     <ul class="toc-list">
       <li><a class="toc-link" href="#s1"><span class="num">01</span><span>نیاز به زبان سمت سرور</span></a></li>
       <li><a class="toc-link" href="#s2"><span class="num">02</span><span>الگوی طراحی MVC</span></a></li>
@@ -51,7 +83,7 @@
 
   <main>
 
-    <section class="section" id="s1">
+    <section class="section fade-in" id="s1">
       <div class="section-head">
         <span class="section-num">01</span>
         <h2 class="section-title">نیاز به زبان سمت سرور</h2>
@@ -112,33 +144,13 @@
       <div class="table-wrap">
         <table>
           <thead>
-            <tr>
-              <th>مورد</th>
-              <th>انتخاب</th>
-              <th>توضیح</th>
-            </tr>
+            <tr><th>مورد</th><th>انتخاب</th><th>توضیح</th></tr>
           </thead>
           <tbody>
-            <tr>
-              <td>زبان برنامه‌نویسی</td>
-              <td class="cell-ltr">C#</td>
-              <td>زبانی مدرن، شی‌گرا و قدرتمند از مایکروسافت</td>
-            </tr>
-            <tr>
-              <td>تکنولوژی</td>
-              <td class="cell-ltr">ASP.NET</td>
-              <td>فریم‌ورک مایکروسافت برای ساخت اپلیکیشن‌های وب</td>
-            </tr>
-            <tr>
-              <td>محیط توسعه</td>
-              <td class="cell-ltr">Visual Studio</td>
-              <td>IDE رسمی مایکروسافت برای توسعه .NET</td>
-            </tr>
-            <tr>
-              <td>الگوی معماری</td>
-              <td class="cell-ltr">MVC</td>
-              <td>الگوی جداسازی منطق، نمایش و کنترل</td>
-            </tr>
+            <tr><td>زبان برنامه‌نویسی</td><td class="cell-ltr">C#</td><td>زبانی مدرن، شی‌گرا و قدرتمند از مایکروسافت</td></tr>
+            <tr><td>تکنولوژی</td><td class="cell-ltr">ASP.NET</td><td>فریم‌ورک مایکروسافت برای ساخت اپلیکیشن‌های وب</td></tr>
+            <tr><td>محیط توسعه</td><td class="cell-ltr">Visual Studio</td><td>IDE رسمی مایکروسافت برای توسعه .NET</td></tr>
+            <tr><td>الگوی معماری</td><td class="cell-ltr">MVC</td><td>الگوی جداسازی منطق، نمایش و کنترل</td></tr>
           </tbody>
         </table>
       </div>
@@ -154,7 +166,7 @@
       </div>
     </section>
 
-    <section class="section" id="s2">
+    <section class="section fade-in" id="s2">
       <div class="section-head">
         <span class="section-num">02</span>
         <h2 class="section-title">الگوی طراحی MVC</h2>
@@ -275,7 +287,7 @@
       </div>
     </section>
 
-    <section class="section" id="s3">
+    <section class="section fade-in" id="s3">
       <div class="section-head">
         <span class="section-num">03</span>
         <h2 class="section-title">چرخه پردازش درخواست</h2>
@@ -398,7 +410,7 @@
       </div>
     </section>
 
-    <section class="section" id="s4">
+    <section class="section fade-in" id="s4">
       <div class="section-head">
         <span class="section-num">04</span>
         <h2 class="section-title">ساختار پروژه ASP.NET MVC</h2>
@@ -433,7 +445,6 @@
               </li>
             </ul>
           </li>
-
           <li>
             <div class="ft-node ft-dir">
               <svg class="ft-ico" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
@@ -449,7 +460,6 @@
               </li>
             </ul>
           </li>
-
           <li>
             <div class="ft-node ft-dir">
               <svg class="ft-ico" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
@@ -520,7 +530,6 @@
               </li>
             </ul>
           </li>
-
           <li>
             <div class="ft-node ft-dir">
               <svg class="ft-ico" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
@@ -530,7 +539,6 @@
               <span class="ft-cmt">فایل‌های داده</span>
             </div>
           </li>
-
           <li>
             <div class="ft-node ft-dir">
               <svg class="ft-ico" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
@@ -540,7 +548,6 @@
               <span class="ft-cmt">CSS و تصاویر</span>
             </div>
           </li>
-
           <li>
             <div class="ft-node ft-dir">
               <svg class="ft-ico" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
@@ -550,7 +557,6 @@
               <span class="ft-cmt">فایل‌های JavaScript</span>
             </div>
           </li>
-
           <li>
             <div class="ft-node ft-file">
               <svg class="ft-ico" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
@@ -561,7 +567,6 @@
               <span class="ft-cmt">تنظیمات برنامه</span>
             </div>
           </li>
-
           <li>
             <div class="ft-node ft-file">
               <svg class="ft-ico" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
@@ -583,30 +588,12 @@
             <tr><th>پوشه / فایل</th><th>کاربرد</th></tr>
           </thead>
           <tbody>
-            <tr>
-              <td><strong>Controllers/</strong></td>
-              <td>محل قرارگیری کلاس‌های Controller. نام کلاس‌ها باید با پسوند <code>Controller</code> تمام شود.</td>
-            </tr>
-            <tr>
-              <td><strong>Models/</strong></td>
-              <td>کلاس‌های مدل که ساختار داده و منطق تجاری را تعریف می‌کنند.</td>
-            </tr>
-            <tr>
-              <td><strong>Views/</strong></td>
-              <td>فایل‌های نمایشی (<code>Razor View</code>) که خروجی HTML تولید می‌کنند.</td>
-            </tr>
-            <tr>
-              <td><strong>App_Data/</strong></td>
-              <td>محل ذخیره‌سازی فیزیکی داده‌ها (فایل‌های دیتابیس، XML و...).</td>
-            </tr>
-            <tr>
-              <td><strong>Content/</strong></td>
-              <td>فایل‌های ایستا مانند CSS، تصاویر و فونت‌ها.</td>
-            </tr>
-            <tr>
-              <td><strong>Scripts/</strong></td>
-              <td>فایل‌های JavaScript پروژه.</td>
-            </tr>
+            <tr><td><strong>Controllers/</strong></td><td>محل قرارگیری کلاس‌های Controller. نام کلاس‌ها باید با پسوند <code>Controller</code> تمام شود.</td></tr>
+            <tr><td><strong>Models/</strong></td><td>کلاس‌های مدل که ساختار داده و منطق تجاری را تعریف می‌کنند.</td></tr>
+            <tr><td><strong>Views/</strong></td><td>فایل‌های نمایشی (<code>Razor View</code>) که خروجی HTML تولید می‌کنند.</td></tr>
+            <tr><td><strong>App_Data/</strong></td><td>محل ذخیره‌سازی فیزیکی داده‌ها (فایل‌های دیتابیس، XML و...).</td></tr>
+            <tr><td><strong>Content/</strong></td><td>فایل‌های ایستا مانند CSS، تصاویر و فونت‌ها.</td></tr>
+            <tr><td><strong>Scripts/</strong></td><td>فایل‌های JavaScript پروژه.</td></tr>
           </tbody>
         </table>
       </div>
@@ -622,7 +609,7 @@
       </div>
     </section>
 
-    <section class="section" id="s5">
+    <section class="section fade-in" id="s5">
       <div class="section-head">
         <span class="section-num">05</span>
         <h2 class="section-title">اولین پروژه عملی</h2>
@@ -682,7 +669,7 @@
       </div>
     </section>
 
-    <section class="section" id="s6">
+    <section class="section fade-in" id="s6">
       <div class="section-head">
         <span class="section-num">06</span>
         <h2 class="section-title">مزایای استفاده از MVC</h2>
@@ -696,30 +683,19 @@
       <div class="card-grid">
         <div class="card">
           <div class="card-title">قابلیت نگهداری بالا</div>
-          <div class="card-desc">
-            هر بخش (Model، View، Controller) یک وظیفه مشخص دارد و تغییر در یکی، بخش‌های دیگر
-            را تحت تأثیر قرار نمی‌دهد.
-          </div>
+          <div class="card-desc">هر بخش (Model، View، Controller) یک وظیفه مشخص دارد و تغییر در یکی، بخش‌های دیگر را تحت تأثیر قرار نمی‌دهد.</div>
         </div>
         <div class="card">
           <div class="card-title">تست‌پذیری</div>
-          <div class="card-desc">
-            Model و Controller را می‌توان به‌صورت مستقل از View تست کرد. این کار کیفیت کد را
-            بسیار افزایش می‌دهد.
-          </div>
+          <div class="card-desc">Model و Controller را می‌توان به‌صورت مستقل از View تست کرد. این کار کیفیت کد را بسیار افزایش می‌دهد.</div>
         </div>
         <div class="card">
           <div class="card-title">کار تیمی بهتر</div>
-          <div class="card-desc">
-            تیم طراحی UI می‌تواند روی View کار کند و تیم بک‌اند روی Model و Controller،
-            بدون تداخل.
-          </div>
+          <div class="card-desc">تیم طراحی UI می‌تواند روی View کار کند و تیم بک‌اند روی Model و Controller، بدون تداخل.</div>
         </div>
         <div class="card">
           <div class="card-title">مقیاس‌پذیری</div>
-          <div class="card-desc">
-            پروژه‌های بزرگ را می‌توان به‌راحتی بین اعضای تیم تقسیم کرد و توسعه داد.
-          </div>
+          <div class="card-desc">پروژه‌های بزرگ را می‌توان به‌راحتی بین اعضای تیم تقسیم کرد و توسعه داد.</div>
         </div>
       </div>
 
@@ -734,7 +710,7 @@
       </div>
     </section>
 
-    <section class="section" id="s7">
+    <section class="section fade-in" id="s7">
       <div class="section-head">
         <span class="section-num">07</span>
         <h2 class="section-title">خلاصه مطالب</h2>
@@ -751,36 +727,33 @@
             <tr><th>مفهوم</th><th>خلاصه</th></tr>
           </thead>
           <tbody>
-            <tr>
-              <td><strong>سمت سرور</strong></td>
-              <td>زبان‌های سمت سرور امکان ذخیره، ویرایش و بازیابی داده‌ها را می‌دهند. کدهای آن‌ها در مرورگر دیده نمی‌شوند.</td>
-            </tr>
-            <tr>
-              <td><strong>ASP.NET</strong></td>
-              <td>یک تکنولوژی مایکروسافتی است (نه یک زبان) که با C# در Visual Studio کار می‌کند.</td>
-            </tr>
-            <tr>
-              <td><strong>الگوی MVC</strong></td>
-              <td>برنامه را به سه بخش Model (داده‌ها)، View (نمایش) و Controller (کنترل‌کننده) تقسیم می‌کند.</td>
-            </tr>
-            <tr>
-              <td><strong>Controller</strong></td>
-              <td>واسطه بین Model و View است. درخواست‌ها را دریافت و به بخش مناسب هدایت می‌کند.</td>
-            </tr>
-            <tr>
-              <td><strong>Model</strong></td>
-              <td>نماینده داده‌ها و منطق تجاری برنامه است. با C# نوشته می‌شود.</td>
-            </tr>
-            <tr>
-              <td><strong>View</strong></td>
-              <td>خروجی HTML/CSS/JS است که کاربر می‌بیند.</td>
-            </tr>
-            <tr>
-              <td><strong>ساختار پروژه</strong></td>
-              <td>پوشه‌های اصلی: Controllers، Models، Views، App_Data</td>
-            </tr>
+            <tr><td><strong>سمت سرور</strong></td><td>زبان‌های سمت سرور امکان ذخیره، ویرایش و بازیابی داده‌ها را می‌دهند. کدهای آن‌ها در مرورگر دیده نمی‌شوند.</td></tr>
+            <tr><td><strong>ASP.NET</strong></td><td>یک تکنولوژی مایکروسافتی است (نه یک زبان) که با C# در Visual Studio کار می‌کند.</td></tr>
+            <tr><td><strong>الگوی MVC</strong></td><td>برنامه را به سه بخش Model (داده‌ها)، View (نمایش) و Controller (کنترل‌کننده) تقسیم می‌کند.</td></tr>
+            <tr><td><strong>Controller</strong></td><td>واسطه بین Model و View است. درخواست‌ها را دریافت و به بخش مناسب هدایت می‌کند.</td></tr>
+            <tr><td><strong>Model</strong></td><td>نماینده داده‌ها و منطق تجاری برنامه است. با C# نوشته می‌شود.</td></tr>
+            <tr><td><strong>View</strong></td><td>خروجی HTML/CSS/JS است که کاربر می‌بیند.</td></tr>
+            <tr><td><strong>ساختار پروژه</strong></td><td>پوشه‌های اصلی: Controllers، Models، Views، App_Data</td></tr>
           </tbody>
         </table>
+      </div>
+
+      <div class="exercise-box">
+        <div class="exercise-title">
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M2 3.5V12a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V3.5"/>
+            <path d="M2 3.5a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1"/>
+            <path d="M5 2v2M11 2v2M5 7h6M5 10h4"/>
+          </svg>
+          تمرین‌های پایان قسمت
+        </div>
+        <ol class="exercise-list">
+          <li>با زبان خودتان توضیح دهید چرا HTML و CSS به‌تنهایی برای ساخت یک سایت پویا کافی نیستند.</li>
+          <li>سه جزء اصلی MVC را نام ببرید و وظیفه هرکدام را در یک جمله توضیح دهید.</li>
+          <li>چرخه پردازش درخواست را در ۶ گام خلاصه کنید و بگویید در هر گام چه اتفاقی می‌افتد.</li>
+          <li>یک پروژه ASP.NET MVC جدید بسازید و ببینید به‌صورت پیش‌فرض چه پوشه‌ها و فایل‌هایی ساخته می‌شود.</li>
+          <li>توضیح دهید چرا View نمی‌تواند مستقیماً به دیتابیس متصل شود و این کار باید از طریق Controller انجام شود.</li>
+        </ol>
       </div>
     </section>
 
@@ -802,13 +775,36 @@
 </div>
 
 <footer class="doc-footer">
+  <div class="footer-nav">
+    <a href="index.html">فهرست</a>
+    <a href="about.html">درباره من</a>
+    <a href="all-parts.html">همه قسمت‌ها</a>
+    <a href="https://github.com/Mehran00programmer/ASP.NET-Core-Learning" target="_blank" rel="noopener noreferrer">گیت‌هاب</a>
+  </div>
   <div class="footer-name">مهران غلامی مقدم</div>
   <div>
     <a class="footer-link" href="https://github.com/Mehran00programmer" target="_blank" rel="noopener noreferrer">github.com/Mehran00programmer</a>
   </div>
 </footer>
 
+<button class="back-to-top" type="button" aria-label="بازگشت به بالا">
+  <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M8 13V3"/>
+    <polyline points="3 8 8 3 13 8"/>
+  </svg>
+</button>
+
+<button class="theme-toggle" type="button" aria-label="تغییر تم">
+  <svg class="icon-moon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M14 9.5A6 6 0 0 1 6.5 2 6 6 0 1 0 14 9.5z"/>
+  </svg>
+  <svg class="icon-sun" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="8" cy="8" r="3"/>
+    <path d="M8 1v2M8 13v2M1 8h2M13 8h2M3 3l1.5 1.5M11.5 11.5L13 13M13 3l-1.5 1.5M4.5 11.5L3 13"/>
+  </svg>
+</button>
+
 <script src="assets/app.js"></script>
 
 </body>
-</html>
+                                                                                                                              </html>
