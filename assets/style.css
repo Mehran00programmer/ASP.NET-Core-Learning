@@ -81,7 +81,14 @@ code, .en, kbd, samp {
   line-height: 1.6;
 }
 
-bdi, .ltr-plain {
+bdi {
+  direction: ltr;
+  unicode-bidi: isolate;
+  display: inline-block;
+  color: inherit;
+}
+
+.ltr-plain {
   font-family: var(--mono);
   direction: ltr;
   unicode-bidi: isolate;
