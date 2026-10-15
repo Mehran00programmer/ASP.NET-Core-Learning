@@ -20,11 +20,11 @@
 <header class="doc-header">
   <div class="page">
     <div class="hero-badge" style="display:inline-block;font-family:var(--mono);font-size:11px;color:var(--accent);letter-spacing:1.5px;background:rgba(88,166,255,0.08);border:1px solid rgba(88,166,255,0.2);padding:4px 12px;border-radius:20px;margin-bottom:14px;">قسمت ۰۱</div>
-    <h1 class="doc-title">برنامه‌نویسی وب‌سایت‌های پویا با ASP.NET Core MVC</h1>
+    <h1 class="doc-title">برنامه‌نویسی وب‌سایت‌های پویا با <bdi>ASP.NET Core MVC</bdi></h1>
     <p class="doc-subtitle">
       در این قسمت با مفاهیم پایه‌ای برنامه‌نویسی سمت سرور آشنا می‌شویم، ضرورت استفاده از آن را بررسی
       می‌کنیم و سپس الگوی معماری MVC را به‌عنوان ساختار اصلی یک برنامه وب پویا معرفی می‌کنیم. در
-      پایان نیز مراحل ساخت اولین پروژه عملی ASP.NET Core MVC مرور می‌شود.
+      پایان نیز مراحل ساخت اولین پروژه عملی <bdi>ASP.NET Core MVC</bdi> مرور می‌شود.
     </p>
 
     <div class="author-card">
@@ -82,7 +82,7 @@
         <p>
           تا این مرحله، ما فقط می‌توانستیم داده‌ها را <em>دریافت</em> کنیم. اما اگر کاربر بخواهد داده‌ای
           را <em>به سایت بفرستد</em> و آن را در سرور ذخیره کند — مانند ثبت‌نام، ثبت سفارش، ارسال نظر،
-          ویرایش پروفایل یا پرداخت — دیگر HTML و CSS به‌تنهایی کارساز نیستند.
+          ویرایش پروفایل یا پرداخت — دیگر <bdi>HTML</bdi> و <bdi>CSS</bdi> به‌تنهایی کارساز نیستند.
         </p>
       </div>
 
@@ -103,7 +103,7 @@
         <span class="callout-label">نکته امنیتی</span>
         <p>
           کدهای سمت سرور <strong>هرگز</strong> در مرورگر کاربر دیده نمی‌شوند. آن‌ها فقط در سرور اجرا
-          می‌شوند و صرفاً خروجی نهایی — که معمولاً HTML است — به مرورگر ارسال می‌شود. این ویژگی
+          می‌شوند و صرفاً خروجی نهایی — که معمولاً <bdi>HTML</bdi> است — به مرورگر ارسال می‌شود. این ویژگی
           باعث می‌شود منطق برنامه، الگوریتم‌ها و اطلاعات حساس، از دید کاربر پنهان بمانند.
         </p>
       </div>
@@ -237,7 +237,7 @@
         <strong>View</strong> همان چیزی است که <strong>کاربر نهایی می‌بیند</strong>. تمام صفحاتی
         که با <code>HTML</code>، <code>CSS</code> و <code>JavaScript</code> ساخته می‌شوند در بخش
         View قرار می‌گیرند. View مسئول نمایش داده‌ها به کاربر است و نباید منطق تجاری پیچیده‌ای
-        در آن قرار بگیرد. در ASP.NET Core MVC، Viewها با موتور نمایشی
+        در آن قرار بگیرد. در <bdi>ASP.NET Core MVC</bdi>، Viewها با موتور نمایشی
         <code>Razor</code> (پسوند <code>.cshtml</code>) نوشته می‌شوند.
       </p>
 
@@ -427,7 +427,7 @@
                         <path d="M9.5 1.5V5H13"/>
                       </svg>
                       <span class="ft-name">Index.cshtml</span>
-                      <span class="ft-cmt">صفحه اصلی</span>
+                      <span class="ft-cmt">صفحه اصلی سایت</span>
                     </div>
                   </li>
                   <li>
@@ -437,7 +437,7 @@
                         <path d="M9.5 1.5V5H13"/>
                       </svg>
                       <span class="ft-name">About.cshtml</span>
-                      <span class="ft-cmt">درباره ما</span>
+                      <span class="ft-cmt">صفحه درباره</span>
                     </div>
                   </li>
                 </ul>
@@ -638,8 +638,8 @@
 
       <h3>پیش‌نیازها</h3>
       <ul>
-        <li><strong>Visual Studio 2022</strong> نسخه ۱۷ یا بالاتر — یا <code>Visual Studio Code</code> با افزونه <code>C# Dev Kit</code>.</li>
-        <li><strong>.NET SDK</strong> نسخه ۶ یا بالاتر (ترجیحاً <code>.NET 8</code>).</li>
+        <li><strong><bdi>Visual Studio 2022</bdi></strong> نسخه ۱۷ یا بالاتر — یا <code>Visual Studio Code</code> با افزونه <code>C# Dev Kit</code>.</li>
+        <li><strong><bdi>.NET SDK</bdi></strong> نسخه ۶ یا بالاتر (ترجیحاً <code>.NET 8</code>).</li>
         <li>آشنایی مقدماتی با زبان <code>C#</code> و مفاهیم شی‌گرایی.</li>
       </ul>
 
@@ -764,7 +764,7 @@
           <li>با زبان خودتان توضیح دهید چرا HTML و CSS به‌تنهایی برای ساخت یک سایت پویا کافی نیستند.</li>
           <li>سه جزء اصلی MVC را نام ببرید و وظیفه هرکدام را در یک جمله توضیح دهید.</li>
           <li>چرخه پردازش درخواست را در ۶ گام خلاصه کنید و بگویید در هر گام چه اتفاقی می‌افتد.</li>
-          <li>یک پروژه ASP.NET Core MVC جدید بسازید و ببینید به‌صورت پیش‌فرض چه پوشه‌ها و فایل‌هایی ساخته می‌شود.</li>
+          <li>یک پروژه <bdi>ASP.NET Core MVC</bdi> جدید بسازید و ببینید به‌صورت پیش‌فرض چه پوشه‌ها و فایل‌هایی ساخته می‌شود.</li>
           <li>توضیح دهید چرا View نمی‌تواند مستقیماً به دیتابیس متصل شود و این کار باید از طریق Controller انجام شود.</li>
         </ol>
       </div>
@@ -814,4 +814,4 @@
 <script src="assets/app.js"></script>
 
 </body>
-</html>
+        </html>
