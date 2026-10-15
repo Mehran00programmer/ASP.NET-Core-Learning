@@ -20,11 +20,11 @@
 <header class="doc-header">
   <div class="page">
     <div class="hero-badge" style="display:inline-block;font-family:var(--mono);font-size:11px;color:var(--accent);letter-spacing:1.5px;background:rgba(88,166,255,0.08);border:1px solid rgba(88,166,255,0.2);padding:4px 12px;border-radius:20px;margin-bottom:14px;">قسمت ۰۱</div>
-    <h1 class="doc-title">جزوه برنامه‌نویسی وب‌سایت‌های پویا با ساختار MVC</h1>
+    <h1 class="doc-title">برنامه‌نویسی وب‌سایت‌های پویا با ASP.NET Core MVC</h1>
     <p class="doc-subtitle">
       در این قسمت با مفاهیم پایه‌ای برنامه‌نویسی سمت سرور آشنا می‌شویم، ضرورت استفاده از آن را بررسی
       می‌کنیم و سپس الگوی معماری MVC را به‌عنوان ساختار اصلی یک برنامه وب پویا معرفی می‌کنیم. در
-      پایان نیز مراحل ساخت اولین پروژه عملی ASP.NET MVC مرور می‌شود.
+      پایان نیز مراحل ساخت اولین پروژه عملی ASP.NET Core MVC مرور می‌شود.
     </p>
 
     <div class="author-card">
@@ -47,7 +47,7 @@
       <li><a class="toc-link" href="#s1"><span class="num">01</span><span>نیاز به زبان سمت سرور</span></a></li>
       <li><a class="toc-link" href="#s2"><span class="num">02</span><span>الگوی طراحی MVC</span></a></li>
       <li><a class="toc-link" href="#s3"><span class="num">03</span><span>چرخه پردازش درخواست</span></a></li>
-      <li><a class="toc-link" href="#s4"><span class="num">04</span><span>ساختار پروژه ASP.NET MVC</span></a></li>
+      <li><a class="toc-link" href="#s4"><span class="num">04</span><span>ساختار پروژه ASP.NET Core MVC</span></a></li>
       <li><a class="toc-link" href="#s5"><span class="num">05</span><span>اولین پروژه عملی</span></a></li>
       <li><a class="toc-link" href="#s6"><span class="num">06</span><span>مزایای استفاده از MVC</span></a></li>
       <li><a class="toc-link" href="#s7"><span class="num">07</span><span>خلاصه مطالب</span></a></li>
@@ -121,7 +121,7 @@
           </thead>
           <tbody>
             <tr><td>زبان برنامه‌نویسی</td><td class="cell-ltr">C#</td><td>زبانی مدرن، شی‌گرا و قدرتمند از مایکروسافت</td></tr>
-            <tr><td>تکنولوژی</td><td class="cell-ltr">ASP.NET</td><td>فریم‌ورک مایکروسافت برای ساخت اپلیکیشن‌های وب</td></tr>
+            <tr><td>تکنولوژی</td><td class="cell-ltr">ASP.NET Core</td><td>فریم‌ورک چندسکویی مایکروسافت برای ساخت اپلیکیشن‌های وب مدرن</td></tr>
             <tr><td>محیط توسعه</td><td class="cell-ltr">Visual Studio</td><td>IDE رسمی مایکروسافت برای توسعه .NET</td></tr>
             <tr><td>الگوی معماری</td><td class="cell-ltr">MVC</td><td>الگوی جداسازی منطق، نمایش و کنترل</td></tr>
           </tbody>
@@ -131,10 +131,10 @@
       <div class="callout warn">
         <span class="callout-label">توجه</span>
         <p>
-          <code>ASP.NET</code> یک <strong>زبان برنامه‌نویسی نیست</strong>؛ بلکه یک
+          <code>ASP.NET Core</code> یک <strong>زبان برنامه‌نویسی نیست</strong>؛ بلکه یک
           <strong>تکنولوژی یا فریم‌ورک</strong> است که توسط مایکروسافت ارائه شده. ما با
-          زبان <code>C#</code> کد می‌نویسیم و از <code>ASP.NET</code> برای تبدیل آن کد به یک وب‌سایت
-          قابل اجرا استفاده می‌کنیم.
+          زبان <code>C#</code> کد می‌نویسیم و از <code>ASP.NET Core</code> برای تبدیل آن کد به یک
+          وب‌سایت قابل اجرا استفاده می‌کنیم.
         </p>
       </div>
     </section>
@@ -237,7 +237,7 @@
         <strong>View</strong> همان چیزی است که <strong>کاربر نهایی می‌بیند</strong>. تمام صفحاتی
         که با <code>HTML</code>، <code>CSS</code> و <code>JavaScript</code> ساخته می‌شوند در بخش
         View قرار می‌گیرند. View مسئول نمایش داده‌ها به کاربر است و نباید منطق تجاری پیچیده‌ای
-        در آن قرار بگیرد. در ASP.NET MVC، View‌ها معمولاً با زبان نشانه‌گذاری
+        در آن قرار بگیرد. در ASP.NET Core MVC، Viewها با موتور نمایشی
         <code>Razor</code> (پسوند <code>.cshtml</code>) نوشته می‌شوند.
       </p>
 
@@ -333,35 +333,6 @@
         </div>
       </div>
 
-      <h3>شرح گام‌ها</h3>
-
-      <ol class="flow">
-        <li>
-          <strong>کاربر آدرس را در مرورگر وارد می‌کند</strong>
-          <span>کاربر یک URL را در نوار آدرس مرورگر تایپ می‌کند، روی لینکی کلیک می‌کند یا فرمی را ارسال می‌کند.</span>
-        </li>
-        <li>
-          <strong>مرورگر درخواست HTTP را به سرور ارسال می‌کند</strong>
-          <span>مرورگر بر اساس آدرس، یک درخواست <code>HTTP</code> می‌سازد و آن را به سرور می‌فرستد.</span>
-        </li>
-        <li>
-          <strong>سیستم Routing درخواست را به Controller هدایت می‌کند</strong>
-          <span>در <code>ASP.NET MVC</code>، سیستم مسیریابی الگوی آدرس را بررسی کرده و آن را به Controller و Action مناسب هدایت می‌کند.</span>
-        </li>
-        <li>
-          <strong>Controller در صورت نیاز با Model ارتباط می‌گیرد</strong>
-          <span>اگر اکشن به داده نیاز داشته باشد، Controller از Model درخواست می‌کند. Model داده‌ها را از دیتابیس خوانده و به Controller برمی‌گرداند.</span>
-        </li>
-        <li>
-          <strong>Controller داده‌ها را به View می‌فرستد تا رندر شود</strong>
-          <span>Controller داده‌ها را به یک View می‌فرستد. View روی سرور اجرا شده و به HTML نهایی تبدیل می‌شود.</span>
-        </li>
-        <li>
-          <strong>HTML نهایی به مرورگر برگشته و به کاربر نمایش داده می‌شود</strong>
-          <span>مرورگر HTML دریافتی را تفسیر و به صفحه‌ای قابل مشاهده برای کاربر تبدیل می‌کند. برای درخواست بعدی، همین چرخه از ابتدا تکرار می‌شود.</span>
-        </li>
-      </ol>
-
       <div class="callout note">
         <span class="callout-label">نکته فنی</span>
         <p>
@@ -386,11 +357,11 @@
     <section class="section fade-in" id="s4">
       <div class="section-head">
         <span class="section-num">04</span>
-        <h2 class="section-title">ساختار پروژه ASP.NET MVC</h2>
+        <h2 class="section-title">ساختار پروژه ASP.NET Core MVC</h2>
       </div>
 
       <p>
-        وقتی یک پروژه <code>ASP.NET MVC</code> جدید در <code>Visual Studio</code> ایجاد می‌کنید،
+        وقتی یک پروژه <code>ASP.NET Core MVC</code> جدید در <code>Visual Studio</code> ایجاد می‌کنید،
         به‌صورت پیش‌فرض چند پوشه و فایل برای شما ساخته می‌شود. آشنایی با این ساختار برای شروع
         کار ضروری است، چون MVC بر پایه <strong>قرارداد (Convention)</strong> کار می‌کند و
         محل قرارگیری فایل‌ها اهمیت زیادی دارد.
@@ -489,17 +460,27 @@
                       <span class="ft-cmt">قالب اصلی</span>
                     </div>
                   </li>
-                  <li>
-                    <div class="ft-node ft-file">
-                      <svg class="ft-ico" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                        <path d="M9.5 1.5H4a1 1 0 0 0-1 1v11a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V5z"/>
-                        <path d="M9.5 1.5V5H13"/>
-                      </svg>
-                      <span class="ft-name">_ViewStart.cshtml</span>
-                      <span class="ft-cmt">تنظیمات اولیه</span>
-                    </div>
-                  </li>
                 </ul>
+              </li>
+              <li>
+                <div class="ft-node ft-file">
+                  <svg class="ft-ico" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M9.5 1.5H4a1 1 0 0 0-1 1v11a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V5z"/>
+                    <path d="M9.5 1.5V5H13"/>
+                  </svg>
+                  <span class="ft-name">_ViewImports.cshtml</span>
+                  <span class="ft-cmt">واردات مشترک</span>
+                </div>
+              </li>
+              <li>
+                <div class="ft-node ft-file">
+                  <svg class="ft-ico" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M9.5 1.5H4a1 1 0 0 0-1 1v11a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V5z"/>
+                    <path d="M9.5 1.5V5H13"/>
+                  </svg>
+                  <span class="ft-name">_ViewStart.cshtml</span>
+                  <span class="ft-cmt">تنظیمات اولیه</span>
+                </div>
               </li>
             </ul>
           </li>
@@ -508,27 +489,68 @@
               <svg class="ft-ico" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                 <path d="M2 4.5V12a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V6.5a1 1 0 0 0-1-1H7.5L6 4H3a1 1 0 0 0-1 .5z"/>
               </svg>
-              <span class="ft-name">App_Data</span>
-              <span class="ft-cmt">فایل‌های داده</span>
+              <span class="ft-name">wwwroot</span>
+              <span class="ft-cmt">فایل‌های ایستا</span>
             </div>
+            <ul>
+              <li>
+                <div class="ft-node ft-dir">
+                  <svg class="ft-ico" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M2 4.5V12a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V6.5a1 1 0 0 0-1-1H7.5L6 4H3a1 1 0 0 0-1 .5z"/>
+                  </svg>
+                  <span class="ft-name">css</span>
+                  <span class="ft-cmt">فایل‌های CSS</span>
+                </div>
+              </li>
+              <li>
+                <div class="ft-node ft-dir">
+                  <svg class="ft-ico" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M2 4.5V12a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V6.5a1 1 0 0 0-1-1H7.5L6 4H3a1 1 0 0 0-1 .5z"/>
+                  </svg>
+                  <span class="ft-name">js</span>
+                  <span class="ft-cmt">فایل‌های JavaScript</span>
+                </div>
+              </li>
+              <li>
+                <div class="ft-node ft-dir">
+                  <svg class="ft-ico" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M2 4.5V12a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V6.5a1 1 0 0 0-1-1H7.5L6 4H3a1 1 0 0 0-1 .5z"/>
+                  </svg>
+                  <span class="ft-name">lib</span>
+                  <span class="ft-cmt">کتابخانه‌های خارجی</span>
+                </div>
+              </li>
+              <li>
+                <div class="ft-node ft-file">
+                  <svg class="ft-ico" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M9.5 1.5H4a1 1 0 0 0-1 1v11a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V5z"/>
+                    <path d="M9.5 1.5V5H13"/>
+                  </svg>
+                  <span class="ft-name">favicon.ico</span>
+                  <span class="ft-cmt">آیکون سایت</span>
+                </div>
+              </li>
+            </ul>
           </li>
           <li>
             <div class="ft-node ft-dir">
               <svg class="ft-ico" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                 <path d="M2 4.5V12a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V6.5a1 1 0 0 0-1-1H7.5L6 4H3a1 1 0 0 0-1 .5z"/>
               </svg>
-              <span class="ft-name">Content</span>
-              <span class="ft-cmt">CSS و تصاویر</span>
+              <span class="ft-name">Properties</span>
             </div>
-          </li>
-          <li>
-            <div class="ft-node ft-dir">
-              <svg class="ft-ico" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                <path d="M2 4.5V12a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V6.5a1 1 0 0 0-1-1H7.5L6 4H3a1 1 0 0 0-1 .5z"/>
-              </svg>
-              <span class="ft-name">Scripts</span>
-              <span class="ft-cmt">فایل‌های JavaScript</span>
-            </div>
+            <ul>
+              <li>
+                <div class="ft-node ft-file">
+                  <svg class="ft-ico" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M9.5 1.5H4a1 1 0 0 0-1 1v11a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V5z"/>
+                    <path d="M9.5 1.5V5H13"/>
+                  </svg>
+                  <span class="ft-name">launchSettings.json</span>
+                  <span class="ft-cmt">تنظیمات اجرا</span>
+                </div>
+              </li>
+            </ul>
           </li>
           <li>
             <div class="ft-node ft-file">
@@ -536,7 +558,7 @@
                 <path d="M9.5 1.5H4a1 1 0 0 0-1 1v11a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V5z"/>
                 <path d="M9.5 1.5V5H13"/>
               </svg>
-              <span class="ft-name">Web.config</span>
+              <span class="ft-name">appsettings.json</span>
               <span class="ft-cmt">تنظیمات برنامه</span>
             </div>
           </li>
@@ -546,8 +568,28 @@
                 <path d="M9.5 1.5H4a1 1 0 0 0-1 1v11a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V5z"/>
                 <path d="M9.5 1.5V5H13"/>
               </svg>
-              <span class="ft-name">Global.asax</span>
-              <span class="ft-cmt">رویدادهای برنامه</span>
+              <span class="ft-name">appsettings.Development.json</span>
+              <span class="ft-cmt">تنظیمات توسعه</span>
+            </div>
+          </li>
+          <li>
+            <div class="ft-node ft-file">
+              <svg class="ft-ico" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M9.5 1.5H4a1 1 0 0 0-1 1v11a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V5z"/>
+                <path d="M9.5 1.5V5H13"/>
+              </svg>
+              <span class="ft-name">Program.cs</span>
+              <span class="ft-cmt">نقطه ورود برنامه</span>
+            </div>
+          </li>
+          <li>
+            <div class="ft-node ft-file">
+              <svg class="ft-ico" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M9.5 1.5H4a1 1 0 0 0-1 1v11a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V5z"/>
+                <path d="M9.5 1.5V5H13"/>
+              </svg>
+              <span class="ft-name">ProjectName.csproj</span>
+              <span class="ft-cmt">فایل پروژه</span>
             </div>
           </li>
         </ul>
@@ -564,9 +606,10 @@
             <tr><td><strong>Controllers/</strong></td><td>محل قرارگیری کلاس‌های Controller. نام کلاس‌ها باید با پسوند <code>Controller</code> تمام شود.</td></tr>
             <tr><td><strong>Models/</strong></td><td>کلاس‌های مدل که ساختار داده و منطق تجاری را تعریف می‌کنند.</td></tr>
             <tr><td><strong>Views/</strong></td><td>فایل‌های نمایشی (<code>Razor View</code>) که خروجی HTML تولید می‌کنند.</td></tr>
-            <tr><td><strong>App_Data/</strong></td><td>محل ذخیره‌سازی فیزیکی داده‌ها (فایل‌های دیتابیس، XML و...).</td></tr>
-            <tr><td><strong>Content/</strong></td><td>فایل‌های ایستا مانند CSS، تصاویر و فونت‌ها.</td></tr>
-            <tr><td><strong>Scripts/</strong></td><td>فایل‌های JavaScript پروژه.</td></tr>
+            <tr><td><strong>wwwroot/</strong></td><td>محل قرارگیری فایل‌های ایستا مانند CSS، JavaScript، تصاویر و فونت‌ها.</td></tr>
+            <tr><td><strong>Properties/</strong></td><td>تنظیمات مربوط به اجرای پروژه در محیط توسعه.</td></tr>
+            <tr><td><strong>appsettings.json</strong></td><td>تنظیمات برنامه (رشته‌های اتصال، لاگ‌ها و...).</td></tr>
+            <tr><td><strong>Program.cs</strong></td><td>نقطه ورود برنامه و محل تنظیم سرویس‌ها و Middlewareها.</td></tr>
           </tbody>
         </table>
       </div>
@@ -574,8 +617,8 @@
       <div class="callout note">
         <span class="callout-label">قرارداد پیش‌فرض (Convention over Configuration)</span>
         <p>
-          <code>ASP.NET MVC</code> بر پایه «قرارداد» کار می‌کند. اگر Controller شما
-          <code>HomeController</code> نام داشته باشد، به‌صورت خودکار به دنبال View‌های مربوطه
+          <code>ASP.NET Core MVC</code> بر پایه «قرارداد» کار می‌کند. اگر Controller شما
+          <code>HomeController</code> نام داشته باشد، به‌صورت خودکار به دنبال Viewهای مربوطه
           در پوشه <code>Views/Home/</code> می‌گردد. این یعنی نیازی به تنظیم دستی مسیرها
           ندارید و می‌توانید روی منطق برنامه تمرکز کنید.
         </p>
@@ -589,14 +632,14 @@
       </div>
 
       <p>
-        پس از آشنایی با مفاهیم نظری، حالا مراحل ساخت یک پروژه ساده <code>ASP.NET MVC</code>
-        را مرور می‌کنیم.
+        پس از آشنایی با مفاهیم نظری، حالا مراحل ساخت یک پروژه ساده
+        <code>ASP.NET Core MVC</code> را مرور می‌کنیم.
       </p>
 
       <h3>پیش‌نیازها</h3>
       <ul>
-        <li><strong>Visual Studio</strong> نسخه ۲۰۱۰ یا بالاتر — یا <code>Visual Web Developer Express</code>.</li>
-        <li><strong>.NET Framework</strong> نصب‌شده روی سیستم‌عامل.</li>
+        <li><strong>Visual Studio 2022</strong> نسخه ۱۷ یا بالاتر — یا <code>Visual Studio Code</code> با افزونه <code>C# Dev Kit</code>.</li>
+        <li><strong>.NET SDK</strong> نسخه ۶ یا بالاتر (ترجیحاً <code>.NET 8</code>).</li>
         <li>آشنایی مقدماتی با زبان <code>C#</code> و مفاهیم شی‌گرایی.</li>
       </ul>
 
@@ -604,23 +647,23 @@
       <ol class="flow">
         <li>
           <strong>اجرای Visual Studio</strong>
-          <span>برنامه را اجرا کنید و از منوی <code>File</code> گزینه <code>New Project</code> را انتخاب کنید.</span>
-        </li>
-        <li>
-          <strong>انتخاب زبان برنامه‌نویسی</strong>
-          <span>در پنجره باز شده، از سمت چپ زبان <code>Visual C#</code> را انتخاب کنید.</span>
+          <span>برنامه را اجرا کنید و روی <code>Create a new project</code> کلیک کنید.</span>
         </li>
         <li>
           <strong>انتخاب قالب پروژه</strong>
-          <span>از قالب‌های موجود، <code>ASP.NET MVC Web Application</code> را انتخاب کنید.</span>
+          <span>در کادر جستجو عبارت <code>MVC</code> را تایپ کنید و گزینه <code>ASP.NET Core Web App (Model-View-Controller)</code> را انتخاب کنید.</span>
         </li>
         <li>
           <strong>نام‌گذاری پروژه</strong>
-          <span>نام پروژه را وارد کنید (مثلاً <code>Movies</code>) و روی <code>OK</code> کلیک کنید.</span>
+          <span>نام پروژه را وارد کنید (مثلاً <code>MyFirstApp</code>) و روی <code>Next</code> کلیک کنید.</span>
+        </li>
+        <li>
+          <strong>انتخاب نسخه .NET</strong>
+          <span>در پنجره بعدی، از منوی کشویی <code>Framework</code>، نسخه <code>.NET 8.0</code> (یا جدیدتر) را انتخاب کنید. سایر گزینه‌ها را به حالت پیش‌فرض بگذارید و روی <code>Create</code> کلیک کنید.</span>
         </li>
         <li>
           <strong>ساخت خودکار پروژه</strong>
-          <span>پروژه به‌صورت خودکار با یک قالب پیش‌فرض ساخته می‌شود که شامل یک صفحه <code>Hello World</code> است.</span>
+          <span>پروژه به‌صورت خودکار با یک قالب پیش‌فرض ساخته می‌شود که شامل چندین کنترلر، View و فایل‌های تنظیمات است.</span>
         </li>
       </ol>
 
@@ -631,15 +674,12 @@
         <code>localhost</code> را نمایش می‌دهد که به کامپیوتر محلی خودتان اشاره می‌کند.
       </p>
 
-      <div class="callout warn">
-        <span class="callout-label">توجه</span>
-        <p>
-          در <code>ASP.NET MVC</code>، برخلاف <code>Web Forms</code>، چرخه صفحه
-          (<code>Page Life Cycle</code>) به آن شکل کلاسیک وجود ندارد. درخواست‌ها مستقیماً از
-          طریق <strong>روتینگ (Routing)</strong> به Controller هدایت می‌شوند و اکشن‌ها
-          پردازش را انجام می‌دهند.
-        </p>
-      </div>
+      <p>
+        در <code>ASP.NET Core</code>، برخلاف <code>Web Forms</code>، چرخه صفحه
+        (<code>Page Life Cycle</code>) به آن شکل کلاسیک وجود ندارد. درخواست‌ها مستقیماً از
+        طریق <strong>روتینگ (Routing)</strong> به Controller هدایت می‌شوند و اکشن‌ها
+        پردازش را انجام می‌دهند.
+      </p>
     </section>
 
     <section class="section fade-in" id="s6">
@@ -701,12 +741,12 @@
           </thead>
           <tbody>
             <tr><td><strong>سمت سرور</strong></td><td>زبان‌های سمت سرور امکان ذخیره، ویرایش و بازیابی داده‌ها را می‌دهند. کدهای آن‌ها در مرورگر دیده نمی‌شوند.</td></tr>
-            <tr><td><strong>ASP.NET</strong></td><td>یک تکنولوژی مایکروسافتی است (نه یک زبان) که با C# در Visual Studio کار می‌کند.</td></tr>
+            <tr><td><strong>ASP.NET Core</strong></td><td>یک تکنولوژی مایکروسافتی چندسکویی است (نه یک زبان) که با C# در Visual Studio یا VS Code کار می‌کند.</td></tr>
             <tr><td><strong>الگوی MVC</strong></td><td>برنامه را به سه بخش Model (داده‌ها)، View (نمایش) و Controller (کنترل‌کننده) تقسیم می‌کند.</td></tr>
             <tr><td><strong>Controller</strong></td><td>واسطه بین Model و View است. درخواست‌ها را دریافت و به بخش مناسب هدایت می‌کند.</td></tr>
             <tr><td><strong>Model</strong></td><td>نماینده داده‌ها و منطق تجاری برنامه است. با C# نوشته می‌شود.</td></tr>
             <tr><td><strong>View</strong></td><td>خروجی HTML/CSS/JS است که کاربر می‌بیند.</td></tr>
-            <tr><td><strong>ساختار پروژه</strong></td><td>پوشه‌های اصلی: Controllers، Models، Views، App_Data</td></tr>
+            <tr><td><strong>ساختار پروژه</strong></td><td>پوشه‌های اصلی: Controllers، Models، Views، wwwroot</td></tr>
           </tbody>
         </table>
       </div>
@@ -724,7 +764,7 @@
           <li>با زبان خودتان توضیح دهید چرا HTML و CSS به‌تنهایی برای ساخت یک سایت پویا کافی نیستند.</li>
           <li>سه جزء اصلی MVC را نام ببرید و وظیفه هرکدام را در یک جمله توضیح دهید.</li>
           <li>چرخه پردازش درخواست را در ۶ گام خلاصه کنید و بگویید در هر گام چه اتفاقی می‌افتد.</li>
-          <li>یک پروژه ASP.NET MVC جدید بسازید و ببینید به‌صورت پیش‌فرض چه پوشه‌ها و فایل‌هایی ساخته می‌شود.</li>
+          <li>یک پروژه ASP.NET Core MVC جدید بسازید و ببینید به‌صورت پیش‌فرض چه پوشه‌ها و فایل‌هایی ساخته می‌شود.</li>
           <li>توضیح دهید چرا View نمی‌تواند مستقیماً به دیتابیس متصل شود و این کار باید از طریق Controller انجام شود.</li>
         </ol>
       </div>
