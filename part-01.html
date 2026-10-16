@@ -4,9 +4,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="theme-color" content="#0d1117">
-<meta name="description" content="قسمت اول آموزش ASP.NET Core — برنامه‌نویسی سمت سرور، الگوی معماری MVC، چرخه پردازش درخواست و ساختار پروژه.">
+<meta name="description" content="قسمت اول آموزش ASP.NET Core — آشنایی کامل با .NET، .NET Standard، .NET Framework، .NET Core، ASP.NET Core، MVC، HTTP و HTTPS">
 <meta name="author" content="مهران غلامی مقدم">
-<title>قسمت ۰۱ — برنامه‌نویسی سمت سرور و الگوی MVC</title>
+<title>قسمت ۰۱ — آشنایی با .NET، ASP.NET Core و MVC</title>
 <link rel="icon" href="mehran-favicon.ico" sizes="any">
 <link rel="canonical" href="https://mehran00programmer.github.io/ASP.NET-Core-Learning/part-01.html">
 <link rel="stylesheet" href="assets/style.css">
@@ -20,11 +20,13 @@
 <header class="doc-header">
   <div class="page">
     <div class="hero-badge" style="display:inline-block;font-family:var(--mono);font-size:11px;color:var(--accent);letter-spacing:1.5px;background:rgba(88,166,255,0.08);border:1px solid rgba(88,166,255,0.2);padding:4px 12px;border-radius:20px;margin-bottom:14px;">قسمت ۰۱</div>
-    <h1 class="doc-title">برنامه‌نویسی وب‌سایت‌های پویا با <bdi>ASP.NET Core MVC</bdi></h1>
+    <h1 class="doc-title">آشنایی با <bdi>.NET</bdi>، <bdi>ASP.NET Core</bdi> و <bdi>MVC</bdi></h1>
     <p class="doc-subtitle">
-      در این قسمت با مفاهیم پایه‌ای برنامه‌نویسی سمت سرور آشنا می‌شویم، ضرورت استفاده از آن را بررسی
-      می‌کنیم و سپس الگوی معماری MVC را به‌عنوان ساختار اصلی یک برنامه وب پویا معرفی می‌کنیم. در
-      پایان نیز مراحل ساخت اولین پروژه عملی <bdi>ASP.NET Core MVC</bdi> مرور می‌شود.
+      در این قسمت با اکوسیستم <bdi>.NET</bdi> و تاریخچه آن آشنا می‌شویم، تفاوت‌های
+      <bdi>.NET Framework</bdi> و <bdi>.NET Core</bdi> را بررسی می‌کنیم، فریم‌ورک
+      <bdi>ASP.NET Core</bdi> را معرفی می‌کنیم، الگوی معماری <bdi>MVC</bdi> را
+      به‌طور کامل توضیح می‌دهیم و در نهایت مفاهیم پایه پروتکل <bdi>HTTP</bdi>،
+      <bdi>HTTPS</bdi>، کدهای وضعیت، متدها و هدرها را بررسی می‌کنیم.
     </p>
 
     <div class="author-card">
@@ -44,86 +46,217 @@
   <aside class="toc-wrap fade-in">
     <div class="toc-header">فهرست مطالب این قسمت</div>
     <ul class="toc-list">
-      <li><a class="toc-link" href="#s1"><span class="num">01</span><span>نیاز به زبان سمت سرور</span></a></li>
-      <li><a class="toc-link" href="#s2"><span class="num">02</span><span>الگوی طراحی MVC</span></a></li>
-      <li><a class="toc-link" href="#s3"><span class="num">03</span><span>چرخه پردازش درخواست</span></a></li>
-      <li><a class="toc-link" href="#s4"><span class="num">04</span><span>ساختار پروژه ASP.NET Core MVC</span></a></li>
-      <li><a class="toc-link" href="#s5"><span class="num">05</span><span>اولین پروژه عملی</span></a></li>
-      <li><a class="toc-link" href="#s6"><span class="num">06</span><span>مزایای استفاده از MVC</span></a></li>
-      <li><a class="toc-link" href="#s7"><span class="num">07</span><span>خلاصه مطالب</span></a></li>
+      <li><a class="toc-link" href="#s1"><span class="num">01</span><span>آشنایی با .NET و .NET Standard</span></a></li>
+      <li><a class="toc-link" href="#s2"><span class="num">02</span><span>مقایسه .NET Framework و .NET Core</span></a></li>
+      <li><a class="toc-link" href="#s3"><span class="num">03</span><span>ASP.NET Core چیست؟</span></a></li>
+      <li><a class="toc-link" href="#s4"><span class="num">04</span><span>الگوی طراحی MVC</span></a></li>
+      <li><a class="toc-link" href="#s5"><span class="num">05</span><span>مقایسه WebForm، MVC و Core</span></a></li>
+      <li><a class="toc-link" href="#s6"><span class="num">06</span><span>آشنایی با HTTP و HTTPS</span></a></li>
+      <li><a class="toc-link" href="#s7"><span class="num">07</span><span>Status Code و HTTP Method</span></a></li>
+      <li><a class="toc-link" href="#s8"><span class="num">08</span><span>HTTP Headers</span></a></li>
     </ul>
   </aside>
 
   <main>
 
+    <!-- ============ SECTION 1 ============ -->
     <section class="section fade-in" id="s1">
       <div class="section-head">
         <span class="section-num">01</span>
-        <h2 class="section-title">نیاز به زبان سمت سرور</h2>
+        <h2 class="section-title">آشنایی با <bdi>.NET</bdi> و <bdi>.NET Standard</bdi></h2>
       </div>
 
       <p>
-        پیش از این، تمرکز ما روی <strong>برنامه‌نویسی سمت کلاینت</strong> بود؛ یعنی کدی که در مرورگر
-        کاربر اجرا می‌شود. با سه تکنولوژی اصلی <code>HTML</code>، <code>CSS</code> و <code>JavaScript</code>
-        می‌توانیم صفحاتی زیبا، واکنش‌گرا و حتی تعاملی بسازیم. اما این سه، یک محدودیت بنیادین دارند:
-        آن‌ها <strong>نمی‌توانند در سمت سرور کد اجرا کنند</strong>.
+        <bdi>.NET</bdi> یک <strong>فریم‌ورک نرم‌افزاری</strong> است که توسط شرکت
+        مایکروسافت توسعه داده شده است. این فریم‌ورک امکان توسعه و اجرای
+        برنامه‌های نرم‌افزاری را در محیط‌های مختلف از جمله <strong>وب، دسکتاپ،
+        موبایل و سرور</strong> فراهم می‌کند[reference:0].
       </p>
 
-      <h3>در وب دقیقاً چه اتفاقی می‌افتد؟</h3>
       <p>
-        زمانی که آدرس یک وب‌سایت را در نوار آدرس مرورگر وارد می‌کنید، مرورگر یک
-        <strong>درخواست (Request)</strong> به سمت سرور ارسال می‌کند. سرور این درخواست را دریافت، پردازش
-        و پاسخ مناسب را برای مرورگر می‌فرستد. پاسخ نهایی چیزی نیست جز فایل‌های <code>HTML</code>،
-        <code>CSS</code> و <code>JavaScript</code> که مرورگر آن‌ها را تفسیر و به صفحه‌ای قابل مشاهده تبدیل می‌کند.
+        <bdi>.NET</bdi> یک <strong>پلتفرم توسعه نرم‌افزاری و اپن‌سورس</strong>
+        است که شامل چندین فریم‌ورک مختلف نظیر <bdi>.NET Framework</bdi>،
+        <bdi>.NET Core</bdi> و <bdi>.NET 7</bdi> می‌شود و امکان اجرا بر روی
+        سیستم‌عامل‌های مختلف از جمله <bdi>Windows</bdi>، <bdi>Linux</bdi> و
+        <bdi>macOS</bdi> را دارد[reference:1].
+      </p>
+
+      <p>
+        کلمه <bdi>.NET</bdi> به یک <strong>فریم‌ورک کلان نرم‌افزاری</strong>
+        اشاره می‌کند که امکان توسعه برنامه‌های متنوع را در محیط‌های مختلف فراهم
+        می‌کند[reference:2]. <bdi>.NET</bdi> از زبان‌های برنامه‌نویسی متنوعی
+        مانند <code>C#</code>، <code>VB.NET</code> و <code>F#</code> پشتیبانی
+        می‌کند[reference:3].
       </p>
 
       <div class="callout note">
-        <span class="callout-label">نکته کلیدی</span>
+        <span class="callout-label">نکته مهم</span>
         <p>
-          تا این مرحله، ما فقط می‌توانستیم داده‌ها را <em>دریافت</em> کنیم. اما اگر کاربر بخواهد داده‌ای
-          را <em>به سایت بفرستد</em> و آن را در سرور ذخیره کند — مانند ثبت‌نام، ثبت سفارش، ارسال نظر،
-          ویرایش پروفایل یا پرداخت — دیگر <bdi>HTML</bdi> و <bdi>CSS</bdi> به‌تنهایی کارساز نیستند.
+          <bdi>.NET</bdi> خودش یک <strong>زبان برنامه‌نویسی نیست</strong>، بلکه
+          یک <strong>پلتفرم یا اکوسیستم</strong> است. زبان‌های برنامه‌نویسی
+          مختلفی روی این پلتفرم اجرا می‌شوند که معروف‌ترین آن‌ها
+          <code>C#</code> است.
         </p>
       </div>
 
-      <h3>توانمندی‌های یک زبان سمت سرور</h3>
+      <h3><bdi>.NET Standard</bdi> چیست؟</h3>
       <p>
-        با یادگیری یک زبان برنامه‌نویسی سمت سرور، درهای تازه‌ای به روی ما باز می‌شود. مهم‌ترین
-        توانایی‌هایی که به دست می‌آوریم عبارتند از:
+        <bdi>.NET Standard</bdi> یک <strong>استاندارد تعریف‌شده توسط
+        مایکروسافت</strong> است که به توسعه‌دهندگان امکان ایجاد کدهای قابل
+        استفاده در انواع فریم‌ورک‌های <bdi>.NET</bdi> را می‌دهد[reference:4].
       </p>
-      <ul>
-        <li><strong>دریافت داده از کاربر:</strong> خواندن اطلاعات فرم‌ها، پارامترهای آدرس و کوکی‌ها.</li>
-        <li><strong>ذخیره‌سازی داده:</strong> نگه‌داشتن اطلاعات در دیتابیس، فایل یا حافظه سرور.</li>
-        <li><strong>ویرایش و حذف داده:</strong> به‌روزرسانی و حذف رکوردهای موجود در دیتابیس.</li>
-        <li><strong>بازیابی و ارسال داده:</strong> خواندن اطلاعات از دیتابیس و نمایش آن‌ها به کاربر.</li>
-        <li><strong>اعتبارسنجی و امنیت:</strong> بررسی صحت داده‌ها، مدیریت نشست‌ها و احراز هویت.</li>
-      </ul>
+
+      <p>
+        هدف اصلی این استاندارد، <strong>ایجاد یک بخش مشترک</strong> برای توسعه
+        برنامه‌ها روی انواع فریم‌ورک‌های مختلف <bdi>.NET</bdi> است. به عبارت
+        دیگر، اگر شما یک کتابخانه یا برنامه با استفاده از <bdi>.NET Standard</bdi>
+        توسعه دهید، آن کد می‌تواند در هر فریم‌ورکی که از <bdi>.NET Standard</bdi>
+        پشتیبانی می‌کند، اجرا شود[reference:5].
+      </p>
+
+      <p>
+        فریم‌ورک‌هایی مثل <bdi>Xamarin</bdi>، <bdi>.NET Core</bdi> و
+        <bdi>.NET Framework</bdi> از <bdi>.NET Standard</bdi> پشتیبانی
+        می‌کنند[reference:6].
+      </p>
 
       <div class="callout key">
-        <span class="callout-label">نکته امنیتی</span>
+        <span class="callout-label">تفاوت کلیدی</span>
         <p>
-          کدهای سمت سرور <strong>هرگز</strong> در مرورگر کاربر دیده نمی‌شوند. آن‌ها فقط در سرور اجرا
-          می‌شوند و صرفاً خروجی نهایی — که معمولاً <bdi>HTML</bdi> است — به مرورگر ارسال می‌شود. این ویژگی
-          باعث می‌شود منطق برنامه، الگوریتم‌ها و اطلاعات حساس، از دید کاربر پنهان بمانند.
+          <bdi>.NET Standard</bdi> یک <strong>پیاده‌سازی از <bdi>.NET</bdi>
+          نیست</strong>؛ بلکه <strong>مجموعه‌ای از APIها</strong> است که کلیه
+          پیاده‌سازی‌های <bdi>.NET</bdi> باید آن‌ها را ارائه دهند. در واقع وقتی
+          ما از <bdi>.NET Standard</bdi> استفاده می‌کنیم، مشکل اشتراک کد در
+          همه سیستم‌عامل‌ها و پیاده‌سازی‌ها برای <bdi>.NET</bdi> برطرف
+          می‌شود[reference:7].
         </p>
       </div>
 
-      <h3>تکنولوژی‌های مورد استفاده</h3>
+      <h3>مزایای استفاده از <bdi>.NET Standard</bdi></h3>
+      <ul>
+        <li><strong>قابلیت اجرا در چندین فریم‌ورک:</strong> کدهای توسعه‌داده‌شده با <bdi>.NET Standard</bdi> قابل استفاده در هر فریم‌ورکی است که از آن پشتیبانی کند[reference:8].</li>
+        <li><strong>قابلیت به‌روزرسانی سریع:</strong> به‌روزرسانی‌های کتابخانه‌ها و برنامه‌ها سریع‌تر و ساده‌تر انجام می‌شود[reference:9].</li>
+        <li><strong>کاهش پیچیدگی‌ها:</strong> به‌عنوان یک استاندارد مشترک، پیچیدگی میان فریم‌ورک‌ها را کاهش می‌دهد[reference:10].</li>
+        <li><strong>پشتیبانی از محیط‌های مختلف:</strong> امکان توسعه برنامه‌ها را برای ویندوز، لینوکس و مک فراهم می‌کند[reference:11].</li>
+      </ul>
+
+      <h3>تفاوت <bdi>.NET</bdi> با <bdi>.NET Standard</bdi></h3>
       <p>
-        زبان‌ها و تکنولوژی‌های متعددی برای برنامه‌نویسی سمت سرور وجود دارد. در این جزوه، تمرکز ما
-        روی مجموعه‌ای از محصولات مایکروسافت است:
+        <bdi>.NET</bdi> به <strong>مجموعه‌ای از فریم‌ورک‌های مختلف</strong>
+        مثل <bdi>.NET Framework</bdi> و <bdi>.NET Core</bdi> اشاره دارد که
+        جدیدترین تکنولوژی‌های <bdi>.NET</bdi> را در بر می‌گیرد و بر روی
+        یکپارچگی بیشتر بین پلتفرم‌ها تأکید دارد[reference:12].
+      </p>
+
+      <p>
+        <bdi>.NET Standard</bdi> <strong>استانداردی</strong> است که تعیین‌کننده
+        قابلیت‌های مشترک بین انواع مختلف فریم‌ورک‌های <bdi>.NET</bdi>
+        است[reference:13].
       </p>
 
       <div class="table-wrap">
         <table>
           <thead>
-            <tr><th>مورد</th><th>انتخاب</th><th>توضیح</th></tr>
+            <tr><th>معیار</th><th><bdi>.NET</bdi></th><th><bdi>.NET Standard</bdi></th></tr>
           </thead>
           <tbody>
-            <tr><td>زبان برنامه‌نویسی</td><td class="cell-ltr">C#</td><td>زبانی مدرن، شی‌گرا و قدرتمند از مایکروسافت</td></tr>
-            <tr><td>تکنولوژی</td><td class="cell-ltr">ASP.NET Core</td><td>فریم‌ورک چندسکویی مایکروسافت برای ساخت اپلیکیشن‌های وب مدرن</td></tr>
-            <tr><td>محیط توسعه</td><td class="cell-ltr">Visual Studio</td><td>IDE رسمی مایکروسافت برای توسعه .NET</td></tr>
-            <tr><td>الگوی معماری</td><td class="cell-ltr">MVC</td><td>الگوی جداسازی منطق، نمایش و کنترل</td></tr>
+            <tr><td>ماهیت</td><td>پلتفرم و اکوسیستم</td><td>استاندارد و مشخصات فنی</td></tr>
+            <tr><td>شامل</td><td>فریم‌ورک‌های مختلف</td><td>APIهای مشترک</td></tr>
+            <tr><td>هدف</td><td>توسعه انواع برنامه‌ها</td><td>اشتراک کد بین فریم‌ورک‌ها</td></tr>
+            <tr><td>نوع استفاده</td><td>ساخت اپلیکیشن</td><td>ساخت کتابخانه</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ============ SECTION 2 ============ -->
+    <section class="section fade-in" id="s2">
+      <div class="section-head">
+        <span class="section-num">02</span>
+        <h2 class="section-title">مقایسه <bdi>.NET Framework</bdi> و <bdi>.NET Core</bdi></h2>
+      </div>
+
+      <h3><bdi>.NET Framework</bdi> چیست؟</h3>
+      <p>
+        <bdi>.NET Framework</bdi> یک <strong>فریم‌ورک توسعه نرم‌افزار برای
+        ساخت و اجرای برنامه‌های کاربردی در محیط ویندوز</strong> است. این
+        فریم‌ورک توسط شرکت مایکروسافت ایجاد شده و ابتدا در سال ۲۰۰۲ عرضه
+        شد[reference:14].
+      </p>
+
+      <p>
+        <bdi>.NET Framework</bdi> ابزارها و زیرساخت‌های لازم برای توسعه و
+        اجرای برنامه‌های <strong>ویندوزی، وب و سرویس‌های ویندوزی</strong> را
+        فراهم می‌کند. این فریم‌ورک به‌طور اصلی <strong>بر روی سیستم‌عامل
+        ویندوز اجرا می‌شود</strong> و وابستگی به این سیستم‌عامل
+        دارد[reference:15].
+      </p>
+
+      <p>
+        <bdi>.NET Framework</bdi> بخشی از دات‌نت است، مجموعه‌ای از فناوری‌ها
+        برای ساخت اپلیکیشن برای لینوکس، macOS، ویندوز، iOS، اندروید و
+        غیره[reference:16].
+      </p>
+
+      <h3><bdi>.NET Core</bdi> چیست؟</h3>
+      <p>
+        <bdi>.NET Core</bdi> یکی از محصولات شرکت مایکروسافت است که در سال
+        <strong>۲۰۱۶</strong> به بازار عرضه شد. این فریم‌ورک یک
+        <strong>ابزار برنامه‌نویسی چندپلتفرمی و منبع‌باز</strong> است که روی
+        تمامی پلتفرم‌های رایج در دنیا قابل‌استفاده است[reference:17].
+      </p>
+
+      <p>
+        <bdi>.NET Core</bdi> یک <strong>فریم‌ورک سازگار با تمامی
+        سیستم‌عامل‌ها</strong> است و قابلیت ساخت برنامه‌های مختلف مناسب
+        اندروید، iOS، ویندوز، لینوکس، وب، فضای ابری، IoT و هوش مصنوعی را
+        دارد. از جمله ویژگی‌های خوب این پلتفرم <strong>سرعت و سبکی</strong>
+        آن است و فقط برای اجرای قسمت اصلی کد به <bdi>.NET Core</bdi> نیاز
+        دارید[reference:18].
+      </p>
+
+      <div class="callout note">
+        <span class="callout-label">تاریخچه</span>
+        <p>
+          در اواخر سال ۲۰۲۰، <bdi>.NET Core</bdi> به <bdi>.NET 5</bdi>
+          تغییر نام داد و در ادامه، تا ویرایش <bdi>.NET 8</bdi> معرفی
+          شد[reference:19].
+        </p>
+      </div>
+
+      <h3>چرا <bdi>.NET Core</bdi> معرفی شد؟</h3>
+      <p>
+        نسخه قبلی این پلتفرم یعنی <bdi>.NET Framework</bdi>، یک ابزار با
+        <strong>محدودیت‌های جدی</strong> بود. مهم‌ترین ضعف <bdi>.NET
+        Framework</bdi> این بود که <strong>تنها در سیستم‌عامل ویندوز قابلیت
+        اجرا داشت</strong> و روی سایر سیستم‌عامل‌ها قابل‌استفاده
+        نبود[reference:20].
+      </p>
+
+      <p>
+        بنابراین، اغلب توسعه‌دهندگان به‌علت انحصاری بودن محصولات شرکت
+        مایکروسافت، به‌مرور نسبت به نرم‌افزارهای این شرکت دلسرد
+        شدند[reference:21]. علاوه بر این امروزه، استفاده از برنامه‌هایی که
+        در تمامی دستگاه‌ها قابل‌اجرا باشند، رایج شده است. یک برنامه قوی
+        باید بتواند تحت وب، روی دسکتاپ و روی تلفن‌های همراه و تبلت‌ها
+        اجرا شود. به همین علت، نیاز به یک <strong>چارچوب واحد</strong>
+        دارد. در واقع این موضوع، <strong>انگیزه اصلی شرکت مایکروسافت
+        برای معرفی ابزار <bdi>.NET Core</bdi></strong> بود[reference:22].
+      </p>
+
+      <h3>جدول مقایسه <bdi>.NET Framework</bdi> و <bdi>.NET Core</bdi></h3>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>معیار</th><th><bdi>.NET Framework</bdi></th><th><bdi>.NET Core</bdi></th></tr>
+          </thead>
+          <tbody>
+            <tr><td>سال عرضه</td><td>۲۰۰۲</td><td>۲۰۱۶</td></tr>
+            <tr><td>سیستم‌عامل</td><td>فقط ویندوز</td><td>ویندوز، لینوکس، مک</td></tr>
+            <tr><td>متن‌باز</td><td>خیر</td><td>بله</td></tr>
+            <tr><td>عملکرد</td><td>کندتر</td><td>سریع‌تر و سبک‌تر</td></tr>
+            <tr><td>پشتیبانی از ابر و IoT</td><td>محدود</td><td>عالی</td></tr>
+            <tr><td>وضعیت فعلی</td><td>منسوخ</td><td>فعال</td></tr>
           </tbody>
         </table>
       </div>
@@ -131,26 +264,134 @@
       <div class="callout warn">
         <span class="callout-label">توجه</span>
         <p>
-          <code>ASP.NET Core</code> یک <strong>زبان برنامه‌نویسی نیست</strong>؛ بلکه یک
-          <strong>تکنولوژی یا فریم‌ورک</strong> است که توسط مایکروسافت ارائه شده. ما با
-          زبان <code>C#</code> کد می‌نویسیم و از <code>ASP.NET Core</code> برای تبدیل آن کد به یک
-          وب‌سایت قابل اجرا استفاده می‌کنیم.
+          اگر امروز می‌خواهید پروژه جدیدی بسازید، <strong>حتماً
+          <bdi>.NET Core</bdi> (یا <bdi>.NET 8</bdi> و بالاتر)</strong> را
+          انتخاب کنید. <bdi>.NET Framework</bdi> فقط برای نگهداری
+          پروژه‌های قدیمی استفاده می‌شود.
         </p>
       </div>
     </section>
 
-    <section class="section fade-in" id="s2">
+    <!-- ============ SECTION 3 ============ -->
+    <section class="section fade-in" id="s3">
       <div class="section-head">
-        <span class="section-num">02</span>
+        <span class="section-num">03</span>
+        <h2 class="section-title"><bdi>ASP.NET Core</bdi> چیست؟</h2>
+      </div>
+
+      <p>
+        <bdi>ASP.NET Core</bdi> یک <strong>فریم‌ورک برای توسعه
+        اپلیکیشن‌های مدرن وب و تحت فضای ابری</strong> است. این پلتفرم محبوب
+        توسط کمپانی مایکروسافت توسعه داده شده و به‌صورت <strong>متن‌باز در
+        گیت‌هاب</strong> در دسترس است[reference:23].
+      </p>
+
+      <p>
+        این امر <bdi>ASP.NET Core</bdi> را به یک پلتفرم جهانی با قابلیت‌های
+        بسیار و نقص کمتر تبدیل کرده که خود می‌تواند یک عامل مهم در انتخاب
+        آن به‌عنوان یک پلتفرم برای یادگیری توسعه‌دهندگان باشد[reference:24].
+      </p>
+
+      <p>
+        با آن می‌توان برای محیط‌های <strong>بک‌اند وب، اینترنت اشیا و
+        اپلیکیشن‌های موبایلی</strong> برنامه‌نویسی کرد. این فریم‌ورک طوری
+        طراحی شده است که به اجزای برنامه‌نویسی مانند APIها، کامپایلرها و
+        زبان‌ها اجازه می‌دهد تا به سرعت تکامل پیدا کنند[reference:25].
+      </p>
+
+      <p>
+        <bdi>ASP.NET Core</bdi> یک <strong>پلتفرم پایه، قدرتمند و در عین
+        حال پشتیبانی‌شده</strong> برای توسعه و اجرای برنامه‌ها و
+        اپلیکیشن‌ها ارائه می‌دهد. از جمله مزایای اساسی این فریم‌ورک
+        <strong>امکان نصب و راه‌اندازی نسخه‌های مختلف <bdi>ASP.NET</bdi>
+        روی یک سرور</strong> است. شما می‌توانید با استفاده از آن پروژه‌های
+        دلخواه‌تان را روی یک سرور و با استفاده از نسخه‌های مختلف پیاده‌سازی
+        کنید[reference:26].
+      </p>
+
+      <h3>تاریخچه <bdi>ASP.NET Core</bdi></h3>
+      <p>
+        <bdi>ASP.NET Core</bdi> اولین بار در سال <strong>۲۰۱۶</strong> منتشر
+        شد و یک <strong>طراحی مجدد</strong> از نسخه‌های قبلی
+        <bdi>ASP.NET</bdi> بود که فقط روی <bdi>Windows</bdi> قابل اجرا
+        بود[reference:27].
+      </p>
+
+      <p>
+        <bdi>ASP.NET Core</bdi> نسخه <strong>اپن‌سورس</strong>
+        <bdi>ASP.NET</bdi> است که روی <bdi>MacOS</bdi>، <bdi>Linux</bdi> و
+        <bdi>Windows</bdi> اجرا می‌شود[reference:28].
+      </p>
+
+      <h3>مزایای استفاده از <bdi>ASP.NET Core</bdi></h3>
+      <p>
+        کاربردهای بسیار زیاد این پلتفرم، باعث محبوبیت آن را در میان
+        توسعه‌دهندگان افزایش داده است. عملاً این زبان یکی از بهترین
+        زبان‌های توسعه نرم‌افزار کراس‌پلتفرم است که مزایای خاص خود را دارا
+        بوده که در این مقاله به بررسی آن‌ها می‌پردازیم[reference:29].
+      </p>
+
+      <ul>
+        <li>
+          <strong>کراس‌پلتفرم:</strong> شما با <bdi>ASP.NET Core</bdi>
+          می‌توانید تنها با نوشتن یک کد، برنامه موردنظر خود را روی
+          سیستم‌عامل‌های ویندوز، مک و لینوکس اجرا کنید[reference:30].
+        </li>
+        <li>
+          <strong>عملکرد بالا:</strong> یکی از مهم‌ترین ویژگی‌های هر
+          نرم‌افزار سرعت بالا و کیفیت بالای آن است. <bdi>ASP.NET Core</bdi>
+          هر آنچه که لازم دارید تا یک نرم‌افزار بهینه توسعه دهید را در
+          اختیار شما قرار می‌دهد. این پلتفرم محبوب با بهره‌بردن از تکنولوژی
+          <bdi>IIS</bdi> و وب‌سرورهای سبک و سریع، توسعه نرم‌افزار را سریع،
+          بهینه و باکیفیت می‌کند[reference:31].
+        </li>
+        <li>
+          <strong>پشتیبانی از چهارچوب‌های ناهمزمان:</strong> ارسال چند
+          درخواست به‌صورت همزمان به سرورها ممکن است سرور را دچار اختلال
+          کند. این موضوع با استفاده از <bdi>Asynchronous via
+          async/await</bdi> به‌طور کامل مدیریت می‌شود[reference:32].
+        </li>
+        <li>
+          <strong>پشتیبانی از <bdi>MVC</bdi> و وب API:</strong> یکی از
+          ضروری‌ترین امور در پروژه‌ها استفاده از وب‌سرویس‌ها در آن‌ها است؛
+          چراکه در صورت درست عمل‌نکردن <bdi>Web API</bdi> پروژه دچار مشکل
+          می‌شود. اما زمانی که از <bdi>ASP.NET Core</bdi> استفاده می‌کنید،
+          درخواست‌ها از HTML به سمت JSON می‌روند سپس در اختیار کاربر قرار
+          می‌گیرند[reference:33].
+        </li>
+      </ul>
+
+      <div class="callout key">
+        <span class="callout-label">مهم</span>
+        <p>
+          <bdi>ASP.NET Core</bdi> یک <strong>زبان برنامه‌نویسی نیست</strong>؛
+          بلکه یک <strong>فریم‌ورک</strong> است. ما با زبان <code>C#</code>
+          کد می‌نویسیم و از <bdi>ASP.NET Core</bdi> برای ساخت وب‌سایت‌ها و
+          APIها استفاده می‌کنیم.
+        </p>
+      </div>
+    </section>
+
+    <!-- ============ SECTION 4 ============ -->
+    <section class="section fade-in" id="s4">
+      <div class="section-head">
+        <span class="section-num">04</span>
         <h2 class="section-title">الگوی طراحی MVC</h2>
       </div>
 
       <p>
-        <strong>MVC</strong> مخفف سه کلمه <code>Model</code> (مدل)، <code>View</code> (نمایش) و
-        <code>Controller</code> (کنترل‌کننده) است. این یک <strong>الگوی طراحی معماری</strong> است
-        که یک برنامه وب را به سه بخش مستقل تقسیم می‌کند. هدف اصلی این تقسیم‌بندی،
-        <strong>مدیریت پیچیدگی</strong> و <strong>جداسازی دغدغه‌ها</strong> است تا توسعه، نگهداری
-        و تست برنامه ساده‌تر شود.
+        <bdi>MVC</bdi> یک <strong>الگوی طراحی نرم‌افزار</strong> یا
+        <bdi>software design pattern</bdi> است که مخفف کلمات <bdi>Model</bdi>،
+        <bdi>View</bdi> و <bdi>Controller</bdi> است. این سه بخش نرم‌افزاری
+        همیشه با هم در ارتباط هستند[reference:34].
+      </p>
+
+      <p>
+        <strong>Model</strong> وظیفه <strong>ارتباط با پایگاه داده</strong>
+        را برعهده دارد. نقش <strong>View</strong>، <strong>نمایش اطلاعات
+        برای کاربر</strong> است و <strong>Controller</strong> <strong>رابط
+        بین Model و View</strong> است. یعنی اطلاعات را از Model می‌گیرد و
+        جهت نمایش به View ارسال می‌کند[reference:35].
       </p>
 
       <div class="diagram">
@@ -217,556 +458,603 @@
         </div>
       </div>
 
-      <h3>سه جزء اصلی MVC</h3>
-
-      <h4>Model — مدل</h4>
+      <h3>نحوه کار <bdi>MVC</bdi></h3>
       <p>
-        <strong>مدل</strong> نماینده <strong>داده‌ها و منطق تجاری</strong> برنامه است. هر چیزی که
-        مربوط به ساختار داده‌ها، قوانین اعتبارسنجی، محاسبات و تعامل با دیتابیس باشد، در Model
-        قرار می‌گیرد. Model با زبان <code>C#</code> نوشته می‌شود و معمولاً کلاس‌هایی هستند که
-        ویژگی‌ها (Properties) و متدهای مربوط به داده را تعریف می‌کنند.
-      </p>
-      <p>
-        برای مثال، در یک فروشگاه اینترنتی، کلاس <code>Product</code> که شامل
-        <code>Id</code>، <code>Name</code>، <code>Price</code> و <code>Stock</code> است،
-        یک Model محسوب می‌شود.
+        ابتدا کاربر درخواستی را توسط مرورگر خود ارسال می‌کند. این درخواست
+        توسط <strong>Controller</strong> دریافت می‌شود و مورد پردازش قرار
+        می‌گیرد. اگر درخواست به داده نیاز داشته باشد، Controller آن را از
+        <strong>Model</strong> دریافت می‌کند. و یک <strong>View</strong> را
+        انتخاب می‌کند و در صورت نیاز مدل/داده که دریافت کرده را به آن ارسال
+        می‌کند. و در آخر View به کاربر در پاسخ درخواست او اطلاعات را نمایش
+        می‌دهد[reference:36].
       </p>
 
-      <h4>View — نمایش</h4>
-      <p>
-        <strong>View</strong> همان چیزی است که <strong>کاربر نهایی می‌بیند</strong>. تمام صفحاتی
-        که با <code>HTML</code>، <code>CSS</code> و <code>JavaScript</code> ساخته می‌شوند در بخش
-        View قرار می‌گیرند. View مسئول نمایش داده‌ها به کاربر است و نباید منطق تجاری پیچیده‌ای
-        در آن قرار بگیرد. در <bdi>ASP.NET Core MVC</bdi>، Viewها با موتور نمایشی
-        <code>Razor</code> (پسوند <code>.cshtml</code>) نوشته می‌شوند.
-      </p>
+      <h3>مزایای <bdi>MVC</bdi></h3>
+      <ul>
+        <li>
+          <strong>سرعت توسعه:</strong> <bdi>MVC</bdi> باعث می‌شود هر کد در
+          جای مربوط به خودش باشد و نظمی که ایجاد می‌شود باعث افزایش سرعت
+          توسعه کدها می‌شود[reference:37].
+        </li>
+        <li>
+          <strong>افزایش خوانایی کد:</strong> در <bdi>MVC</bdi> به علت مرتب
+          سازی و تمیز بودن کدها، خوانایی کدها بالاتر می‌رود[reference:38].
+        </li>
+        <li>
+          <strong>آسان‌تر شدن دیباگ کد:</strong> در معماری <bdi>MVC</bdi>
+          اگر مشکلی در کد ایجاد شود، به دلیل ساختار مناسب و منظم، مشکل کد
+          سریع‌تر رفع می‌شود[reference:39].
+        </li>
+        <li>
+          <strong>تقسیم کاری بین توسعه‌دهندگان:</strong> در <bdi>MVC</bdi>
+          می‌توان به هر توسعه‌دهنده دسترسی لازم به آن بخش را داد. مثلاً
+          فرانت‌کارها به <bdi>View</bdi> دسترسی دارند یا بک‌اند کارها به
+          <bdi>Controller</bdi>ها[reference:40].
+        </li>
+      </ul>
 
-      <h4>Controller — کنترل‌کننده</h4>
-      <p>
-        <strong>Controller</strong> قلب تپنده برنامه است و وظیفه <strong>برقراری ارتباط بین
-        Model و View</strong> را بر عهده دارد. وقتی کاربر درخواستی می‌فرستد، Controller آن را
-        دریافت می‌کند، در صورت نیاز به Model مراجعه می‌کند و سپس داده‌ها را به View می‌فرستد
-        تا نمایش داده شوند. Controller با زبان <code>C#</code> نوشته می‌شود.
-      </p>
+      <h3>معایب <bdi>MVC</bdi></h3>
+      <ul>
+        <li>
+          <strong>پیچیدگی <bdi>MVC</bdi> زیاد است:</strong> اگر برنامه‌نویس
+          حرفه‌ای نباشد ممکن است با ساختار <bdi>MVC</bdi> زیاد آشنا نباشد و
+          کار او سخت شود[reference:41].
+        </li>
+        <li>
+          <strong>مناسب نرم‌افزار کوچک نیست:</strong> اگر نرم‌افزار شما
+          کوچک باشد و نیازی به توسعه نداشته باشد، <bdi>MVC</bdi> باعث
+          افزایش پیچیدگی و کاهش سرعت برنامه خواهد شد[reference:42].
+        </li>
+      </ul>
 
       <div class="callout key">
-        <span class="callout-label">قانون طلایی MVC</span>
+        <span class="callout-label">نتیجه‌گیری</span>
         <p>
-          Model و Controller با <code>C#</code> نوشته می‌شوند و View با
-          <code>HTML</code>/<code>CSS</code>/<code>JavaScript</code>. Controller هرگز مستقیماً
-          داده‌ها را نمایش نمی‌دهد و View نباید مستقیماً به دیتابیس دسترسی داشته باشد. هر جزء فقط
-          وظیفه خودش را انجام می‌دهد.
+          در مجموع ممکن است الگوی <bdi>MVC</bdi> در ابتدا کمی پیچیده و
+          مشکل به نظر برسد و ترجیح دهید بدون استفاده از این الگو پروژه‌های
+          خود را پیش ببرید، اما اگر قصد انجام پروژه‌های بزرگ که نیازمند کار
+          تیمی هستند را دارید هرگز از این الگو غافل نشوید. زیرا همان‌طور که
+          در بالا توضیح داده شد این الگو با جداسازی <bdi>View</bdi>،
+          <bdi>Model</bdi> و <bdi>Controller</bdi> امکان کار جداگانه بر
+          روی هر یک از بخش‌ها را فراهم می‌کند[reference:43].
         </p>
       </div>
     </section>
 
-    <section class="section fade-in" id="s3">
-      <div class="section-head">
-        <span class="section-num">03</span>
-        <h2 class="section-title">چرخه پردازش درخواست</h2>
-      </div>
-
-      <p>
-        برای درک دقیق MVC، باید بدانیم وقتی کاربر یک آدرس را در مرورگر وارد می‌کند، در سرور
-        واقعاً چه اتفاقی می‌افتد. نکته مهم این است که <strong>View هیچ‌وقت درخواست نمی‌فرستد</strong>؛
-        View یک قالب روی سرور است که یک بار رندر می‌شود و به HTML تبدیل می‌شود. آنچه کاربر با آن
-        تعامل می‌کند، HTML نهایی است که مرورگر نمایش می‌دهد. درخواست بعدی هم از طرف
-        <strong>مرورگر</strong> به سرور ارسال می‌شود، نه از طرف View.
-      </p>
-
-      <div class="diagram">
-        <svg viewBox="0 0 780 800" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="چرخه پردازش درخواست در MVC">
-          <defs>
-            <marker id="mk-down" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto">
-              <polygon points="0 0, 7 3, 0 6" fill="#58a6ff"/>
-            </marker>
-          </defs>
-
-          <rect x="60" y="20" width="660" height="100" rx="10" fill="#161b22" stroke="#6e7681" stroke-width="1.5"/>
-          <circle cx="680" cy="70" r="20" fill="#0d1117" stroke="#58a6ff" stroke-width="2"/>
-          <text x="680" y="77" text-anchor="middle" fill="#58a6ff" font-family="JetBrains Mono, monospace" font-size="14" font-weight="600">1</text>
-          <text x="645" y="62" text-anchor="start" fill="#e6edf3" font-family="Vazirmatn, sans-serif" font-size="14.5" font-weight="600">کاربر آدرس را در مرورگر وارد می‌کند</text>
-          <text x="645" y="90" text-anchor="start" fill="#8b949e" font-family="Vazirmatn, sans-serif" font-size="12.5">یا روی یک لینک کلیک می‌کند / فرمی را ارسال می‌کند</text>
-
-          <line x1="390" y1="126" x2="390" y2="150" stroke="#58a6ff" stroke-width="2" marker-end="url(#mk-down)"/>
-
-          <rect x="60" y="154" width="660" height="100" rx="10" fill="#161b22" stroke="#d29922" stroke-width="2"/>
-          <circle cx="680" cy="204" r="20" fill="#0d1117" stroke="#58a6ff" stroke-width="2"/>
-          <text x="680" y="211" text-anchor="middle" fill="#58a6ff" font-family="JetBrains Mono, monospace" font-size="14" font-weight="600">2</text>
-          <text x="645" y="196" text-anchor="start" fill="#e6edf3" font-family="Vazirmatn, sans-serif" font-size="14.5" font-weight="600">مرورگر درخواست HTTP را به سرور ارسال می‌کند</text>
-          <text x="645" y="224" text-anchor="start" fill="#8b949e" font-family="Vazirmatn, sans-serif" font-size="12.5">آدرس درخواست‌شده در قالب یک Request به سرور می‌رسد</text>
-
-          <line x1="390" y1="260" x2="390" y2="284" stroke="#58a6ff" stroke-width="2" marker-end="url(#mk-down)"/>
-
-          <rect x="60" y="288" width="660" height="100" rx="10" fill="#161b22" stroke="#58a6ff" stroke-width="2"/>
-          <circle cx="680" cy="338" r="20" fill="#0d1117" stroke="#58a6ff" stroke-width="2"/>
-          <text x="680" y="345" text-anchor="middle" fill="#58a6ff" font-family="JetBrains Mono, monospace" font-size="14" font-weight="600">3</text>
-          <text x="645" y="330" text-anchor="start" fill="#e6edf3" font-family="Vazirmatn, sans-serif" font-size="14.5" font-weight="600">سیستم Routing درخواست را به Controller هدایت می‌کند</text>
-          <text x="645" y="358" text-anchor="start" fill="#8b949e" font-family="Vazirmatn, sans-serif" font-size="12.5">بر اساس الگوی آدرس، Controller و Action مناسب انتخاب می‌شود</text>
-
-          <line x1="390" y1="394" x2="390" y2="418" stroke="#58a6ff" stroke-width="2" marker-end="url(#mk-down)"/>
-
-          <rect x="60" y="422" width="660" height="100" rx="10" fill="#161b22" stroke="#3fb950" stroke-width="2"/>
-          <circle cx="680" cy="472" r="20" fill="#0d1117" stroke="#58a6ff" stroke-width="2"/>
-          <text x="680" y="479" text-anchor="middle" fill="#58a6ff" font-family="JetBrains Mono, monospace" font-size="14" font-weight="600">4</text>
-          <text x="645" y="464" text-anchor="start" fill="#e6edf3" font-family="Vazirmatn, sans-serif" font-size="14.5" font-weight="600">Controller در صورت نیاز با Model ارتباط می‌گیرد</text>
-          <text x="645" y="492" text-anchor="start" fill="#8b949e" font-family="Vazirmatn, sans-serif" font-size="12.5">Model داده‌ها را از دیتابیس می‌خواند و به Controller برمی‌گرداند</text>
-
-          <line x1="390" y1="528" x2="390" y2="552" stroke="#58a6ff" stroke-width="2" marker-end="url(#mk-down)"/>
-
-          <rect x="60" y="556" width="660" height="100" rx="10" fill="#161b22" stroke="#58a6ff" stroke-width="2"/>
-          <circle cx="680" cy="606" r="20" fill="#0d1117" stroke="#58a6ff" stroke-width="2"/>
-          <text x="680" y="613" text-anchor="middle" fill="#58a6ff" font-family="JetBrains Mono, monospace" font-size="14" font-weight="600">5</text>
-          <text x="645" y="598" text-anchor="start" fill="#e6edf3" font-family="Vazirmatn, sans-serif" font-size="14.5" font-weight="600">Controller داده‌ها را به View می‌فرستد تا رندر شود</text>
-          <text x="645" y="626" text-anchor="start" fill="#8b949e" font-family="Vazirmatn, sans-serif" font-size="12.5">View روی سرور اجرا و به HTML نهایی تبدیل می‌شود</text>
-
-          <line x1="390" y1="662" x2="390" y2="686" stroke="#58a6ff" stroke-width="2" marker-end="url(#mk-down)"/>
-
-          <rect x="60" y="690" width="660" height="100" rx="10" fill="#161b22" stroke="#d29922" stroke-width="2"/>
-          <circle cx="680" cy="740" r="20" fill="#0d1117" stroke="#58a6ff" stroke-width="2"/>
-          <text x="680" y="747" text-anchor="middle" fill="#58a6ff" font-family="JetBrains Mono, monospace" font-size="14" font-weight="600">6</text>
-          <text x="645" y="732" text-anchor="start" fill="#e6edf3" font-family="Vazirmatn, sans-serif" font-size="14.5" font-weight="600">HTML نهایی به مرورگر برگشته و به کاربر نمایش داده می‌شود</text>
-          <text x="645" y="760" text-anchor="start" fill="#8b949e" font-family="Vazirmatn, sans-serif" font-size="12.5">مرورگر HTML دریافتی را تفسیر و رندر می‌کند</text>
-        </svg>
-        <div class="diagram-caption">
-          چرخه کامل پردازش درخواست — از ورود آدرس تا نمایش نتیجه به کاربر
-        </div>
-      </div>
-
-      <div class="callout note">
-        <span class="callout-label">نکته فنی</span>
-        <p>
-          نکته مهمی که گاهی در توضیحات ساده‌سازی‌شده نادیده گرفته می‌شود این است که
-          <strong>View هیچ‌وقت درخواست نمی‌فرستد</strong>. View یک قالب روی سرور است که صرفاً یک بار
-          رندر می‌شود. آنچه کاربر با آن تعامل دارد، HTML نهایی است که مرورگر نمایش داده. درخواست
-          بعدی هم مستقیم از طرف مرورگر به Controller می‌رود.
-        </p>
-      </div>
-
-      <div class="callout key">
-        <span class="callout-label">نکته مهم</span>
-        <p>
-          کاربر می‌تواند مستقیماً یک URL را در مرورگر وارد کند و بدون اینکه قبلاً هیچ صفحه‌ای از
-          سایت را دیده باشد، به Controller برود. همچنین در APIها که اصلاً View وجود ندارد،
-          درخواست مستقیم به Controller می‌رود و Controller به‌جای View، داده <code>JSON</code>
-          برمی‌گرداند. این نشان می‌دهد Controller کاملاً مستقل از View عمل می‌کند.
-        </p>
-      </div>
-    </section>
-
-    <section class="section fade-in" id="s4">
-      <div class="section-head">
-        <span class="section-num">04</span>
-        <h2 class="section-title">ساختار پروژه ASP.NET Core MVC</h2>
-      </div>
-
-      <p>
-        وقتی یک پروژه <code>ASP.NET Core MVC</code> جدید در <code>Visual Studio</code> ایجاد می‌کنید،
-        به‌صورت پیش‌فرض چند پوشه و فایل برای شما ساخته می‌شود. آشنایی با این ساختار برای شروع
-        کار ضروری است، چون MVC بر پایه <strong>قرارداد (Convention)</strong> کار می‌کند و
-        محل قرارگیری فایل‌ها اهمیت زیادی دارد.
-      </p>
-
-      <div class="ft-tree">
-        <ul>
-          <li>
-            <div class="ft-node ft-dir">
-              <svg class="ft-ico" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                <path d="M2 4.5V12a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V6.5a1 1 0 0 0-1-1H7.5L6 4H3a1 1 0 0 0-1 .5z"/>
-              </svg>
-              <span class="ft-name">Controllers</span>
-            </div>
-            <ul>
-              <li>
-                <div class="ft-node ft-file">
-                  <svg class="ft-ico" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                    <path d="M9.5 1.5H4a1 1 0 0 0-1 1v11a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V5z"/>
-                    <path d="M9.5 1.5V5H13"/>
-                  </svg>
-                  <span class="ft-name">HomeController.cs</span>
-                  <span class="ft-cmt">کنترل‌کننده اصلی</span>
-                </div>
-              </li>
-            </ul>
-          </li>
-          <li>
-            <div class="ft-node ft-dir">
-              <svg class="ft-ico" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                <path d="M2 4.5V12a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V6.5a1 1 0 0 0-1-1H7.5L6 4H3a1 1 0 0 0-1 .5z"/>
-              </svg>
-              <span class="ft-name">Models</span>
-            </div>
-            <ul>
-              <li>
-                <div class="ft-node ft-note">
-                  <span>کلاس‌های مدل اینجا قرار می‌گیرند</span>
-                </div>
-              </li>
-            </ul>
-          </li>
-          <li>
-            <div class="ft-node ft-dir">
-              <svg class="ft-ico" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                <path d="M2 4.5V12a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V6.5a1 1 0 0 0-1-1H7.5L6 4H3a1 1 0 0 0-1 .5z"/>
-              </svg>
-              <span class="ft-name">Views</span>
-            </div>
-            <ul>
-              <li>
-                <div class="ft-node ft-dir">
-                  <svg class="ft-ico" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                    <path d="M2 4.5V12a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V6.5a1 1 0 0 0-1-1H7.5L6 4H3a1 1 0 0 0-1 .5z"/>
-                  </svg>
-                  <span class="ft-name">Home</span>
-                </div>
-                <ul>
-                  <li>
-                    <div class="ft-node ft-file">
-                      <svg class="ft-ico" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                        <path d="M9.5 1.5H4a1 1 0 0 0-1 1v11a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V5z"/>
-                        <path d="M9.5 1.5V5H13"/>
-                      </svg>
-                      <span class="ft-name">Index.cshtml</span>
-                      <span class="ft-cmt">صفحه اصلی سایت</span>
-                    </div>
-                  </li>
-                  <li>
-                    <div class="ft-node ft-file">
-                      <svg class="ft-ico" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                        <path d="M9.5 1.5H4a1 1 0 0 0-1 1v11a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V5z"/>
-                        <path d="M9.5 1.5V5H13"/>
-                      </svg>
-                      <span class="ft-name">About.cshtml</span>
-                      <span class="ft-cmt">صفحه درباره</span>
-                    </div>
-                  </li>
-                </ul>
-              </li>
-              <li>
-                <div class="ft-node ft-dir">
-                  <svg class="ft-ico" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                    <path d="M2 4.5V12a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V6.5a1 1 0 0 0-1-1H7.5L6 4H3a1 1 0 0 0-1 .5z"/>
-                  </svg>
-                  <span class="ft-name">Shared</span>
-                </div>
-                <ul>
-                  <li>
-                    <div class="ft-node ft-file">
-                      <svg class="ft-ico" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                        <path d="M9.5 1.5H4a1 1 0 0 0-1 1v11a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V5z"/>
-                        <path d="M9.5 1.5V5H13"/>
-                      </svg>
-                      <span class="ft-name">_Layout.cshtml</span>
-                      <span class="ft-cmt">قالب اصلی</span>
-                    </div>
-                  </li>
-                </ul>
-              </li>
-              <li>
-                <div class="ft-node ft-file">
-                  <svg class="ft-ico" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                    <path d="M9.5 1.5H4a1 1 0 0 0-1 1v11a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V5z"/>
-                    <path d="M9.5 1.5V5H13"/>
-                  </svg>
-                  <span class="ft-name">_ViewImports.cshtml</span>
-                  <span class="ft-cmt">واردات مشترک</span>
-                </div>
-              </li>
-              <li>
-                <div class="ft-node ft-file">
-                  <svg class="ft-ico" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                    <path d="M9.5 1.5H4a1 1 0 0 0-1 1v11a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V5z"/>
-                    <path d="M9.5 1.5V5H13"/>
-                  </svg>
-                  <span class="ft-name">_ViewStart.cshtml</span>
-                  <span class="ft-cmt">تنظیمات اولیه</span>
-                </div>
-              </li>
-            </ul>
-          </li>
-          <li>
-            <div class="ft-node ft-dir">
-              <svg class="ft-ico" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                <path d="M2 4.5V12a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V6.5a1 1 0 0 0-1-1H7.5L6 4H3a1 1 0 0 0-1 .5z"/>
-              </svg>
-              <span class="ft-name">wwwroot</span>
-              <span class="ft-cmt">فایل‌های ایستا</span>
-            </div>
-            <ul>
-              <li>
-                <div class="ft-node ft-dir">
-                  <svg class="ft-ico" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                    <path d="M2 4.5V12a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V6.5a1 1 0 0 0-1-1H7.5L6 4H3a1 1 0 0 0-1 .5z"/>
-                  </svg>
-                  <span class="ft-name">css</span>
-                  <span class="ft-cmt">فایل‌های CSS</span>
-                </div>
-              </li>
-              <li>
-                <div class="ft-node ft-dir">
-                  <svg class="ft-ico" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                    <path d="M2 4.5V12a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V6.5a1 1 0 0 0-1-1H7.5L6 4H3a1 1 0 0 0-1 .5z"/>
-                  </svg>
-                  <span class="ft-name">js</span>
-                  <span class="ft-cmt">فایل‌های JavaScript</span>
-                </div>
-              </li>
-              <li>
-                <div class="ft-node ft-dir">
-                  <svg class="ft-ico" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                    <path d="M2 4.5V12a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V6.5a1 1 0 0 0-1-1H7.5L6 4H3a1 1 0 0 0-1 .5z"/>
-                  </svg>
-                  <span class="ft-name">lib</span>
-                  <span class="ft-cmt">کتابخانه‌های خارجی</span>
-                </div>
-              </li>
-              <li>
-                <div class="ft-node ft-file">
-                  <svg class="ft-ico" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                    <path d="M9.5 1.5H4a1 1 0 0 0-1 1v11a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V5z"/>
-                    <path d="M9.5 1.5V5H13"/>
-                  </svg>
-                  <span class="ft-name">favicon.ico</span>
-                  <span class="ft-cmt">آیکون سایت</span>
-                </div>
-              </li>
-            </ul>
-          </li>
-          <li>
-            <div class="ft-node ft-dir">
-              <svg class="ft-ico" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                <path d="M2 4.5V12a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V6.5a1 1 0 0 0-1-1H7.5L6 4H3a1 1 0 0 0-1 .5z"/>
-              </svg>
-              <span class="ft-name">Properties</span>
-            </div>
-            <ul>
-              <li>
-                <div class="ft-node ft-file">
-                  <svg class="ft-ico" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                    <path d="M9.5 1.5H4a1 1 0 0 0-1 1v11a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V5z"/>
-                    <path d="M9.5 1.5V5H13"/>
-                  </svg>
-                  <span class="ft-name">launchSettings.json</span>
-                  <span class="ft-cmt">تنظیمات اجرا</span>
-                </div>
-              </li>
-            </ul>
-          </li>
-          <li>
-            <div class="ft-node ft-file">
-              <svg class="ft-ico" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                <path d="M9.5 1.5H4a1 1 0 0 0-1 1v11a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V5z"/>
-                <path d="M9.5 1.5V5H13"/>
-              </svg>
-              <span class="ft-name">appsettings.json</span>
-              <span class="ft-cmt">تنظیمات برنامه</span>
-            </div>
-          </li>
-          <li>
-            <div class="ft-node ft-file">
-              <svg class="ft-ico" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                <path d="M9.5 1.5H4a1 1 0 0 0-1 1v11a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V5z"/>
-                <path d="M9.5 1.5V5H13"/>
-              </svg>
-              <span class="ft-name">appsettings.Development.json</span>
-              <span class="ft-cmt">تنظیمات توسعه</span>
-            </div>
-          </li>
-          <li>
-            <div class="ft-node ft-file">
-              <svg class="ft-ico" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                <path d="M9.5 1.5H4a1 1 0 0 0-1 1v11a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V5z"/>
-                <path d="M9.5 1.5V5H13"/>
-              </svg>
-              <span class="ft-name">Program.cs</span>
-              <span class="ft-cmt">نقطه ورود برنامه</span>
-            </div>
-          </li>
-          <li>
-            <div class="ft-node ft-file">
-              <svg class="ft-ico" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                <path d="M9.5 1.5H4a1 1 0 0 0-1 1v11a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V5z"/>
-                <path d="M9.5 1.5V5H13"/>
-              </svg>
-              <span class="ft-name">ProjectName.csproj</span>
-              <span class="ft-cmt">فایل پروژه</span>
-            </div>
-          </li>
-        </ul>
-      </div>
-
-      <h3>توضیح پوشه‌های مهم</h3>
-
-      <div class="table-wrap">
-        <table>
-          <thead>
-            <tr><th>پوشه / فایل</th><th>کاربرد</th></tr>
-          </thead>
-          <tbody>
-            <tr><td><strong>Controllers/</strong></td><td>محل قرارگیری کلاس‌های Controller. نام کلاس‌ها باید با پسوند <code>Controller</code> تمام شود.</td></tr>
-            <tr><td><strong>Models/</strong></td><td>کلاس‌های مدل که ساختار داده و منطق تجاری را تعریف می‌کنند.</td></tr>
-            <tr><td><strong>Views/</strong></td><td>فایل‌های نمایشی (<code>Razor View</code>) که خروجی HTML تولید می‌کنند.</td></tr>
-            <tr><td><strong>wwwroot/</strong></td><td>محل قرارگیری فایل‌های ایستا مانند CSS، JavaScript، تصاویر و فونت‌ها.</td></tr>
-            <tr><td><strong>Properties/</strong></td><td>تنظیمات مربوط به اجرای پروژه در محیط توسعه.</td></tr>
-            <tr><td><strong>appsettings.json</strong></td><td>تنظیمات برنامه (رشته‌های اتصال، لاگ‌ها و...).</td></tr>
-            <tr><td><strong>Program.cs</strong></td><td>نقطه ورود برنامه و محل تنظیم سرویس‌ها و Middlewareها.</td></tr>
-          </tbody>
-        </table>
-      </div>
-
-      <div class="callout note">
-        <span class="callout-label">قرارداد پیش‌فرض (Convention over Configuration)</span>
-        <p>
-          <code>ASP.NET Core MVC</code> بر پایه «قرارداد» کار می‌کند. اگر Controller شما
-          <code>HomeController</code> نام داشته باشد، به‌صورت خودکار به دنبال Viewهای مربوطه
-          در پوشه <code>Views/Home/</code> می‌گردد. این یعنی نیازی به تنظیم دستی مسیرها
-          ندارید و می‌توانید روی منطق برنامه تمرکز کنید.
-        </p>
-      </div>
-    </section>
-
+    <!-- ============ SECTION 5 ============ -->
     <section class="section fade-in" id="s5">
       <div class="section-head">
         <span class="section-num">05</span>
-        <h2 class="section-title">اولین پروژه عملی</h2>
+        <h2 class="section-title">مقایسه <bdi>WebForm</bdi>، <bdi>MVC</bdi> و <bdi>Core</bdi></h2>
       </div>
 
+      <h3><bdi>ASP.NET WebForms</bdi></h3>
       <p>
-        پس از آشنایی با مفاهیم نظری، حالا مراحل ساخت یک پروژه ساده
-        <code>ASP.NET Core MVC</code> را مرور می‌کنیم.
+        <bdi>ASP.NET WebForms</bdi> یک فریم‌ورک توسعه وب است که توسط
+        مایکروسافت ارائه شده. این فریم‌ورک به توسعه وب‌سایت‌ها و برنامه‌های
+        وب مبتنی بر سرور در محیط <bdi>.NET</bdi> کمک می‌کند. <bdi>ASP.NET
+        WebForms</bdi> مبتنی بر <strong>مدل ویندوزی</strong>
+        (<bdi>Windows-based</bdi>) و <strong>مدل رویدادی</strong>
+        (<bdi>event-driven</bdi>) است[reference:44].
       </p>
 
-      <h3>پیش‌نیازها</h3>
+      <p>
+        <strong>تاریخچه <bdi>WebForms</bdi>:</strong>
+      </p>
       <ul>
-        <li><strong><bdi>Visual Studio 2022</bdi></strong> نسخه ۱۷ یا بالاتر — یا <code>Visual Studio Code</code> با افزونه <code>C# Dev Kit</code>.</li>
-        <li><strong><bdi>.NET SDK</bdi></strong> نسخه ۶ یا بالاتر (ترجیحاً <code><bdi>.NET 8</bdi></code>).</li>
-        <li>آشنایی مقدماتی با زبان <code>C#</code> و مفاهیم شی‌گرایی.</li>
+        <li>در سال ۲۰۰۲ اولین نسخه از <bdi>ASP.NET Web Forms</bdi> با <bdi>.NET Framework 1.0</bdi> منتشر شد.</li>
+        <li>در سال ۲۰۰۵ نسخه <bdi>ASP.NET 2.0</bdi> منتشر شد.</li>
+        <li>در سال ۲۰۰۸ نسخه <bdi>ASP.NET 3.5</bdi> با افزونه‌ها و بهبودهای دیگر منتشر شد.</li>
+        <li>در سال ۲۰۱۰ نسخه <bdi>ASP.NET 4.0</bdi> با ویژگی‌های جدیدتری منتشر شد.</li>
+        <li>در سال ۲۰۱۲ نسخه <bdi>ASP.NET 4.5</bdi> با اضافه شدن <bdi>ASP.NET Web API</bdi> و <bdi>SignalR</bdi> منتشر شد[reference:45].</li>
       </ul>
 
-      <h3>مراحل ساخت پروژه</h3>
-      <ol class="flow">
-        <li>
-          <strong>اجرای Visual Studio</strong>
-          <span>برنامه را اجرا کنید و روی <code>Create a new project</code> کلیک کنید.</span>
-        </li>
-        <li>
-          <strong>انتخاب قالب پروژه</strong>
-          <span>در کادر جستجو عبارت <code>MVC</code> را تایپ کنید و گزینه <code>ASP.NET Core Web App (Model-View-Controller)</code> را انتخاب کنید.</span>
-        </li>
-        <li>
-          <strong>نام‌گذاری پروژه</strong>
-          <span>نام پروژه را وارد کنید (مثلاً <code>MyFirstApp</code>) و روی <code>Next</code> کلیک کنید.</span>
-        </li>
-        <li>
-          <strong>انتخاب نسخه <bdi>.NET</bdi></strong>
-          <span>در پنجره بعدی، از منوی کشویی <code>Framework</code>، نسخه <code><bdi>.NET 8.0</bdi></code> (یا جدیدتر) را انتخاب کنید. سایر گزینه‌ها را به حالت پیش‌فرض بگذارید و روی <code>Create</code> کلیک کنید.</span>
-        </li>
-        <li>
-          <strong>ساخت خودکار پروژه</strong>
-          <span>پروژه به‌صورت خودکار با یک قالب پیش‌فرض ساخته می‌شود که شامل چندین کنترلر، View و فایل‌های تنظیمات است.</span>
-        </li>
-      </ol>
-
-      <h3>اجرای پروژه</h3>
       <p>
-        برای اجرای پروژه کافی است روی دکمه <strong>Play</strong> (فلش سبز) در نوار ابزار کلیک
-        کنید یا کلید <code>F5</code> را بزنید. مرورگر به‌صورت خودکار باز می‌شود و آدرس
-        <code>localhost</code> را نمایش می‌دهد که به کامپیوتر محلی خودتان اشاره می‌کند.
+        <strong>مزایا <bdi>WebForms</bdi>:</strong>
+      </p>
+      <ul>
+        <li>سرعت توسعه بالا با استفاده از کنترل‌های کاربری (<bdi>Server Controls</bdi>) و مدل برنامه‌نویسی <bdi>Code-Behind</bdi>.</li>
+        <li>ویژگی‌های بصری مانند <bdi>ViewState</bdi> برای مدیریت وضعیت صفحه.</li>
+        <li>سازگاری با پلتفرم‌ها و وب‌سرورهای مختلف[reference:46].</li>
+      </ul>
+
+      <p>
+        <strong>معایب <bdi>WebForms</bdi>:</strong>
+      </p>
+      <ul>
+        <li>کد HTML پیچیده و سنگین بودن صفحات.</li>
+        <li>سختی مدیریت وضعیت و <bdi>Unit Testing</bdi>.</li>
+        <li>عدم انعطاف‌پذیری وابستگی به وضعیت[reference:47].</li>
+      </ul>
+
+      <h3><bdi>ASP.NET MVC</bdi></h3>
+      <p>
+        <bdi>ASP.NET MVC</bdi> یک فریم‌ورک توسعه وب است. این فریم‌ورک بر
+        مدل طراحی <bdi>MVC</bdi> تکیه دارد که به توسعه وب بر اساس تفکیک
+        وظایف مربوط به <strong>مدل</strong> (<bdi>Model</bdi>)،
+        <strong>نمایش</strong> (<bdi>View</bdi>) و <strong>کنترل</strong>
+        (<bdi>Controller</bdi>) کمک می‌کند[reference:48].
       </p>
 
       <p>
-        در <code>ASP.NET Core</code>، برخلاف <code>Web Forms</code>، چرخه صفحه
-        (<code>Page Life Cycle</code>) به آن شکل کلاسیک وجود ندارد. درخواست‌ها مستقیماً از
-        طریق <strong>روتینگ (Routing)</strong> به Controller هدایت می‌شوند و اکشن‌ها
-        پردازش را انجام می‌دهند.
+        <strong>تاریخچه <bdi>ASP.NET MVC</bdi>:</strong>
       </p>
-    </section>
+      <ul>
+        <li>در سال ۲۰۰۹ اولین نسخه از <bdi>ASP.NET MVC</bdi> با <bdi>.NET Framework 3.5</bdi> منتشر شد.</li>
+        <li>در سال ۲۰۱۰ نسخه <bdi>ASP.NET MVC 2</bdi> منتشر شد.</li>
+        <li>در سال ۲۰۱۱ نسخه <bdi>ASP.NET MVC 3</bdi> با اضافه شدن <bdi>Razor</bdi> و برخی ویژگی‌های جدید منتشر شد.</li>
+        <li>در سال ۲۰۱۲ نسخه <bdi>ASP.NET MVC 4</bdi> با افزودن <bdi>ASP.NET Web API</bdi> منتشر شد.</li>
+        <li>در سال ۲۰۱۵ نسخه <bdi>ASP.NET MVC 5</bdi> با بهبودها و اضافه شدن امکانات جدید منتشر شد[reference:49].</li>
+      </ul>
 
-    <section class="section fade-in" id="s6">
-      <div class="section-head">
-        <span class="section-num">06</span>
-        <h2 class="section-title">مزایای استفاده از MVC</h2>
+      <p>
+        <strong>مزایا <bdi>ASP.NET MVC</bdi>:</strong>
+      </p>
+      <ul>
+        <li>استفاده از معماری <bdi>MVC</bdi>.</li>
+        <li>تمرکز بر روی اصول <bdi>RESTful</bdi> و ساختار کلاینت-سرور.</li>
+        <li>قابلیت <bdi>Unit Testing</bdi> و امکانات تست‌پذیری بهتر[reference:50].</li>
+      </ul>
+
+      <p>
+        <strong>معایب <bdi>ASP.NET MVC</bdi>:</strong>
+      </p>
+      <ul>
+        <li>مدیریت فایل‌های <bdi>JavaScript</bdi> و <bdi>CSS</bdi> مقداری پیچیده است.</li>
+        <li>آشنایی برخی توسعه‌دهندگان با مفاهیم <bdi>MVC</bdi> ممکن است زمان‌بر باشد.</li>
+        <li>نیاز به مدیریت بیشتری روی <bdi>URL</bdi> و <bdi>Routing</bdi> می‌باشد[reference:51].</li>
+      </ul>
+
+      <h3><bdi>ASP.NET Core</bdi></h3>
+      <p>
+        <bdi>ASP.NET Core</bdi> یک فریم‌ورک توسعه وب و <strong>چندپلتفرمی</strong>
+        است. این فریم‌ورک به‌عنوان نسخه به‌روز شده و جدیدتر از
+        <bdi>ASP.NET</bdi> عرضه شده و برخی از مشکلات و نقاط ضعف پیشین را
+        حل کرده است[reference:52].
+      </p>
+
+      <p>
+        <strong>تاریخچه <bdi>ASP.NET Core</bdi>:</strong>
+      </p>
+      <ul>
+        <li>در سال ۲۰۱۶ اولین نسخه از <bdi>ASP.NET Core 1.0</bdi> به‌عنوان یک فریم‌ورک بازسازی‌شده منتشر شد.</li>
+        <li>در سال ۲۰۱۷ نسخه <bdi>ASP.NET Core 2.0</bdi> با بهبود عملکرد و اضافه شدن ویژگی‌های جدید منتشر شد.</li>
+        <li>در سال ۲۰۱۸ نسخه <bdi>ASP.NET Core 2.1</bdi> با بهبودها و توسعه‌های دیگر منتشر شد.</li>
+        <li>در سال ۲۰۱۹ نسخه <bdi>ASP.NET Core 3.0</bdi> با امکانات جدید منتشر شد.</li>
+        <li>در سال ۲۰۲۰ نسخه <bdi>ASP.NET 5</bdi> با تغییر نام منتشر شد.</li>
+        <li>در سال ۲۰۲۱ نسخه <bdi>ASP.NET 6</bdi> منتشر شد.</li>
+        <li>در سال ۲۰۲۲ نسخه <bdi>ASP.NET 7</bdi> منتشر شد.</li>
+        <li>در سال ۲۰۲۳ نسخه <bdi>ASP.NET 8</bdi> منتشر شد[reference:53].</li>
+      </ul>
+
+      <h3>جدول مقایسه کامل</h3>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>معیار</th><th><bdi>WebForms</bdi></th><th><bdi>ASP.NET MVC</bdi></th><th><bdi>ASP.NET Core</bdi></th></tr>
+          </thead>
+          <tbody>
+            <tr><td>سال عرضه</td><td>۲۰۰۲</td><td>۲۰۰۹</td><td>۲۰۱۶</td></tr>
+            <tr><td>مدل برنامه‌نویسی</td><td>صفحه‌محور</td><td>اکشن‌محور</td><td>اکشن‌محور</td></tr>
+            <tr><td>سیستم‌عامل</td><td>فقط ویندوز</td><td>فقط ویندوز</td><td>ویندوز، لینوکس، مک</td></tr>
+            <tr><td>متن‌باز</td><td>خیر</td><td>خیر</td><td>بله</td></tr>
+            <tr><td>کنترل روی HTML</td><td>کم</td><td>کامل</td><td>کامل</td></tr>
+            <tr><td>تست‌پذیری</td><td>ضعیف</td><td>خوب</td><td>عالی</td></tr>
+            <tr><td>عملکرد</td><td>کند</td><td>متوسط</td><td>سریع</td></tr>
+            <tr><td>وضعیت فعلی</td><td>منسوخ</td><td>قدیمی</td><td>فعال</td></tr>
+          </tbody>
+        </table>
       </div>
 
-      <p>
-        MVC به دلیل <strong>جداسازی دغدغه‌ها</strong> (<code>Separation of Concerns</code>)
-        مزایای متعددی دارد که آن را به انتخاب مناسبی برای برنامه‌های وب پویا تبدیل می‌کند.
-      </p>
-
-      <div class="card-grid">
-        <div class="card">
-          <div class="card-title">قابلیت نگهداری بالا</div>
-          <div class="card-desc">هر بخش (Model، View، Controller) یک وظیفه مشخص دارد و تغییر در یکی، بخش‌های دیگر را تحت تأثیر قرار نمی‌دهد.</div>
-        </div>
-        <div class="card">
-          <div class="card-title">تست‌پذیری</div>
-          <div class="card-desc">Model و Controller را می‌توان به‌صورت مستقل از View تست کرد. این کار کیفیت کد را بسیار افزایش می‌دهد.</div>
-        </div>
-        <div class="card">
-          <div class="card-title">کار تیمی بهتر</div>
-          <div class="card-desc">تیم طراحی UI می‌تواند روی View کار کند و تیم بک‌اند روی Model و Controller، بدون تداخل.</div>
-        </div>
-        <div class="card">
-          <div class="card-title">مقیاس‌پذیری</div>
-          <div class="card-desc">پروژه‌های بزرگ را می‌توان به‌راحتی بین اعضای تیم تقسیم کرد و توسعه داد.</div>
-        </div>
-      </div>
-
-      <div class="callout key">
-        <span class="callout-label">مقایسه با Web Forms</span>
+      <div class="callout warn">
+        <span class="callout-label">توجه</span>
         <p>
-          در <code>Web Forms</code>، منطق برنامه با ظاهر صفحه کاملاً درهم تنیده بود و همین
-          موضوع نگهداری و تست را دشوار می‌کرد. اما در <code>MVC</code>، این دو کاملاً از هم
-          جدا هستند و همین موضوع باعث می‌شود MVC برای پروژه‌های پویا و مدرن انتخاب بهتری
-          باشد.
+          اگر امروز می‌خواهید پروژه جدیدی شروع کنید، <strong>قطعاً
+          <bdi>ASP.NET Core</bdi></strong> را انتخاب کنید. <bdi>WebForms</bdi>
+          و <bdi>ASP.NET MVC</bdi> دیگر توصیه نمی‌شوند و فقط برای نگهداری
+          پروژه‌های قدیمی استفاده می‌شوند.
         </p>
       </div>
     </section>
 
-    <section class="section fade-in" id="s7">
+    <!-- ============ SECTION 6 ============ -->
+    <section class="section fade-in" id="s6">
       <div class="section-head">
-        <span class="section-num">07</span>
-        <h2 class="section-title">خلاصه مطالب</h2>
+        <span class="section-num">06</span>
+        <h2 class="section-title">آشنایی با <bdi>HTTP</bdi> و <bdi>HTTPS</bdi></h2>
       </div>
 
       <p>
-        در این قسمت با مفاهیم بنیادین برنامه‌نویسی سمت سرور و الگوی معماری MVC آشنا شدیم. جدول
-        زیر خلاصه‌ای از مهم‌ترین نکات مطرح‌شده است.
+        زمانی که در مرورگر خود آدرس یک وب‌سایت را وارد می‌کنید، توسط
+        پروتکل <bdi>HTTP</bdi> است که می‌توانید اطلاعات آن سایت را درون
+        مرورگر یا کامپیوتر خودتان مشاهده کنید. در واقع وقتی شما یک آدرس را
+        درون مرورگر خود وارد می‌کنید، پروتکل <bdi>HTTP</bdi> یک درخواست
+        یا <bdi>Request</bdi> از نوع <bdi>GET</bdi> به سمت سرور ارسال
+        می‌کند. و در پاسخ یا <bdi>Response</bdi> اطلاعات مورد نیاز را
+        دریافت و در مرورگر به کاربر یا همان کلاینت نمایش می‌دهد[reference:54].
+      </p>
+
+      <p>
+        در کل می‌توان گفت پروتکل <bdi>HTTP</bdi> کلیه تعاملات بین کلاینت
+        با سرور را انجام می‌دهد. هر کاری در وب توسط پروتکل <bdi>HTTP</bdi>
+        صورت می‌پذیرد. به زبان ساده می‌توان گفت ارتباط بین سرور و کلاینت
+        توسط پروتکل <bdi>HTTP</bdi> انجام می‌شود[reference:55].
+      </p>
+
+      <h3><bdi>HTTP</bdi> چیست؟</h3>
+      <p>
+        پروتکل <bdi>HTTP</bdi> مخفف <bdi>Hyper Text Transfer Protocol</bdi>
+        می‌باشد. یکی از استانداردهای مهم در شبکه‌های اینترنتی است. این
+        پروتکل برای ارتباط میان <strong>سرویس‌دهنده</strong>
+        (<bdi>server</bdi>) و <strong>سرویس‌گیرنده</strong>
+        (<bdi>client</bdi>) در وب استفاده می‌شود[reference:56].
+      </p>
+
+      <p>
+        در واقع هرگونه انتقال داده روی وب توسط پروتکل <bdi>HTTP</bdi> انجام
+        می‌شود. این پروتکل به صورت <strong>کلاینت-سرور</strong> عمل می‌کند،
+        به این معنی که درخواست‌ها از سوی کلاینت (معمولاً یک مرورگر وب) آغاز
+        می‌شوند. در پاسخ، سرور منابع مورد نیاز را ارسال می‌کند. این منابع
+        می‌توانند شامل متن، تصاویر، ویدئوها، اسکریپت‌ها و موارد دیگر
+        باشند[reference:57].
+      </p>
+
+      <p>
+        پروتکل <bdi>HTTP</bdi> برای انتقال اطلاعات از سرور و نمایش آن‌ها در
+        مرورگر وب استفاده می‌شود. این پروتکل در اوایل دهه ۱۹۹۰ میلادی ایجاد
+        و به تدریج تکامل یافته است. از آن زمان تاکنون، <bdi>HTTP</bdi> به
+        عنوان پایه‌ای برای تبادل داده‌ها در وب استفاده می‌شود. از اصلی‌ترین
+        پروتکل‌های دسترسی به وب، پروتکل <bdi>HTTP</bdi> می‌باشد و هدف
+        اصلی آن ایجاد ارتباط بین وب‌سرور و مرورگر است[reference:58].
+      </p>
+
+      <h3><bdi>HTTPS</bdi> چیست؟</h3>
+      <p>
+        <bdi>HTTPS</bdi> مخفف <bdi>Hypertext Transfer Protocol Secure</bdi>
+        می‌باشد. یک پروتکل امنیتی برای انتقال داده‌ها در بستر وب است. این
+        پروتکل نسخه ایمن‌تری از <bdi>HTTP</bdi> است که از
+        <strong>رمزگذاری</strong> برای حفاظت از اطلاعات ارسالی بین کاربر و
+        سرور استفاده می‌کند[reference:59].
+      </p>
+
+      <p>
+        با استفاده از <bdi>HTTPS</bdi>، اطلاعات رمزگذاری شده و بین کلاینت و
+        سرور منتقل می‌شوند. نماد <bdi>HTTPS</bdi> با
+        <strong>علامت قفل</strong> در نوار آدرس مرورگر قابل مشاهده است.
+        این پروتکل برای افزایش امنیت کاربران در ارتباط با وب‌سایت‌ها بسیار
+        مهم است[reference:60].
+      </p>
+
+      <h3>Hypertext یا ابرمتن چیست؟</h3>
+      <p>
+        منظور از <bdi>Hypertext</bdi> یا ابرمتن، متن‌های بزرگ و طولانی است
+        که به صورت <bdi>HTML</bdi> نوشته می‌شوند. البته برخلاف اینکه کدهای
+        نوشته‌شده فقط به صورت متنی هستند، بعد از پردازش توسط مرورگر کاربر
+        لزوماً به صورت متنی نخواهند بود. یک سند <bdi>HTML</bdi> می‌تواند
+        دارای تصویر، ویدئو، جدول، لینک و... باشد[reference:61].
+      </p>
+
+      <h3>تفاوت <bdi>HTTP</bdi> و <bdi>HTTPS</bdi></h3>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>ویژگی</th><th><bdi>HTTP</bdi></th><th><bdi>HTTPS</bdi></th></tr>
+          </thead>
+          <tbody>
+            <tr><td>پروتکل</td><td>Hypertext Transfer Protocol</td><td>HTTP + TLS/SSL</td></tr>
+            <tr><td>پورت پیش‌فرض</td><td>۸۰</td><td>۴۴۳</td></tr>
+            <tr><td>امنیت</td><td>بدون رمزنگاری</td><td>با رمزنگاری</td></tr>
+            <tr><td>گواهی SSL</td><td>نیاز ندارد</td><td>نیاز دارد</td></tr>
+            <tr><td>سرعت اولیه</td><td>سریع‌تر</td><td>کمی کندتر</td></tr>
+            <tr><td>نماد در مرورگر</td><td>نامناسب</td><td>قفل سبز</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="callout key">
+        <span class="callout-label">مهم</span>
+        <p>
+          امروزه استفاده از <bdi>HTTPS</bdi> برای تمام سایت‌ها ضروری است.
+          حتی گوگل، سایت‌های <bdi>HTTP</bdi> را در مرورگر کروم «ناامن»
+          علامت‌گذاری می‌کند. برای دریافت گواهی SSL رایگان، می‌توانید از
+          سرویس <bdi>Let's Encrypt</bdi> استفاده کنید.
+        </p>
+      </div>
+    </section>
+
+    <!-- ============ SECTION 7 ============ -->
+    <section class="section fade-in" id="s7">
+      <div class="section-head">
+        <span class="section-num">07</span>
+        <h2 class="section-title">Status Code و HTTP Method</h2>
+      </div>
+
+      <p>
+        همان‌طور که در قسمت قبلی گفتیم، <bdi>Request</bdi> و
+        <bdi>Response</bdi> از اجزای اصلی پروتکل <bdi>HTTP</bdi> می‌باشند.
+        زمانی که شما در یک وب‌سایت وارد می‌شوید، یا در سایتی کامنت
+        می‌گذارید و یا مطلبی را در یک سایت جستجو می‌کنید، در حقیقت برای
+        هر کدام از این کارها یک <bdi>Request</bdi> از طرف مرورگر شما به
+        سرور ارسال می‌شود و در مقابل سرور هم یک <bdi>Response</bdi> مناسب
+        برای شما ارسال می‌کند[reference:62].
+      </p>
+
+      <h3><bdi>HTTP Method</bdi> چیست؟</h3>
+      <p>
+        هر <bdi>Request</bdi> ای که از طرف مرورگر به سمت سرور ارسال شود،
+        حتماً دارای یک <bdi>HTTP Method</bdi> می‌باشد. در حقیقت
+        <bdi>HTTP Method</bdi>ها به سرور اعلام می‌کنند که ما قصد انجام چه
+        کاری را داریم. مثلاً قصد ایجاد یک دیتای جدید را داریم، یا قصد حذف
+        یک دیتا را داریم، و یا قصد ایجاد یک دیتای جدید را
+        داریم[reference:63].
+      </p>
+
+      <p>
+        توجه داشته باشید که از چهار متد اولی بیشتر استفاده
+        می‌شود[reference:64]:
       </p>
 
       <div class="table-wrap">
         <table>
           <thead>
-            <tr><th>مفهوم</th><th>خلاصه</th></tr>
+            <tr><th>متد</th><th>توضیح</th><th>کاربرد</th></tr>
           </thead>
           <tbody>
-            <tr><td><strong>سمت سرور</strong></td><td>زبان‌های سمت سرور امکان ذخیره، ویرایش و بازیابی داده‌ها را می‌دهند. کدهای آن‌ها در مرورگر دیده نمی‌شوند.</td></tr>
-            <tr><td><strong>ASP.NET Core</strong></td><td>یک تکنولوژی مایکروسافتی چندسکویی است (نه یک زبان) که با C# در Visual Studio یا VS Code کار می‌کند.</td></tr>
-            <tr><td><strong>الگوی MVC</strong></td><td>برنامه را به سه بخش Model (داده‌ها)، View (نمایش) و Controller (کنترل‌کننده) تقسیم می‌کند.</td></tr>
-            <tr><td><strong>Controller</strong></td><td>واسطه بین Model و View است. درخواست‌ها را دریافت و به بخش مناسب هدایت می‌کند.</td></tr>
-            <tr><td><strong>Model</strong></td><td>نماینده داده‌ها و منطق تجاری برنامه است. با C# نوشته می‌شود.</td></tr>
-            <tr><td><strong>View</strong></td><td>خروجی HTML/CSS/JS است که کاربر می‌بیند.</td></tr>
-            <tr><td><strong>ساختار پروژه</strong></td><td>پوشه‌های اصلی: Controllers، Models، Views، wwwroot</td></tr>
+            <tr><td><code>GET</code></td><td>برای دریافت منابع از سرور استفاده می‌شود[reference:65]</td><td>نمایش صفحه، دریافت لیست محصولات</td></tr>
+            <tr><td><code>POST</code></td><td>برای ایجاد یک منبع جدید در سرور استفاده می‌شود[reference:66]</td><td>ثبت‌نام، ارسال فرم، ایجاد منبع</td></tr>
+            <tr><td><code>PUT</code></td><td>برای به‌روزرسانی یک منبع در سرور استفاده می‌شود[reference:67]</td><td>ویرایش کامل یک محصول</td></tr>
+            <tr><td><code>DELETE</code></td><td>برای حذف یک منبع در سرور استفاده می‌شود[reference:68]</td><td>حذف یک محصول</td></tr>
+            <tr><td><code>HEAD</code></td><td>برای دریافت اطلاعات سرآیند منبع استفاده می‌شود[reference:69]</td><td>بررسی وجود منبع</td></tr>
+            <tr><td><code>OPTIONS</code></td><td>برای دریافت گزینه‌های موجود برای یک منبع استفاده می‌شود[reference:70]</td><td>درخواست‌های CORS</td></tr>
+            <tr><td><code>PATCH</code></td><td>برای به‌روزرسانی جزئی یک منبع موجود در سرور استفاده می‌شود[reference:71]</td><td>تغییر فقط قیمت یک محصول</td></tr>
           </tbody>
         </table>
       </div>
 
-      <div class="exercise-box">
-        <div class="exercise-title">
-          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M2 3.5V12a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V3.5"/>
-            <path d="M2 3.5a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1"/>
-            <path d="M5 2v2M11 2v2M5 7h6M5 10h4"/>
-          </svg>
-          تمرین‌های پایان قسمت
+      <h3><bdi>Status Code</bdi> چیست؟</h3>
+      <p>
+        هر زمان یک <bdi>Request</bdi> به سمت سرور ارسال می‌شود، حتماً سرور
+        برای ما یک <bdi>Response</bdi> ارسال می‌کند حتی اگر عملیات ما با
+        موفقیت انجام نشود. در پروتکل <bdi>HTTP</bdi> برای اینکه ما متوجه
+        بشویم که عملیات در چه وضعیتی است، مثلاً موفقیت‌آمیز بوده یا شکست
+        خورده، سرور به همراه <bdi>Response</bdi> برای ما یک
+        <bdi>Status Code</bdi> ارسال می‌کند[reference:72].
+      </p>
+
+      <p>
+        در واقع <bdi>Status Code</bdi> یک <strong>عدد</strong> است که ما با
+        استفاده از این عدد متوجه می‌شویم که عملیات ما موفقیت‌آمیز بوده یا
+        خیر و یا دارای چه وضعیتی می‌باشد. این اعداد به <strong>۵
+        دسته</strong> تقسیم‌بندی می‌شوند: اعداد سری ۱۰۰، اعداد سری ۲۰۰،
+        اعداد سری ۳۰۰، اعداد سری ۴۰۰ و اعداد سری ۵۰۰ که هر کدام معنا و
+        مفهوم خاص خود را دارند[reference:73].
+      </p>
+
+      <h4><bdi>Status Code</bdi>های سری ۱۰۰ تا ۱۹۹</h4>
+      <p>
+        این سری از اعداد اطلاعاتی در خصوص نقل و انتقال بسته‌ها، مثل ارسال
+        و دریافت فایل کاربرد دارند. مثلاً وقتی که یک فایل را در سرور آپلود
+        می‌کنیم، بعد از دریافت فایل توسط سرور برای ما عدد ۱۰۰ ارسال
+        می‌شود. یعنی فایل توسط سرور دریافت شده[reference:74].
+      </p>
+      <ul>
+        <li><code>100 Continue</code>: تأیید دریافت اطلاعات توسط سرور را به مرورگر اطلاع می‌دهد[reference:75]</li>
+        <li><code>101 Switching Protocols</code>: برای تعویض پروتکل‌ها کاربرد دارد[reference:76]</li>
+        <li><code>102 Processing</code>: زمانی که یک درخواست به سرور ارسال می‌کنیم و سرور برای انجام آن درخواست نیاز به زمان دارد، برای مرورگر کد ۱۰۲ را می‌فرستد تا مرورگر متوجه بشود که این فعالیت زمان‌بر است و ارتباط را قطع نکند[reference:77]</li>
+      </ul>
+
+      <h4><bdi>Status Code</bdi>های سری ۲۰۰ تا ۲۹۹</h4>
+      <p>
+        این سری از اعداد زمانی ارسال می‌شوند که سرور کاری را با موفقیت
+        انجام داده است[reference:78].
+      </p>
+      <ul>
+        <li><code>200 OK</code>: درخواست با موفقیت انجام شد و پاسخ در بدنه است.</li>
+        <li><code>201 Created</code>: منبع جدید با موفقیت ایجاد شد (پس از POST یا PUT).</li>
+        <li><code>204 No Content</code>: درخواست موفق بود اما پاسخی برای بازگرداندن وجود ندارد.</li>
+      </ul>
+
+      <h4><bdi>Status Code</bdi>های سری ۳۰۰ تا ۳۹۹</h4>
+      <p>
+        این سری از اعداد برای <bdi>Redirection</bdi> (تغییر مسیر) استفاده
+        می‌شوند.
+      </p>
+      <ul>
+        <li><code>301 Moved Permanently</code>: منبع برای همیشه به آدرس جدید منتقل شده است.</li>
+        <li><code>302 Found</code>: منبع به‌طور موقت به آدرس جدید منتقل شده است.</li>
+        <li><code>304 Not Modified</code>: منبع تغییری نکرده و از کش مرورگر استفاده کن.</li>
+      </ul>
+
+      <h4><bdi>Status Code</bdi>های سری ۴۰۰ تا ۴۹۹</h4>
+      <p>
+        این سری از اعداد مربوط به <strong>خطاهای کلاینت</strong> هستند.
+      </p>
+      <ul>
+        <li><code>400 Bad Request</code>: درخواست ناقص یا نامعتبر است.</li>
+        <li><code>401 Unauthorized</code>: نیاز به احراز هویت دارد.</li>
+        <li><code>403 Forbidden</code>: کاربر احراز هویت شده اما دسترسی ندارد.</li>
+        <li><code>404 Not Found</code>: منبع مورد نظر پیدا نشد.</li>
+        <li><code>405 Method Not Allowed</code>: متد HTTP برای این منبع مجاز نیست.</li>
+      </ul>
+
+      <h4><bdi>Status Code</bdi>های سری ۵۰۰ تا ۵۹۹</h4>
+      <p>
+        این سری از اعداد مربوط به <strong>خطاهای سرور</strong> هستند.
+      </p>
+      <ul>
+        <li><code>500 Internal Server Error</code>: خطای داخلی سرور.</li>
+        <li><code>502 Bad Gateway</code>: سرور واسط پاسخ نامعتبری از سرور اصلی دریافت کرده.</li>
+        <li><code>503 Service Unavailable</code>: سرویس به‌طور موقت در دسترس نیست.</li>
+      </ul>
+
+      <h4>تفاوت <code>GET</code> و <code>POST</code></h4>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>ویژگی</th><th><code>GET</code></th><th><code>POST</code></th></tr>
+          </thead>
+          <tbody>
+            <tr><td>محل داده</td><td>در URL (Query String)</td><td>در بدنه درخواست</td></tr>
+            <tr><td>محدودیت حجم</td><td>محدود (حدود ۲۰۰۰ کاراکتر)</td><td>بدون محدودیت عملی</td></tr>
+            <tr><td>قابل کش شدن</td><td>بله</td><td>خیر</td></tr>
+            <tr><td>در تاریخچه مرورگر</td><td>ذخیره می‌شود</td><td>ذخیره نمی‌شود</td></tr>
+            <tr><td>امنیت</td><td>کمتر</td><td>بیشتر</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ============ SECTION 8 ============ -->
+    <section class="section fade-in" id="s8">
+      <div class="section-head">
+        <span class="section-num">08</span>
+        <h2 class="section-title">HTTP Headers</h2>
+      </div>
+
+      <p>
+        هر <bdi>Request</bdi> یا <bdi>Response</bdi> در پروتکل
+        <bdi>HTTP</bdi> یک فیلد <bdi>HTTP Header</bdi> دارد که اطلاعات و
+        متادیتای اضافی در مورد <bdi>Request</bdi> یا <bdi>Response</bdi>
+        را برای ما منتقل می‌کند. <bdi>HTTP Header</bdi> یا هدرهای
+        <bdi>HTTP</bdi> به مشتری و سرور اجازه می‌دهند تا اطلاعات اضافه شده
+        به صورت <bdi>Request</bdi> یا <bdi>Response</bdi> در
+        <bdi>HTTP</bdi> منتقل شوند[reference:79].
+      </p>
+
+      <h3>انواع <bdi>HTTP Headers</bdi></h3>
+      <p>
+        <bdi>HTTP Header</bdi>ها بر اساس محتوای خود تقسیم‌بندی می‌شوند. در
+        این بخش به معرفی آن‌ها می‌پردازیم[reference:80]:
+      </p>
+      <ul>
+        <li>
+          <strong>هدرهای عمومی — <bdi>General headers</bdi>:</strong> هم
+          برای <bdi>Request</bdi> و هم <bdi>Response</bdi> مورد استفاده
+          قرار می‌گیرند[reference:81].
+        </li>
+        <li>
+          <strong>هدرهای درخواستی — <bdi>Request headers</bdi>:</strong>
+          حاوی اطلاعات بیشتری در مورد منبع <bdi>Request</bdi>های
+          مشتری‌ها هستند[reference:82].
+        </li>
+        <li>
+          <strong>هدرهای پاسخ‌دهنده — <bdi>Response headers</bdi>:</strong>
+          اطلاعات بیشتری در مورد <bdi>Response</bdi> دارند، مثل مکان یا
+          سرور ارائه‌دهنده آن[reference:83].
+        </li>
+        <li>
+          <strong>هدرهای اطلاعاتی — <bdi>Entity headers</bdi>:</strong>
+          حاوی اطلاعاتی درباره متن منبع هستند، مثل طول محتوا یا
+          <bdi>MIME type</bdi>[reference:84].
+        </li>
+      </ul>
+
+      <h3>هدرهای عمومی — <bdi>General headers</bdi></h3>
+      <p>
+        این هدرها هم برای <bdi>Request</bdi> و هم <bdi>Response</bdi> مورد
+        استفاده قرار می‌گیرند. اما هیچ ارتباطی با داده‌های منتقل‌شده در متن
+        ندارند[reference:85].
+      </p>
+      <ul>
+        <li>
+          <strong>فیلد <bdi>Status</bdi>:</strong> یک عدد است که ما با
+          استفاده از این عدد متوجه می‌شویم که عملیات ما موفقیت‌آمیز بوده
+          یا خیر و یا دارای چه وضعیتی می‌باشد[reference:86].
+        </li>
+        <li>
+          <strong>فیلد <bdi>VersionHTTP</bdi>:</strong> ورژن
+          <bdi>HTTP</bdi> را مشخص می‌کند[reference:87].
+        </li>
+      </ul>
+
+      <h3>هدرهای درخواستی — <bdi>Request headers</bdi></h3>
+      <p>
+        این هدرها حاوی اطلاعات بیشتری در مورد منبع <bdi>Request</bdi>های
+        مشتری‌ها هستند[reference:88]:
+      </p>
+      <ul>
+        <li>
+          <strong>فیلد <bdi>Accept</bdi>:</strong> انواع داده‌های قابل
+          ارسال به سرور را مشخص می‌کند[reference:89].
+        </li>
+        <li>
+          <strong>فیلد <bdi>Accept-Encoding</bdi>:</strong> الگوریتم
+          کدگذاری را مشخص می‌کند[reference:90].
+        </li>
+        <li>
+          <strong>فیلد <bdi>Accept-Language</bdi>:</strong> برای سایت‌های
+          چندزبانه خیلی کاربردی می‌باشد و به سرور نوع زبان کلاینت را اطلاع
+          می‌دهد[reference:91].
+        </li>
+        <li>
+          <strong>فیلد <bdi>Connection</bdi>:</strong> کنترل می‌کند که
+          آیا اتصال شبکه بعد از پایان ارتباط فعلی باز باشد یا
+          خیر[reference:92].
+        </li>
+        <li>
+          <strong>فیلد <bdi>Cookie</bdi>:</strong> حاوی کوکی‌های ذخیره‌شده
+          ای است که قبلاً توسط سرور با هدر <bdi>Set-Cookie</bdi> ارسال
+          شده است[reference:93].
+        </li>
+        <li>
+          <strong>فیلد <bdi>Host</bdi>:</strong> نام دامنه و پورت
+          <bdi>TCP</bdi> را که سرور به آن گوش می‌دهد را مشخص
+          می‌کند[reference:94].
+        </li>
+        <li>
+          <strong>فیلد <bdi>Referer</bdi>:</strong> آدرس صفحه وب قبلی را
+          نمایش می‌دهد. یعنی مشخص می‌کند، از چه صفحه و یا لینکی به این
+          صفحه آمده‌ایم[reference:95].
+        </li>
+        <li>
+          <strong>فیلد <bdi>User-Agent</bdi>:</strong> نام مرورگر، ورژن
+          مرورگر، نام سیستم‌عامل و... را مشخص می‌کند و به سرور ارسال
+          می‌کند[reference:96].
+        </li>
+      </ul>
+
+      <h3>هدرهای پاسخ‌دهنده — <bdi>Response headers</bdi></h3>
+      <p>
+        این هدرها اطلاعات بیشتری در مورد <bdi>Response</bdi> دارند، مثل
+        مکان یا سرور ارائه‌دهنده آن[reference:97]:
+      </p>
+      <ul>
+        <li><code>Cache-Control</code>: تنظیمات مربوط به کش کردن پاسخ</li>
+        <li><code>Connection</code>: وضعیت اتصال</li>
+        <li><code>Content-Encoding</code>: الگوریتم فشرده‌سازی بدنه</li>
+        <li><code>Content-Length</code>: اندازه بدنه پاسخ به بایت</li>
+        <li><code>Content-Type</code>: نوع داده بدنه پاسخ</li>
+        <li><code>Date</code>: تاریخ و ساعت ارسال پاسخ</li>
+        <li><code>Set-Cookie</code>: ارسال کوکی از سرور به کلاینت</li>
+        <li><code>Location</code>: آدرس جدید در ریدایرکت‌ها</li>
+        <li><code>Server</code>: اطلاعات سرور</li>
+        <li><code>ETag</code>: شناسه نسخه فعلی منبع (برای کش)</li>
+      </ul>
+
+      <h3>مثال واقعی از هدرها</h3>
+      <div class="code-block">
+        <div class="code-block-header">
+          <span class="code-block-lang">HTTP Request</span>
         </div>
-        <ol class="exercise-list">
-          <li>با زبان خودتان توضیح دهید چرا HTML و CSS به‌تنهایی برای ساخت یک سایت پویا کافی نیستند.</li>
-          <li>سه جزء اصلی MVC را نام ببرید و وظیفه هرکدام را در یک جمله توضیح دهید.</li>
-          <li>چرخه پردازش درخواست را در ۶ گام خلاصه کنید و بگویید در هر گام چه اتفاقی می‌افتد.</li>
-          <li>یک پروژه <bdi>ASP.NET Core MVC</bdi> جدید بسازید و ببینید به‌صورت پیش‌فرض چه پوشه‌ها و فایل‌هایی ساخته می‌شود.</li>
-          <li>توضیح دهید چرا View نباید مستقیماً به دیتابیس متصل شود و این کار باید از طریق Controller انجام شود.</li>
-        </ol>
+        <pre>GET /api/products HTTP/1.1
+Host: example.com
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64)
+Accept: application/json
+Accept-Language: fa-IR,fa;q=0.9
+Accept-Encoding: gzip, deflate
+Connection: keep-alive
+Cookie: sessionId=abc123
+Referer: https://example.com/products</pre>
+      </div>
+
+      <div class="callout key">
+        <span class="callout-label">مهم</span>
+        <p>
+          هدرها در <bdi>HTTP/1.X</bdi> به بزرگی و کوچکی حروف حساس نیستند
+          (یعنی <code>Content-Type</code> با <code>content-type</code> یکی
+          است)، اما در <bdi>HTTP/2</bdi> به‌صورت اجباری با حروف کوچک
+          نوشته می‌شوند.
+        </p>
       </div>
     </section>
 
