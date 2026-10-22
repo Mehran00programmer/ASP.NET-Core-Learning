@@ -22,12 +22,10 @@
     <div class="hero-badge" style="display:inline-block;font-family:var(--mono);font-size:11px;color:var(--accent);letter-spacing:1.5px;background:rgba(88,166,255,0.08);border:1px solid rgba(88,166,255,0.2);padding:4px 12px;border-radius:20px;margin-bottom:14px;">قسمت ۰۱</div>
     <h1 class="doc-title">آشنایی با <bdi>.NET</bdi>، <bdi>ASP.NET Core</bdi> و <bdi>MVC</bdi></h1>
     <p class="doc-subtitle">
-      در این قسمت، ابتدا با اکوسیستم <bdi>.NET</bdi> و تاریخچه آن آشنا می‌شویم.
-      سپس یاد می‌گیریم که <bdi>.NET Framework</bdi> و <bdi>.NET Core</bdi> چه
-      تفاوت‌هایی دارند و چرا <bdi>.NET Core</bdi> به وجود آمد. بعد از آن،
-      <bdi>ASP.NET Core</bdi> را معرفی می‌کنیم، الگوی <bdi>MVC</bdi> را به‌طور
-      کامل توضیح می‌دهیم و در نهایت مفاهیم پایه پروتکل <bdi>HTTP</bdi> را بررسی
-      می‌کنیم.
+      در این قسمت یاد می‌گیریم <bdi>.NET</bdi> چیست، چطور تکامل پیدا کرد،
+      <bdi>ASP.NET Core</bdi> چه نقشی در ساخت وب‌سایت دارد، الگوی <bdi>MVC</bdi>
+      چطور کار می‌کند و پروتکل <bdi>HTTP</bdi> چطور درخواست‌ها را بین مرورگر
+      و سرور جابه‌جا می‌کند.
     </p>
 
     <div class="author-card">
@@ -47,14 +45,14 @@
   <aside class="toc-wrap fade-in">
     <div class="toc-header">فهرست مطالب این قسمت</div>
     <ul class="toc-list">
-      <li><a class="toc-link" href="#s1"><span class="num">01</span><span>آشنایی با .NET و .NET Standard</span></a></li>
-      <li><a class="toc-link" href="#s2"><span class="num">02</span><span>مقایسه .NET Framework و .NET Core</span></a></li>
-      <li><a class="toc-link" href="#s3"><span class="num">03</span><span>ASP.NET Core چیست؟</span></a></li>
-      <li><a class="toc-link" href="#s4"><span class="num">04</span><span>الگوی طراحی MVC</span></a></li>
-      <li><a class="toc-link" href="#s5"><span class="num">05</span><span>مقایسه WebForm، MVC و Core</span></a></li>
-      <li><a class="toc-link" href="#s6"><span class="num">06</span><span>آشنایی با HTTP و HTTPS</span></a></li>
-      <li><a class="toc-link" href="#s7"><span class="num">07</span><span>Status Code و HTTP Method</span></a></li>
-      <li><a class="toc-link" href="#s8"><span class="num">08</span><span>HTTP Headers</span></a></li>
+      <li><a class="toc-link" href="#s1"><span class="num">01</span><span>‎.NET‎ چیست؟</span></a></li>
+      <li><a class="toc-link" href="#s2"><span class="num">02</span><span>‎.NET Framework‎ در برابر ‎.NET Core‎</span></a></li>
+      <li><a class="toc-link" href="#s3"><span class="num">03</span><span>‎ASP.NET Core‎ چیست؟</span></a></li>
+      <li><a class="toc-link" href="#s4"><span class="num">04</span><span>الگوی طراحی ‎MVC‎</span></a></li>
+      <li><a class="toc-link" href="#s5"><span class="num">05</span><span>تکامل ‎ASP.NET‎: از ‎WebForms‎ تا ‎Core‎</span></a></li>
+      <li><a class="toc-link" href="#s6"><span class="num">06</span><span>‎HTTP‎ و ‎HTTPS‎</span></a></li>
+      <li><a class="toc-link" href="#s7"><span class="num">07</span><span>‎HTTP Method‎ و ‎Status Code‎</span></a></li>
+      <li><a class="toc-link" href="#s8"><span class="num">08</span><span>‎HTTP Headers‎</span></a></li>
     </ul>
   </aside>
 
@@ -64,223 +62,75 @@
     <section class="section fade-in" id="s1">
       <div class="section-head">
         <span class="section-num">01</span>
-        <h2 class="section-title">آشنایی با <bdi>.NET</bdi> و <bdi>.NET Standard</bdi></h2>
+        <h2 class="section-title"><bdi>.NET</bdi> چیست؟</h2>
       </div>
 
-      <h3>یک تشبیه ساده برای شروع</h3>
       <p>
-        تصور کنید می‌خواهید خانه‌ای بسازید. برای این کار به چند چیز نیاز دارید:
-        یک <strong>کارگاه</strong> که همه ابزارها در آن باشد، <strong>مصالح
-        ساختمانی</strong> مثل آجر و سیمان، و <strong>کارگرانی</strong> که با آن
-        ابزارها کار کنند و خانه را بسازند.
+        فرض کنید می‌خواهید خانه بسازید. به یک <strong>کارگاه</strong> با
+        ابزارهای مختلف، <strong>مصالح ساختمانی</strong> و <strong>کارگر</strong>
+        نیاز دارید. در دنیای برنامه‌نویسی هم <bdi>.NET</bdi> نقش همان
+        کارگاه را دارد: همه ابزارهای لازم برای ساخت برنامه را در اختیار شما
+        می‌گذارد.
       </p>
 
       <p>
-        در دنیای برنامه‌نویسی هم دقیقاً همین‌طور است. <bdi>.NET</bdi> نقش همان
-        <strong>کارگاه</strong> را دارد. کارگاه خودش خانه نمی‌سازد، اما همه
-        ابزارها و مصالح لازم را برای ساخت خانه در اختیار شما می‌گذارد.
+        <bdi>.NET</bdi> یک <strong>پلتفرم</strong> است، نه یک زبان
+        برنامه‌نویسی. روی آن می‌توانید با زبان‌های مختلف مثل
+        <code>C#</code>، <code>VB.NET</code> یا <code>F#</code> برنامه
+        بنویسید.
       </p>
 
+      <h3>اجزای اصلی <bdi>.NET</bdi></h3>
       <p>
-        حالا اگر بخواهیم دقیق‌تر بگوییم: <bdi>.NET</bdi> یک
-        <strong>پلتفرم نرم‌افزاری</strong> است که شرکت مایکروسافت آن را ساخته
-        و همه ابزارهای لازم برای ساخت انواع برنامه‌ها را در اختیار
-        برنامه‌نویس‌ها قرار می‌دهد.
+        <bdi>.NET</bdi> از سه لایه اصلی ساخته شده که با هم کار می‌کنند:
       </p>
 
-      <h3><bdi>.NET</bdi> دقیقاً چیست؟</h3>
-      <p>
-        <bdi>.NET</bdi> یک <strong>بستر یا محیط</strong> است که شما روی آن
-        برنامه می‌نویسید. یعنی وقتی شما یک برنامه با زبان <code>C#</code>
-        می‌نویسید، این برنامه روی <bdi>.NET</bdi> اجرا می‌شود.
-      </p>
+      <div class="diagram">
+        <svg viewBox="0 0 700 400" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="اجزای پلتفرم دات‌نت">
+          <defs>
+            <marker id="ar1" markerWidth="10" markerHeight="10" refX="5" refY="5" orient="auto">
+              <polygon points="0 0, 10 5, 0 10" fill="#6e7681"/>
+            </marker>
+          </defs>
 
-      <p>
-        نکته مهمی که خیلی از مبتدی‌ها با آن اشتباه می‌کنند این است که
-        <bdi>.NET</bdi> یک <strong>زبان برنامه‌نویسی نیست</strong>. یک
-        <strong>پلتفرم</strong> است. تفاوت این دو مثل تفاوت «کارگاه» با «زبان
-        حرف زدن کارگرها» است.
-      </p>
+          <!-- Title -->
+          <text x="350" y="28" text-anchor="middle" fill="#e6edf3" font-family="Vazirmatn, sans-serif" font-size="15" font-weight="700">پلتفرم .NET از سه لایه ساخته شده است</text>
 
-      <p>
-        روی پلتفرم <bdi>.NET</bdi>، شما می‌توانید با چندین زبان مختلف برنامه
-        بنویسید. معروف‌ترین این زبان‌ها <code>C#</code> است. زبان‌های دیگر مثل
-        <code>VB.NET</code> و <code>F#</code> هم روی همین پلتفرم کار می‌کنند.
-      </p>
+          <!-- Layer 1: Languages -->
+          <rect x="80" y="50" width="540" height="88" rx="10" fill="#161b22" stroke="#58a6ff" stroke-width="2"/>
+          <text x="350" y="82" text-anchor="middle" fill="#58a6ff" font-family="Vazirmatn, sans-serif" font-size="14" font-weight="700">لایه ۱ — زبان‌های برنامه‌نویسی</text>
+          <text x="350" y="112" text-anchor="middle" fill="#e6edf3" font-family="JetBrains Mono, monospace" font-size="14">C#    ·    VB.NET    ·    F#</text>
 
-      <div class="callout note">
-        <span class="callout-label">جمع‌بندی ساده</span>
-        <p>
-          <bdi>.NET</bdi> = پلتفرم (کارگاه) + <code>C#</code> = یکی از
-          زبان‌هایی که روی این پلتفرم استفاده می‌شود.
-        </p>
+          <!-- Layer 2: BCL -->
+          <rect x="80" y="158" width="540" height="88" rx="10" fill="#161b22" stroke="#3fb950" stroke-width="2"/>
+          <text x="350" y="190" text-anchor="middle" fill="#3fb950" font-family="Vazirmatn, sans-serif" font-size="14" font-weight="700">لایه ۲ — کتابخانه کلاس پایه (BCL)</text>
+          <text x="350" y="220" text-anchor="middle" fill="#e6edf3" font-family="Vazirmatn, sans-serif" font-size="13">کدهای آماده برای کارهای رایج: فایل، تاریخ، شبکه، متن و...</text>
+
+          <!-- Layer 3: CLR -->
+          <rect x="80" y="266" width="540" height="88" rx="10" fill="#161b22" stroke="#d29922" stroke-width="2"/>
+          <text x="350" y="298" text-anchor="middle" fill="#d29922" font-family="Vazirmatn, sans-serif" font-size="14" font-weight="700">لایه ۳ — CLR (محیط اجرا)</text>
+          <text x="350" y="328" text-anchor="middle" fill="#e6edf3" font-family="Vazirmatn, sans-serif" font-size="13">اجرای کد روی سیستم، مدیریت حافظه و امنیت</text>
+
+          <!-- Small note -->
+          <text x="350" y="386" text-anchor="middle" fill="#6e7681" font-family="Vazirmatn, sans-serif" font-size="12">این سه لایه روی هم، پلتفرم .NET را می‌سازند</text>
+        </svg>
+        <div class="diagram-caption">
+          زبان‌ها روی کتابخانه و CLR سوار هستند؛ همه با هم یک پلتفرم واحد می‌سازند
+        </div>
       </div>
 
-      <h3><bdi>.NET</bdi> از چه بخش‌هایی تشکیل شده است؟</h3>
-      <p>
-        برای اینکه بهتر درک کنید، <bdi>.NET</bdi> را مثل یک کارخانه بزرگ در
-        نظر بگیرید که چند بخش مختلف دارد. هر بخش وظیفه خودش را انجام می‌دهد.
-      </p>
-
-      <h4>بخش اول: زبان‌های برنامه‌نویسی</h4>
-      <p>
-        همان‌طور که در یک کارخانه چند کارگر با تخصص‌های مختلف کار می‌کنند، در
-        <bdi>.NET</bdi> هم چند زبان برنامه‌نویسی مختلف وجود دارد. هر زبان
-        ویژگی‌های خاص خودش را دارد، اما همه در نهایت به یک نتیجه می‌رسند.
-      </p>
-
+      <h3>تاریخچه کوتاه <bdi>.NET</bdi></h3>
       <ul>
-        <li><strong>زبان <code>C#</code>:</strong> معروف‌ترین زبان <bdi>.NET</bdi> که در این جزوه از آن استفاده می‌کنیم. زبانی شی‌گرا و مدرن است.</li>
-        <li><strong>زبان <code>VB.NET</code>:</strong> نسخه به‌روز شده زبان <bdi>Visual Basic</bdi>. برای کسانی که با این زبان آشنایی قدیمی دارند، راحت‌تر است.</li>
-        <li><strong>زبان <code>F#</code>:</strong> یک زبان تابعی که بیشتر در محاسبات علمی و برنامه‌های پیچیده استفاده می‌شود.</li>
+        <li><strong>۲۰۰۲ — <bdi>.NET Framework</bdi>:</strong> اولین نسخه، فقط برای ویندوز.</li>
+        <li><strong>۲۰۱۶ — <bdi>.NET Core</bdi>:</strong> بازنویسی کامل، چندسکویی و متن‌باز.</li>
+        <li><strong>۲۰۲۰ به بعد — <bdi>.NET 5</bdi> و بالاتر:</strong> کلمه <bdi>Core</bdi> حذف شد و همه‌چیز زیر نام <bdi>.NET</bdi> با نسخه‌بندی سالانه یکپارچه شد.</li>
       </ul>
-
-      <h4>بخش دوم: کتابخانه کلاس پایه</h4>
-      <p>
-        فرض کنید می‌خواهید یک خانه بسازید و به‌جای اینکه از اول همه آجرها را
-        خودتان بسازید، از آجرهای آماده استفاده کنید. کتابخانه کلاس پایه
-        <bdi>.NET</bdi> هم دقیقاً همین است — مجموعه‌ای از <strong>کدهای
-        آماده</strong> که کارهای رایج را برای شما ساده‌تر می‌کند.
-      </p>
-
-      <p>
-        مثلاً به‌جای اینکه خودتان از صفر کدی بنویسید که یک فایل را باز کند،
-        کد آماده <code>File</code> را استفاده می‌کنید. یا به‌جای اینکه برای
-        نمایش تاریخ و زمان کد بنویسید، از کلاس آماده <code>DateTime</code>
-        استفاده می‌کنید.
-      </p>
-
-      <h4>بخش سوم: محیط اجرا (CLR)</h4>
-      <p>
-        در یک کارخانه، بعد از تولید محصول، نیاز به یک بخش <strong>بسته‌بندی
-        و ارسال</strong> دارید. <bdi>CLR</bdi> هم همین نقش را در <bdi>.NET</bdi>
-        دارد. این بخش کد شما را می‌گیرد و آن را به‌طور واقعی روی کامپیوتر
-        اجرا می‌کند.
-      </p>
-
-      <p>
-        <bdi>CLR</bdi> مخفف <bdi>Common Language Runtime</bdi> است. کارش این
-        است که کد شما را از یک حالت میانی به کد قابل اجرا روی پردازنده
-        تبدیل کند. همچنین مدیریت حافظه، مدیریت خطاها و امنیت را هم انجام
-        می‌دهد.
-      </p>
-
-      <div class="callout note">
-        <span class="callout-label">نکته ساده</span>
-        <p>
-          وقتی کد <code>C#</code> می‌نویسید، این کد به‌طور مستقیم روی پردازنده
-          اجرا نمی‌شود. اول به یک زبان میانی تبدیل می‌شود، بعد <bdi>CLR</bdi>
-          آن را به زبان پردازنده تبدیل می‌کند. این کار باعث می‌شود برنامه‌ها
-          امن‌تر باشند.
-        </p>
-      </div>
-
-      <h3>تاریخچه <bdi>.NET</bdi> — از گذشته تا امروز</h3>
-      <p>
-        درک تاریخچه <bdi>.NET</bdi> به شما کمک می‌کند بفهمید چرا الان چیزهایی
-        به نام <bdi>.NET Framework</bdi>، <bdi>.NET Core</bdi> و <bdi>.NET 8</bdi>
-        وجود دارد. داستان این‌طور شروع شد:
-      </p>
-
-      <p>
-        در اواخر دهه ۱۹۹۰، مایکروسافت متوجه شد که برنامه‌نویسان برای ساخت
-        برنامه‌های ویندوزی با مشکلات زیادی مواجه هستند. هر برنامه نیاز به
-        کدهای تکراری زیادی داشت. مایکروسافت تصمیم گرفت یک پلتفرم واحد
-        بسازد که همه ابزارهای لازم را در خود داشته باشد. این پلتفرم
-        <bdi>.NET</bdi> نام گرفت.
-      </p>
-
-      <p>
-        اولین نسخه در سال <strong>۲۰۰۲</strong> با نام <bdi>.NET Framework 1.0</bdi>
-        منتشر شد. از آن زمان تا الان، نسخه‌های زیادی منتشر شده است:
-      </p>
-
-      <ul>
-        <li><bdi>.NET Framework 1.0</bdi> — سال ۲۰۰۲ — اولین نسخه</li>
-        <li><bdi>.NET Framework 2.0</bdi> — سال ۲۰۰۵</li>
-        <li><bdi>.NET Framework 3.5</bdi> — سال ۲۰۰۷ — اضافه شدن <bdi>LINQ</bdi></li>
-        <li><bdi>.NET Framework 4.0</bdi> — سال ۲۰۱۰</li>
-        <li><bdi>.NET Framework 4.8</bdi> — سال ۲۰۱۹ — آخرین نسخه</li>
-        <li><bdi>.NET Core 1.0</bdi> — سال ۲۰۱۶ — شروع یک نسل جدید</li>
-        <li><bdi>.NET Core 3.1</bdi> — سال ۲۰۱۹</li>
-        <li><bdi>.NET 5</bdi> — سال ۲۰۲۰ — حذف کلمه Core</li>
-        <li><bdi>.NET 6</bdi> — سال ۲۰۲۱ — پشتیبانی بلندمدت</li>
-        <li><bdi>.NET 7</bdi> — سال ۲۰۲۲</li>
-        <li><bdi>.NET 8</bdi> — سال ۲۰۲۳ — پشتیبانی بلندمدت</li>
-      </ul>
-
-      <p>
-        همان‌طور که می‌بینید، از <bdi>.NET 5</bdi> به بعد، کلمه <bdi>Core</bdi>
-        از نام حذف شد و فقط <bdi>.NET</bdi> با یک عدد نوشته می‌شود.
-      </p>
-
-      <h3><bdi>.NET Standard</bdi> چیست و چرا به وجود آمد؟</h3>
-
-      <h4>مشکلی که به وجود آمد</h4>
-      <p>
-        در سال ۲۰۱۶ که <bdi>.NET Core</bdi> معرفی شد، یک مشکل جدی به وجود آمد.
-        برنامه‌هایی که با <bdi>.NET Framework</bdi> نوشته شده بودند، روی
-        <bdi>.NET Core</bdi> اجرا نمی‌شدند. و کتابخانه‌هایی که برای
-        <bdi>.NET Framework</bdi> نوشته شده بودند، در <bdi>.NET Core</bdi>
-        کار نمی‌کردند.
-      </p>
-
-      <p>
-        این مثل این بود که شما یک سری پیچ و مهره برای یک ماشین خریده باشید و
-        بعد ماشین جدیدی بخرید که این پیچ‌ها به آن نخورد. باید همه چیز را از
-        نو می‌ساختید.
-      </p>
-
-      <h4>راه‌حلی که مایکروسافت ارائه داد</h4>
-      <p>
-        مایکروسافت مفهوم <bdi>.NET Standard</bdi> را معرفی کرد.
-        <bdi>.NET Standard</bdi> یک <strong>قرارداد مشترک</strong> است که
-        می‌گوید: «هر کسی که <bdi>.NET</bdi> می‌سازد، باید این مجموعه از
-        قابلیت‌ها را داشته باشد.»
-      </p>
-
-      <p>
-        به‌عبارت ساده‌تر، <bdi>.NET Standard</bdi> مثل یک <strong>زبان
-        مشترک</strong> است. اگر کتابخانه‌ای بر اساس این زبان مشترک نوشته
-        شود، روی همه پیاده‌سازی‌های <bdi>.NET</bdi> که این استاندارد را
-        قبول دارند، اجرا می‌شود.
-      </p>
 
       <div class="callout key">
-        <span class="callout-label">نکته مهم</span>
+        <span class="callout-label">جمع‌بندی</span>
         <p>
-          <bdi>.NET Standard</bdi> یک <strong>نسخه از <bdi>.NET</bdi>
-          نیست</strong>. بلکه فقط یک <strong>مشخصات فنی</strong> است. یعنی
-          نمی‌توانید با آن یک برنامه اجرایی بسازید. فقط می‌توانید
-          <strong>کتابخانه</strong> بسازید که در همه نسخه‌های <bdi>.NET</bdi>
-          قابل استفاده باشد.
-        </p>
-      </div>
-
-      <h3>مزایای <bdi>.NET Standard</bdi></h3>
-      <ul>
-        <li>
-          <strong>اشتراک کد آسان:</strong> اگر کتابخانه‌ای بر اساس این
-          استاندارد بنویسید، می‌توانید آن را در پروژه‌های مختلف <bdi>.NET</bdi>
-          استفاده کنید.
-        </li>
-        <li>
-          <strong>به‌روزرسانی سریع:</strong> وقتی استاندارد به‌روز شود، همه
-          کتابخانه‌ها به‌راحتی به‌روز می‌شوند.
-        </li>
-        <li>
-          <strong>کاهش پیچیدگی:</strong> به‌جای چند نسخه از یک کتابخانه برای
-          هر پلتفرم، یک نسخه دارید.
-        </li>
-      </ul>
-
-      <div class="callout warn">
-        <span class="callout-label">توجه</span>
-        <p>
-          از زمانی که <bdi>.NET 5</bdi> معرفی شد، مفهوم <bdi>.NET Standard</bdi>
-          کم‌اهمیت‌تر شده است، چون خود <bdi>.NET 5</bdi> و بالاتر به‌عنوان
-          پایه مشترک همه اپلیکیشن‌ها عمل می‌کند. با این حال همچنان در پروژه‌های
-          قدیمی می‌توانید آن را ببینید.
+          <bdi>.NET</bdi> = یک پلتفرم کامل. زبان <code>C#</code> فقط یکی
+          از زبان‌هایی است که روی آن کار می‌کند.
         </p>
       </div>
     </section>
@@ -289,112 +139,40 @@
     <section class="section fade-in" id="s2">
       <div class="section-head">
         <span class="section-num">02</span>
-        <h2 class="section-title">مقایسه <bdi>.NET Framework</bdi> و <bdi>.NET Core</bdi></h2>
+        <h2 class="section-title"><bdi>.NET Framework</bdi> در برابر <bdi>.NET Core</bdi></h2>
       </div>
 
-      <h3>داستان دو برادر</h3>
       <p>
-        تصور کنید دو برادر دارید. برادر بزرگ‌تر در سال ۲۰۰۲ به دنیا آمده و
-        برادر کوچک‌تر در سال ۲۰۱۶. هر دو از یک خانواده هستند، اما
-        ویژگی‌هایشان متفاوت است. برادر بزرگ‌تر فقط در یک شهر می‌تواند زندگی
-        کند، اما برادر کوچک‌تر می‌تواند هر جای دنیا برود.
+        این دو را مثل دو برادر در نظر بگیرید: بزرگ‌تر در سال ۲۰۰۲ به دنیا
+        آمد و فقط در یک شهر (ویندوز) می‌تواند زندگی کند. کوچک‌تر در سال
+        ۲۰۱۶ به دنیا آمد و هر جای دنیا (ویندوز، لینوکس، مک) می‌تواند برود.
       </p>
 
+      <h3><bdi>.NET Framework</bdi> — قدیمی و محدود</h3>
       <p>
-        <bdi>.NET Framework</bdi> و <bdi>.NET Core</bdi> هم دقیقاً همین
-        وضعیت را دارند. هر دو از خانواده <bdi>.NET</bdi> هستند، اما یکی
-        قدیمی‌تر و محدودتر است و دیگری جدیدتر و آزادتر.
+        فقط روی <strong>ویندوز</strong> اجرا می‌شود، متن‌باز نیست و
+        مایکروسافت دیگر نسخه جدیدی برایش منتشر نمی‌کند. آخرین نسخه
+        <strong>۴.۸.۱</strong> است.
       </p>
 
-      <h3><bdi>.NET Framework</bdi> — برادر بزرگ‌تر</h3>
+      <h3><bdi>.NET Core</bdi> — مدرن و آزاد</h3>
       <p>
-        <bdi>.NET Framework</bdi> اولین نسخه از پلتفرم <bdi>.NET</bdi> است که
-        در سال <strong>۲۰۰۲</strong> منتشر شد. این نسخه مخصوص
-        <strong>سیستم‌عامل ویندوز</strong> طراحی شده بود.
+        روی <strong>ویندوز، لینوکس و مک</strong> اجرا می‌شود، کاملاً
+        متن‌باز است، سریع‌تر است و برای محیط‌های ابری و
+        <bdi>Docker</bdi> طراحی شده است.
       </p>
 
+      <h3>چرا <bdi>.NET Core</bdi> ساخته شد؟</h3>
       <p>
-        وقتی شما یک برنامه با <bdi>.NET Framework</bdi> می‌سازید، این برنامه
-        فقط روی ویندوز کار می‌کند. اگر دوستتان مکینتاش داشته باشد، نمی‌تواند
-        از آن استفاده کند. اگر سرورتان لینوکس باشد، نمی‌تواند آن را اجرا
-        کند.
+        سه دلیل اصلی مایکروسافت را به ساخت نسخه جدید وادار کرد:
       </p>
-
-      <p>
-        چرا این محدودیت وجود داشت؟ چون <bdi>.NET Framework</bdi> به‌شدت با
-        ویندوز یکپارچه بود. این یکپارچگی باعث می‌شد برنامه‌ها بتوانند به
-        راحتی به ویژگی‌های ویندوز دسترسی داشته باشند، اما در عوض، اجرای آن‌ها
-        روی سیستم‌عامل‌های دیگر غیرممکن می‌شد.
-      </p>
-
-      <p>
-        آخرین نسخه <bdi>.NET Framework</bdi>، نسخه <strong>۴.۸.۱</strong> است
-        که در سال ۲۰۱۹ منتشر شد. مایکروسافت اعلام کرده که دیگر نسخه جدیدی
-        برای این پلتفرم منتشر نمی‌کند.
-      </p>
-
-      <h3><bdi>.NET Core</bdi> — برادر کوچک‌تر</h3>
-      <p>
-        <bdi>.NET Core</bdi> در سال <strong>۲۰۱۶</strong> منتشر شد. این نسخه
-        از صفر بازنویسی شد تا سه محدودیت اصلی <bdi>.NET Framework</bdi> را
-        برطرف کند:
-      </p>
-
       <ul>
-        <li>
-          <strong>محدودیت سیستم‌عامل:</strong> <bdi>.NET Core</bdi> روی
-          ویندوز، لینوکس و مک اجرا می‌شود.
-        </li>
-        <li>
-          <strong>محدودیت عملکرد:</strong> <bdi>.NET Core</bdi> سریع‌تر و
-          سبک‌تر از <bdi>.NET Framework</bdi> است.
-        </li>
-        <li>
-          <strong>محدودیت استقرار:</strong> <bdi>.NET Core</bdi> می‌تواند در
-          محیط‌های ابری و <bdi>Docker</bdi> اجرا شود.
-        </li>
+        <li><strong>دنیای چندسکویی:</strong> بیشتر سرورهای امروزی لینوکسی هستند.</li>
+        <li><strong>نیاز به سرعت:</strong> برنامه‌های وب باید سریع پاسخ دهند.</li>
+        <li><strong>محیط‌های ابری:</strong> ابزارهایی مثل <bdi>Docker</bdi> و <bdi>Kubernetes</bdi> محبوب شده بودند.</li>
       </ul>
 
-      <p>
-        علاوه بر این‌ها، <bdi>.NET Core</bdi> به‌طور کامل
-        <strong>متن‌باز</strong> شد. یعنی کد منبع آن در دسترس همه قرار گرفت.
-        این تصمیم باعث شد برنامه‌نویسان سراسر جهان بتوانند در توسعه آن
-        مشارکت کنند و آن را سریع‌تر رشد دهند.
-      </p>
-
-      <h3>چرا مایکروسافت <bdi>.NET Core</bdi> را ساخت؟</h3>
-
-      <h4>دلیل اول: دنیای امروز چندسکویی است</h4>
-      <p>
-        در دنیای امروز، برنامه‌ها نباید به یک سیستم‌عامل خاص محدود باشند. اگر
-        یک برنامه فقط روی ویندوز کار کند، نمی‌تواند در سرورهای لینوکسی
-        اجرا شود. بسیاری از سرورهای ابری مثل <bdi>AWS</bdi> و <bdi>Azure</bdi>
-        و همچنین سرورهای <bdi>Docker</bdi> روی لینوکس اجرا می‌شوند.
-      </p>
-
-      <h4>دلیل دوم: عملکرد بهتر نیاز بود</h4>
-      <p>
-        برنامه‌های امروزی باید بسیار سریع باشند. اگر یک سایت پربازدید کند
-        بارگذاری شود، کاربران آن را ترک می‌کنند. <bdi>.NET Core</bdi>
-        با معماری جدیدش چند برابر سریع‌تر از <bdi>.NET Framework</bdi>
-        است.
-      </p>
-
-      <h4>دلیل سوم: نیاز به کد باز</h4>
-      <p>
-        برنامه‌نویسان دوست دارند بفهمند کدی که استفاده می‌کنند چطور کار
-        می‌کند. <bdi>.NET Framework</bdi> بخش‌های بزرگی از کدش بسته بود،
-        اما <bdi>.NET Core</bdi> کاملاً باز است.
-      </p>
-
-      <h4>دلیل چهارم: نیاز به محیط‌های ابری</h4>
-      <p>
-        امروزه همه به سمت <bdi>Cloud</bdi> و <bdi>Docker</bdi> می‌روند.
-        برنامه‌های <bdi>.NET Framework</bdi> به‌سختی در این محیط‌ها اجرا
-        می‌شوند، اما <bdi>.NET Core</bdi> برای این محیط‌ها طراحی شده است.
-      </p>
-
-      <h3>جدول مقایسه کامل</h3>
+      <h3>جدول مقایسه</h3>
       <div class="table-wrap">
         <table>
           <thead>
@@ -403,24 +181,20 @@
           <tbody>
             <tr><td>سال عرضه</td><td>۲۰۰۲</td><td>۲۰۱۶</td></tr>
             <tr><td>سیستم‌عامل</td><td>فقط ویندوز</td><td>ویندوز، لینوکس، مک</td></tr>
-            <tr><td>متن‌باز</td><td>خیر</td><td>بله، کاملاً</td></tr>
-            <tr><td>عملکرد</td><td>کندتر</td><td>سریع‌تر و بهینه‌تر</td></tr>
-            <tr><td>نصب</td><td>نصب سیستم‌گستر</td><td>Self-contained یا Framework-dependent</td></tr>
-            <tr><td>پشتیبانی از Docker</td><td>محدود</td><td>عالی</td></tr>
-            <tr><td>پشتیبانی از میکروسرویس</td><td>ضعیف</td><td>عالی</td></tr>
-            <tr><td>نسخه‌بندی</td><td>پراکنده و نامنظم</td><td>منظم و سالانه</td></tr>
-            <tr><td>وضعیت فعلی</td><td>منسوخ، فقط نگهداری</td><td>فعال، در حال توسعه</td></tr>
+            <tr><td>متن‌باز</td><td>خیر</td><td>بله</td></tr>
+            <tr><td>عملکرد</td><td>کندتر</td><td>سریع‌تر</td></tr>
+            <tr><td>پشتیبانی از <bdi>Docker</bdi></td><td>محدود</td><td>عالی</td></tr>
+            <tr><td>وضعیت فعلی</td><td>فقط نگهداری</td><td>در حال توسعه فعال</td></tr>
           </tbody>
         </table>
       </div>
 
-      <div class="callout key">
-        <span class="callout-label">توصیه مهم</span>
+      <div class="callout warn">
+        <span class="callout-label">توصیه</span>
         <p>
-          اگر امروز می‌خواهید پروژه جدیدی بسازید، <strong>حتماً
-          <bdi>.NET Core</bdi> (یا <bdi>.NET 8</bdi> و بالاتر)</strong> را
-          انتخاب کنید. <bdi>.NET Framework</bdi> فقط برای نگهداری پروژه‌های
-          قدیمی استفاده می‌شود.
+          برای هر پروژه جدید، حتماً <bdi>.NET Core</bdi> (یا <bdi>.NET 8</bdi>
+          و بالاتر) را انتخاب کنید. <bdi>.NET Framework</bdi> فقط برای
+          نگهداری پروژه‌های قدیمی مناسب است.
         </p>
       </div>
     </section>
@@ -432,154 +206,97 @@
         <h2 class="section-title"><bdi>ASP.NET Core</bdi> چیست؟</h2>
       </div>
 
-      <h3>یک مثال ساده برای شروع</h3>
       <p>
-        فرض کنید می‌خواهید یک مغازه باز کنید. برای این کار به یک
-        <strong>ساختمان</strong> نیاز دارید. حالا فرض کنید <bdi>.NET Core</bdi>
-        یک <strong>شهر</strong> باشد که همه امکانات را دارد و شما در آن
-        زمینی دارید. <bdi>ASP.NET Core</bdi> در این شهر، <strong>ابزار ساخت
-        مغازه</strong> را در اختیار شما می‌گذارد.
+        <bdi>.NET Core</bdi> را مثل یک شهر بزرگ در نظر بگیرید که همه
+        امکانات را دارد. <bdi>ASP.NET Core</bdi> در این شهر،
+        <strong>ابزار ساخت مغازه</strong> است — یعنی مجموعه‌ای از
+        ابزارهای آماده برای ساختن وب‌سایت، وب‌سرویس و API.
       </p>
 
       <p>
-        به زبان ساده: <bdi>ASP.NET Core</bdi> یک <strong>فریم‌ورک</strong>
-        است که به کمک آن می‌توانید <strong>وب‌سایت</strong>،
-        <strong>وب‌سرویس</strong> و <strong>API</strong> بسازید. فریم‌ورک یعنی
-        مجموعه‌ای از ابزارها و قالب‌های آماده که کار شما را ساده‌تر می‌کند.
+        به زبان ساده، <bdi>ASP.NET Core</bdi> یک <strong>فریم‌ورک وب</strong>
+        است که در سال ۲۰۱۶ منتشر شد و جایگزین نسخه‌های قدیمی
+        <bdi>ASP.NET</bdi> شد.
       </p>
 
-      <h3><bdi>ASP.NET Core</bdi> دقیقاً چیست؟</h3>
-      <p>
-        <bdi>ASP.NET Core</bdi> یک <strong>فریم‌ورک متن‌باز و چندسکویی</strong>
-        است که توسط مایکروسافت برای ساخت اپلیکیشن‌های وب طراحی شده است. این
-        فریم‌ورک بخشی از پلتفرم <bdi>.NET Core</bdi> است.
-      </p>
+      <h3>جایگاه <bdi>ASP.NET Core</bdi> در <bdi>.NET</bdi></h3>
 
-      <p>
-        اگر بخواهیم مسیر را دقیق‌تر بگوییم:
-      </p>
+      <div class="diagram">
+        <svg viewBox="0 0 700 400" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="جایگاه ASP.NET Core در پلتفرم دات‌نت">
+          <!-- Outer .NET -->
+          <rect x="40" y="20" width="620" height="360" rx="14" fill="#161b22" stroke="#6e7681" stroke-width="2"/>
+          <text x="60" y="52" fill="#e6edf3" font-family="JetBrains Mono, monospace" font-size="16" font-weight="700">.NET</text>
+          <text x="640" y="52" text-anchor="end" fill="#6e7681" font-family="Vazirmatn, sans-serif" font-size="12">پلتفرم اصلی</text>
 
-      <div class="code-block">
-        <div class="code-block-header">
-          <span class="code-block-lang">سلسله مراتب</span>
+          <!-- .NET Core -->
+          <rect x="80" y="72" width="540" height="288" rx="12" fill="#0d1117" stroke="#58a6ff" stroke-width="2"/>
+          <text x="100" y="104" fill="#58a6ff" font-family="JetBrains Mono, monospace" font-size="14" font-weight="700">.NET Core</text>
+          <text x="600" y="104" text-anchor="end" fill="#8b949e" font-family="Vazirmatn, sans-serif" font-size="11.5">چندسکویی و متن‌باز</text>
+
+          <!-- ASP.NET Core -->
+          <rect x="120" y="124" width="460" height="216" rx="10" fill="#161b22" stroke="#3fb950" stroke-width="2"/>
+          <text x="140" y="156" fill="#3fb950" font-family="JetBrains Mono, monospace" font-size="14" font-weight="700">ASP.NET Core</text>
+          <text x="560" y="156" text-anchor="end" fill="#8b949e" font-family="Vazirmatn, sans-serif" font-size="11.5">فریم‌ورک وب</text>
+
+          <!-- MVC -->
+          <rect x="160" y="176" width="380" height="144" rx="8" fill="#0d1117" stroke="#d29922" stroke-width="2"/>
+          <text x="180" y="208" fill="#d29922" font-family="JetBrains Mono, monospace" font-size="14" font-weight="700">MVC</text>
+          <text x="520" y="208" text-anchor="end" fill="#8b949e" font-family="Vazirmatn, sans-serif" font-size="11.5">الگوی طراحی</text>
+
+          <!-- Inside MVC: M, V, C -->
+          <rect x="190" y="238" width="90" height="60" rx="6" fill="#161b22" stroke="#3fb950" stroke-width="1.5"/>
+          <text x="235" y="273" text-anchor="middle" fill="#e6edf3" font-family="JetBrains Mono, monospace" font-size="13" font-weight="600">M</text>
+
+          <rect x="305" y="238" width="90" height="60" rx="6" fill="#161b22" stroke="#d29922" stroke-width="1.5"/>
+          <text x="350" y="273" text-anchor="middle" fill="#e6edf3" font-family="JetBrains Mono, monospace" font-size="13" font-weight="600">V</text>
+
+          <rect x="420" y="238" width="90" height="60" rx="6" fill="#161b22" stroke="#58a6ff" stroke-width="1.5"/>
+          <text x="465" y="273" text-anchor="middle" fill="#e6edf3" font-family="JetBrains Mono, monospace" font-size="13" font-weight="600">C</text>
+        </svg>
+        <div class="diagram-caption">
+          هر چه به داخل می‌رویم، تخصصی‌تر می‌شود: از پلتفرم کلی تا الگوی MVC
         </div>
-        <pre>.NET (پلتفرم اصلی)
-  └── .NET Core (نسخه چندسکویی)
-        └── ASP.NET Core (فریم‌ورک وب)
-              └── MVC (الگوی طراحی داخل ASP.NET Core)</pre>
       </div>
 
-      <p>
-        <bdi>ASP.NET Core</bdi> در سال ۲۰۱۶ منتشر شد و نسخه بازنویسی‌شده
-        <bdi>ASP.NET</bdi> قدیمی است. در نسخه قدیمی، سه فریم‌ورک جداگانه
-        وجود داشت: <bdi>ASP.NET MVC</bdi>، <bdi>ASP.NET Web API</bdi> و
-        <bdi>ASP.NET Web Pages</bdi>. در <bdi>ASP.NET Core</bdi>، همه این
-        سه در یک فریم‌ورک واحد ترکیب شدند.
-      </p>
-
-      <h3>ویژگی‌های کلیدی <bdi>ASP.NET Core</bdi></h3>
-
-      <h4>۱. چندسکویی بودن</h4>
-      <p>
-        <bdi>ASP.NET Core</bdi> روی ویندوز، لینوکس و مک کار می‌کند. این یعنی
-        شما یک بار کد می‌نویسید و می‌توانید آن را روی هر سروری اجرا کنید.
-        این ویژگی در دنیای امروز که بیشتر سرورها لینوکسی هستند بسیار مهم
-        است.
-      </p>
-
-      <h4>۲. عملکرد بالا</h4>
-      <p>
-        <bdi>ASP.NET Core</bdi> یکی از سریع‌ترین فریم‌ورک‌های وب در جهان است.
-        در بنچمارک‌های معتبر، از رقبایی مثل <bdi>Node.js</bdi> و
-        <bdi>Django</bdi> سریع‌تر عمل می‌کند. برای سایت‌های پرترافیک این
-        سرعت حیاتی است.
-      </p>
-
-      <h4>۳. متن‌باز بودن</h4>
-      <p>
-        کد منبع <bdi>ASP.NET Core</bdi> روی <bdi>GitHub</bdi> در دسترس عموم
-        است. این یعنی می‌توانید ببینید کد چطور کار می‌کند و اگر مشکلی دیدید،
-        گزارش دهید. همچنین می‌توانید از مشارکت‌های برنامه‌نویسان سراسر
-        دنیا بهره‌مند شوید.
-      </p>
-
-      <h4>۴. تزریق وابستگی داخلی</h4>
-      <p>
-        <bdi>Dependency Injection</bdi> یکی از مفاهیم مهم در برنامه‌نویسی
-        مدرن است که در ادامه جزوه مفصل توضیح خواهیم داد. فعلاً فقط بدانید
-        که <bdi>ASP.NET Core</bdi> این مفهوم را به‌صورت داخلی پیاده‌سازی
-        کرده و نیازی به کتابخانه‌های خارجی ندارید.
-      </p>
-
-      <h4>۵. خط لوله درخواست</h4>
-      <p>
-        در <bdi>ASP.NET Core</bdi>، درخواست‌ها از یک خط لوله عبور می‌کنند.
-        هر مرحله از این خط لوله می‌تواند درخواست را بررسی، تغییر یا رد کند.
-        این معماری انعطاف‌پذیری بالایی به شما می‌دهد.
-      </p>
-
-      <h4>۶. یکپارچگی با فریم‌ورک‌های Front-end</h4>
-      <p>
-        <bdi>ASP.NET Core</bdi> به‌خوبی با فریم‌ورک‌های محبوب Front-end مثل
-        <bdi>React</bdi>، <bdi>Angular</bdi> و <bdi>Vue</bdi> کار می‌کند.
-        همچنین فریم‌ورک اختصاصی <bdi>Blazor</bdi> را دارد که به شما اجازه
-        می‌دهد به‌جای <code>JavaScript</code> با <code>C#</code> Front-end
-        بنویسید.
-      </p>
-
-      <h3>انواع اپلیکیشن‌هایی که با <bdi>ASP.NET Core</bdi> ساخته می‌شوند</h3>
+      <h3>مزایای کلیدی</h3>
       <ul>
-        <li><strong>وب‌سایت‌های MVC:</strong> سایت‌های پویا با صفحات سرور-رندر</li>
-        <li><strong>Web API:</strong> سرویس‌های <bdi>RESTful</bdi> برای اپلیکیشن‌های موبایل و SPA</li>
-        <li><strong>Blazor:</strong> اپلیکیشن‌های وب تعاملی با <code>C#</code> به‌جای <code>JavaScript</code></li>
-        <li><strong>SignalR:</strong> اپلیکیشن‌های Real-time مثل چت و نوتیفیکیشن</li>
-        <li><strong>gRPC:</strong> سرویس‌های میکرو با عملکرد بالا</li>
+        <li><strong>چندسکویی:</strong> روی هر سیستم‌عاملی اجرا می‌شود.</li>
+        <li><strong>سریع:</strong> یکی از سریع‌ترین فریم‌ورک‌های وب در جهان.</li>
+        <li><strong>متن‌باز:</strong> کد روی <bdi>GitHub</bdi> برای همه قابل مشاهده است.</li>
+        <li><strong>تزریق وابستگی داخلی:</strong> بدون کتابخانه اضافی.</li>
+        <li><strong>خط لوله انعطاف‌پذیر:</strong> کنترل کامل روی پردازش درخواست‌ها.</li>
       </ul>
 
-      <div class="callout key">
-        <span class="callout-label">مهم</span>
-        <p>
-          <bdi>ASP.NET Core</bdi> یک <strong>زبان برنامه‌نویسی نیست</strong>؛
-          بلکه یک <strong>فریم‌ورک</strong> است. ما با زبان
-          <code>C#</code> کد می‌نویسیم و از <bdi>ASP.NET Core</bdi> برای
-          ساخت وب‌سایت‌ها و APIها استفاده می‌کنیم.
-        </p>
-      </div>
+      <h3>با <bdi>ASP.NET Core</bdi> چه چیزهایی می‌سازند؟</h3>
+      <ul>
+        <li><strong>وب‌سایت‌های MVC</strong> — سایت‌های پویا با صفحات سمت سرور</li>
+        <li><strong>APIهای <bdi>RESTful</bdi></strong> — برای اپلیکیشن‌های موبایل و <bdi>SPA</bdi></li>
+        <li><strong><bdi>Blazor</bdi></strong> — وب اپلیکیشن با <code>C#</code> به‌جای <code>JavaScript</code></li>
+        <li><strong><bdi>SignalR</bdi></strong> — اپلیکیشن‌های Real-time مثل چت</li>
+        <li><strong><bdi>gRPC</bdi></strong> — سرویس‌های میکرو با عملکرد بالا</li>
+      </ul>
     </section>
 
     <!-- ============ SECTION 4 ============ -->
     <section class="section fade-in" id="s4">
       <div class="section-head">
         <span class="section-num">04</span>
-        <h2 class="section-title">الگوی طراحی MVC</h2>
+        <h2 class="section-title">الگوی طراحی <bdi>MVC</bdi></h2>
       </div>
 
-      <h3>تشبیه یک رستوران</h3>
       <p>
-        بهترین راه برای درک <bdi>MVC</bdi>، تصور یک رستوران است. در یک
-        رستوران سه بخش اصلی وجود دارد:
+        <bdi>MVC</bdi> را با یک رستوران مقایسه کنید. سه بخش اصلی دارد:
       </p>
 
       <ul>
-        <li><strong>آشپزخانه:</strong> جایی که غذا آماده می‌شود.</li>
-        <li><strong>میز غذا:</strong> جایی که غذا به مشتری ارائه می‌شود.</li>
-        <li><strong>گارسون:</strong> کسی که سفارش مشتری را می‌گیرد، به آشپزخانه می‌برد و غذای آماده را به میز مشتری می‌آورد.</li>
+        <li><strong>آشپزخانه (Model):</strong> غذا (داده) و دستور پخت (منطق) اینجاست.</li>
+        <li><strong>میز غذا (View):</strong> چیزی که مشتری (کاربر) می‌بیند.</li>
+        <li><strong>گارسون (Controller):</strong> واسطه بین آشپزخانه و میز.</li>
       </ul>
 
       <p>
-        <bdi>MVC</bdi> هم دقیقاً همین ساختار را دارد:
-      </p>
-
-      <ul>
-        <li><strong>Model (مدل):</strong> مثل آشپزخانه — جایی که داده‌ها و منطق برنامه قرار دارد.</li>
-        <li><strong>View (نمایش):</strong> مثل میز غذا — چیزی که کاربر نهایی می‌بیند.</li>
-        <li><strong>Controller (کنترل‌کننده):</strong> مثل گارسون — کسی که بین Model و View ارتباط برقرار می‌کند.</li>
-      </ul>
-
-      <p>
-        حالا اگر مشتری (کاربر) غذایی (درخواستی) سفارش دهد، گارسون
-        (Controller) سفارش را می‌گیرد، به آشپزخانه (Model) می‌برد، آشپز
-        غذا (داده) را آماده می‌کند، و گارسون غذا را به میز (View) می‌آورد.
+        مشتری سفارش می‌دهد → گارسون آن را به آشپزخانه می‌برد → غذا آماده
+        می‌شود → گارسون غذا را روی میز می‌گذارد.
       </p>
 
       <div class="diagram">
@@ -603,17 +320,14 @@
           <rect x="290" y="250" width="220" height="120" rx="10" fill="#161b22" stroke="#58a6ff" stroke-width="2.5"/>
           <text x="400" y="305" text-anchor="middle" fill="#e6edf3" font-family="JetBrains Mono, monospace" font-size="19" font-weight="600">Controller</text>
           <text x="400" y="333" text-anchor="middle" fill="#8b949e" font-family="Vazirmatn, sans-serif" font-size="13">کنترل‌کننده — مرکز</text>
-          <text x="400" y="355" text-anchor="middle" fill="#6e7681" font-family="JetBrains Mono, monospace" font-size="10.5">C#</text>
 
           <rect x="60" y="480" width="200" height="110" rx="10" fill="#161b22" stroke="#3fb950" stroke-width="2"/>
           <text x="160" y="525" text-anchor="middle" fill="#e6edf3" font-family="JetBrains Mono, monospace" font-size="18" font-weight="600">Model</text>
-          <text x="160" y="551" text-anchor="middle" fill="#8b949e" font-family="Vazirmatn, sans-serif" font-size="12.5">مدل</text>
-          <text x="160" y="573" text-anchor="middle" fill="#6e7681" font-family="JetBrains Mono, monospace" font-size="10">C#</text>
+          <text x="160" y="551" text-anchor="middle" fill="#8b949e" font-family="Vazirmatn, sans-serif" font-size="12.5">مدل (داده)</text>
 
           <rect x="540" y="480" width="200" height="110" rx="10" fill="#161b22" stroke="#d29922" stroke-width="2"/>
           <text x="640" y="525" text-anchor="middle" fill="#e6edf3" font-family="JetBrains Mono, monospace" font-size="18" font-weight="600">View</text>
-          <text x="640" y="551" text-anchor="middle" fill="#8b949e" font-family="Vazirmatn, sans-serif" font-size="12.5">نمایش</text>
-          <text x="640" y="573" text-anchor="middle" fill="#6e7681" font-family="JetBrains Mono, monospace" font-size="10">HTML / CSS / JS</text>
+          <text x="640" y="551" text-anchor="middle" fill="#8b949e" font-family="Vazirmatn, sans-serif" font-size="12.5">نمایش (صفحه)</text>
 
           <line x1="450" y1="112" x2="450" y2="246" stroke="#58a6ff" stroke-width="2" marker-end="url(#mk-blue)"/>
           <rect x="400" y="168" width="100" height="24" fill="#161b22"/>
@@ -639,190 +353,78 @@
           <rect x="415" y="413" width="95" height="24" fill="#161b22"/>
           <text x="462" y="430" text-anchor="middle" fill="#d29922" font-family="Vazirmatn, sans-serif" font-size="11.5" font-weight="600">خروجی نهایی</text>
 
-          <text x="400" y="635" text-anchor="middle" fill="#58a6ff" font-family="Vazirmatn, sans-serif" font-size="12" font-weight="600">کاربر مستقیماً با Controller در ارتباط است؛ View و Model از طریق Controller مدیریت می‌شوند</text>
+          <text x="400" y="635" text-anchor="middle" fill="#58a6ff" font-family="Vazirmatn, sans-serif" font-size="12" font-weight="600">کاربر با Controller حرف می‌زند؛ View و Model از طریق Controller مدیریت می‌شوند</text>
         </svg>
         <div class="diagram-caption">
-          کاربر درخواست را به Controller می‌فرستد و از او پاسخ می‌گیرد — View و Model هر دو تحت کنترل Controller هستند
+          Controller مرکز ارتباط است؛ با Model و View کار می‌کند و پاسخ را به کاربر برمی‌گرداند
         </div>
       </div>
 
-      <h3>سه جزء اصلی <bdi>MVC</bdi> با جزئیات</h3>
+      <h3>سه جزء اصلی</h3>
 
-      <h4>Model — مدل</h4>
+      <h4>Model — مغز برنامه</h4>
       <p>
-        <bdi>Model</bdi> در <bdi>MVC</bdi>، <strong>مغز متفکر</strong> برنامه
-        است. هر چیزی که مربوط به <strong>داده</strong> و
-        <strong>منطق</strong> برنامه باشد، در Model قرار می‌گیرد.
+        هر چیزی که مربوط به داده و منطق باشد در Model است: ساختار
+        اطلاعات (مثلاً «یک محصول چه ویژگی‌هایی دارد»)، دسترسی به دیتابیس،
+        اعتبارسنجی و قوانین کسب‌وکار.
       </p>
 
+      <h4>View — ظاهر برنامه</h4>
       <p>
-        برای درک بهتر، فرض کنید یک فروشگاه اینترنتی دارید. در این فروشگاه،
-        اطلاعات محصولات، کاربران، سفارشات و... همه در Model قرار می‌گیرند.
-        Model مثل یک انبار بزرگ است که همه اطلاعات در آن نگهداری می‌شود.
+        همان چیزی که کاربر در مرورگر می‌بیند. در <bdi>ASP.NET Core MVC</bdi>،
+        Viewها با فناوری <bdi>Razor</bdi> (فایل‌های <code>.cshtml</code>)
+        نوشته می‌شوند و <code>C#</code> با <code>HTML</code> ترکیب می‌شود.
       </p>
 
+      <h4>Controller — مدیر برنامه</h4>
       <p>
-        وظایف Model:
-      </p>
-      <ul>
-        <li>تعریف ساختار داده‌ها — مثلاً یک محصول چه ویژگی‌هایی دارد</li>
-        <li>دسترسی به دیتابیس — خواندن و نوشتن اطلاعات</li>
-        <li>اعتبارسنجی — بررسی صحت داده‌ها</li>
-        <li>منطق تجاری — قوانین مربوط به کسب‌وکار</li>
-      </ul>
-
-      <p>
-        Model با زبان <code>C#</code> نوشته می‌شود. مثلاً در یک فروشگاه
-        اینترنتی، کلاس زیر یک Model است:
+        هر درخواست کاربر اول به Controller می‌رسد. Controller تصمیم
+        می‌گیرد کدام Model و کدام View استفاده شوند، داده را از Model
+        می‌گیرد و به View می‌فرستد.
       </p>
 
-      <div class="code-block">
-        <div class="code-block-header">
-          <span class="code-block-lang">C#</span>
-        </div>
-        <pre>public class Product
-{
-    public int Id { get; set; }
-    public string Name { get; set; }
-    public decimal Price { get; set; }
-    public int Stock { get; set; }
-}</pre>
-      </div>
-
-      <h4>View — نمایش</h4>
-      <p>
-        <bdi>View</bdi> همان چیزی است که <strong>کاربر می‌بیند</strong>. اگر
-        Model مغز برنامه باشد، View <strong>صورت</strong> برنامه است. تمام
-        صفحاتی که در مرورگر می‌بینید، همه چیزهایی که کاربر با آن‌ها تعامل
-        می‌کند، همه در View قرار دارند.
-      </p>
-
-      <p>
-        View با <code>HTML</code>، <code>CSS</code> و <code>JavaScript</code>
-        ساخته می‌شود. در <bdi>ASP.NET Core MVC</bdi>، Viewها با فناوری
-        <bdi>Razor</bdi> نوشته می‌شوند که فایل‌هایش پسوند <code>.cshtml</code>
-        دارند. این فناوری به شما اجازه می‌دهد کد <code>C#</code> را با
-        <code>HTML</code> ترکیب کنید.
-      </p>
-
-      <p>
-        وظایف View:
-      </p>
-      <ul>
-        <li>نمایش داده‌ها به کاربر</li>
-        <li>دریافت ورودی از کاربر (فرم‌ها، دکمه‌ها)</li>
-        <li>استفاده از قالب‌های مشترک برای صفحات مختلف</li>
-      </ul>
-
-      <h4>Controller — کنترل‌کننده</h4>
-      <p>
-        <bdi>Controller</bdi> نقش <strong>مدیر یا واسطه</strong> را دارد. وقتی
-        کاربر روی یک دکمه کلیک می‌کند یا آدرسی را وارد می‌کند، این
-        <bdi>Controller</bdi> است که اول از همه درخواست را دریافت می‌کند.
-        بعد تصمیم می‌گیرد که این درخواست به کدام Model یا View مربوط است.
-      </p>
-
-      <p>
-        برای مثال، وقتی شما صفحه اصلی یک سایت را باز می‌کنید، درخواست شما به
-        <code>HomeController</code> می‌رود و متد <code>Index()</code> آن
-        اجرا می‌شود. این متد داده‌های لازم را از Model می‌گیرد و به View
-        می‌فرستد.
-      </p>
-
-      <p>
-        وظایف Controller:
-      </p>
-      <ul>
-        <li>دریافت درخواست‌های کاربر</li>
-        <li>تصمیم‌گیری درباره اینکه کدام Model و کدام View استفاده شود</li>
-        <li>ارسال داده از Model به View</li>
-        <li>مدیریت خطاها و اعتبارسنجی</li>
-        <li>مدیریت احراز هویت و مجوزدهی</li>
-      </ul>
-
-      <h3>نحوه کار <bdi>MVC</bdi> — یک مثال واقعی</h3>
-      <p>
-        فرض کنید کاربری وارد سایت فروشگاهی می‌شود و می‌خواهد لیست محصولات را
-        ببیند. این فرآیند به این ترتیب طی می‌شود:
-      </p>
-
+      <h3>یک درخواست در MVC چطور پردازش می‌شود؟</h3>
       <ol class="flow">
         <li>
-          <strong>کاربر روی لینک «محصولات» کلیک می‌کند</strong>
-          <span>مرورگر یک درخواست به آدرس <code>/Products</code> ارسال می‌کند.</span>
+          <strong>کاربر درخواست می‌فرستد</strong>
+          <span>مثلاً روی لینک «محصولات» کلیک می‌کند و آدرس <code>/Products</code> باز می‌شود.</span>
         </li>
         <li>
-          <strong>Controller درخواست را دریافت می‌کند</strong>
-          <span>سیستم <bdi>ASP.NET Core</bdi> این درخواست را به <code>ProductsController</code> و متد <code>Index()</code> آن هدایت می‌کند.</span>
+          <strong>Controller درخواست را می‌گیرد</strong>
+          <span>سیستم آن را به <code>ProductsController</code> و متد <code>Index()</code> هدایت می‌کند.</span>
         </li>
         <li>
-          <strong>Controller به Model مراجعه می‌کند</strong>
-          <span>متد <code>Index()</code> از Model درخواست می‌کند که لیست محصولات را برگرداند.</span>
+          <strong>Controller از Model داده می‌خواهد</strong>
+          <span>متد <code>Index()</code> از Model می‌خواهد لیست محصولات را برگرداند.</span>
         </li>
         <li>
-          <strong>Model داده‌ها را آماده می‌کند</strong>
-          <span>Model به دیتابیس می‌رود، لیست محصولات را می‌خواند و آن را به Controller برمی‌گرداند.</span>
+          <strong>Model داده را آماده می‌کند</strong>
+          <span>Model از دیتابیس می‌خواند و لیست را برمی‌گرداند.</span>
         </li>
         <li>
-          <strong>Controller داده را به View می‌فرستد</strong>
-          <span>Controller لیست محصولات را به View مخصوص نمایش لیست می‌فرستد.</span>
+          <strong>Controller داده را به View می‌دهد</strong>
+          <span>لیست محصولات به View مخصوص ارسال می‌شود.</span>
         </li>
         <li>
-          <strong>View صفحه HTML را می‌سازد</strong>
-          <span>View داده‌ها را داخل قالب HTML قرار می‌دهد و HTML نهایی را به مرورگر می‌فرستد.</span>
+          <strong>View صفحه را می‌سازد</strong>
+          <span>View داده‌ها را در قالب HTML می‌ریزد و نتیجه به مرورگر می‌رود.</span>
         </li>
       </ol>
 
       <h3>مزایای <bdi>MVC</bdi></h3>
+      <ul>
+        <li><strong>جداسازی وظایف:</strong> هر بخش کار خودش را می‌کند، بدون دخالت در بقیه.</li>
+        <li><strong>تست‌پذیری:</strong> می‌توان Model و Controller را بدون مرورگر تست کرد.</li>
+        <li><strong>نگهداری آسان:</strong> تغییر ظاهر فقط View را لمس می‌کند.</li>
+        <li><strong>کار تیمی:</strong> چند نفر می‌توانند هم‌زمان روی بخش‌های مختلف کار کنند.</li>
+      </ul>
 
-      <h4>۱. جداسازی دغدغه‌ها</h4>
-      <p>
-        هر بخش یک وظیفه مشخص دارد. برنامه‌نویس بک‌اند روی Model و Controller
-        کار می‌کند، طراح UI روی View. اگر یکی تغییر کند، دیگری نگران
-        نیست.
-      </p>
-
-      <h4>۲. تست‌پذیری بالا</h4>
-      <p>
-        Model و Controller را می‌توان مستقل از View تست کرد. برای مثال،
-        می‌توانید بدون راه‌اندازی مرورگر، یک Controller را تست کنید.
-      </p>
-
-      <h4>۳. قابلیت نگهداری</h4>
-      <p>
-        وقتی می‌خواهید ظاهر برنامه را عوض کنید، فقط Viewها را تغییر می‌دهید.
-        وقتی منطق تغییر کند، فقط Model و Controller تغییر می‌کنند.
-      </p>
-
-      <h4>۴. کار تیمی بهتر</h4>
-      <p>
-        چند تیم می‌توانند همزمان روی بخش‌های مختلف کار کنند. یک تیم روی
-        View، تیم دیگر روی Controller و تیم سوم روی Model.
-      </p>
-
-      <h3>معایب <bdi>MVC</bdi></h3>
-
-      <h4>۱. پیچیدگی برای پروژه‌های کوچک</h4>
-      <p>
-        اگر یک پروژه کوچک و ساده دارید، استفاده از <bdi>MVC</bdi> ممکن است
-        مثل استفاده از کامیون برای حمل یک بسته کوچک باشد. ساختار
-        <bdi>MVC</bdi> برای پروژه‌های کوچک ممکن است بیش از حد پیچیده
-        به نظر برسد.
-      </p>
-
-      <h4>۲. یادگیری زمان‌بر</h4>
-      <p>
-        برای کسی که تازه شروع کرده، درک مفاهیم <bdi>MVC</bdi> ممکن است کمی
-        زمان ببرد. اما وقتی یک بار یاد بگیرید، برای همه پروژه‌ها قابل
-        استفاده است.
-      </p>
-
-      <div class="callout key">
-        <span class="callout-label">نتیجه‌گیری</span>
+      <div class="callout note">
+        <span class="callout-label">یک نکته</span>
         <p>
-          <bdi>MVC</bdi> برای پروژه‌های متوسط و بزرگ عالی است. برای پروژه‌های
-          بسیار کوچک ممکن است بیش از حد پیچیده به نظر برسد، اما در بلندمدت
-          استفاده از آن باعث می‌شود نگهداری و گسترش پروژه آسان‌تر شود.
+          برای پروژه‌های خیلی کوچک، <bdi>MVC</bdi> ممکن است بیش از حد
+          ساختارمند به نظر برسد. اما برای پروژه‌های متوسط و بزرگ، همین
+          ساختار باعث می‌شود در بلندمدت نگهداری آسان‌تر شود.
         </p>
       </div>
     </section>
@@ -831,111 +433,56 @@
     <section class="section fade-in" id="s5">
       <div class="section-head">
         <span class="section-num">05</span>
-        <h2 class="section-title">مقایسه <bdi>WebForm</bdi>، <bdi>MVC</bdi> و <bdi>Core</bdi></h2>
+        <h2 class="section-title">تکامل <bdi>ASP.NET</bdi>: از <bdi>WebForms</bdi> تا <bdi>Core</bdi></h2>
       </div>
 
-      <h3>داستان تحول مایکروسافت در وب</h3>
       <p>
-        مایکروسافت در طول تاریخ سه بار روش ساخت وب‌سایت را تغییر داد. هر بار
-        با درس گرفتن از نسخه قبلی، روش جدیدی ارائه کرد. برای درک این تحول،
-        داستان را از ابتدا می‌گوییم.
+        مایکروسافت سه نسل مختلف برای ساخت وب‌سایت ارائه کرده است. هر نسل
+        درس‌های نسل قبل را به کار گرفت.
       </p>
 
-      <h3>فصل اول: <bdi>WebForms</bdi> — شروع ساده اما پر از مشکل</h3>
+      <div class="diagram">
+        <svg viewBox="0 0 700 240" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="تکامل ASP.NET">
+          <line x1="70" y1="120" x2="630" y2="120" stroke="#30363d" stroke-width="2"/>
+
+          <circle cx="140" cy="120" r="11" fill="#58a6ff"/>
+          <text x="140" y="80" text-anchor="middle" fill="#e6edf3" font-family="JetBrains Mono, monospace" font-size="14" font-weight="700">2002</text>
+          <text x="140" y="160" text-anchor="middle" fill="#e6edf3" font-family="Vazirmatn, sans-serif" font-size="13" font-weight="600">WebForms</text>
+          <text x="140" y="182" text-anchor="middle" fill="#8b949e" font-family="Vazirmatn, sans-serif" font-size="11">شبیه ویندوز</text>
+
+          <circle cx="350" cy="120" r="11" fill="#58a6ff"/>
+          <text x="350" y="80" text-anchor="middle" fill="#e6edf3" font-family="JetBrains Mono, monospace" font-size="14" font-weight="700">2009</text>
+          <text x="350" y="160" text-anchor="middle" fill="#e6edf3" font-family="Vazirmatn, sans-serif" font-size="13" font-weight="600">ASP.NET MVC</text>
+          <text x="350" y="182" text-anchor="middle" fill="#8b949e" font-family="Vazirmatn, sans-serif" font-size="11">بازگشت به اصول وب</text>
+
+          <circle cx="560" cy="120" r="11" fill="#3fb950"/>
+          <text x="560" y="80" text-anchor="middle" fill="#e6edf3" font-family="JetBrains Mono, monospace" font-size="14" font-weight="700">2016</text>
+          <text x="560" y="160" text-anchor="middle" fill="#e6edf3" font-family="Vazirmatn, sans-serif" font-size="13" font-weight="600">ASP.NET Core</text>
+          <text x="560" y="182" text-anchor="middle" fill="#8b949e" font-family="Vazirmatn, sans-serif" font-size="11">چندسکویی و متن‌باز</text>
+        </svg>
+        <div class="diagram-caption">سه نسل ASP.NET، هر کدام با درس‌گرفتن از نسل قبل</div>
+      </div>
+
+      <h3>نسل اول: <bdi>WebForms</bdi></h3>
       <p>
-        سال ۲۰۰۲ بود. مایکروسافت می‌خواست ابزاری بسازد که برنامه‌نویسان
-        ویندوزی بتوانند به‌راحتی سایت بسازند. در آن زمان، برنامه‌نویسان با
-        <bdi>Visual Basic</bdi> و <bdi>Windows Forms</bdi> کار می‌کردند و
-        با مفاهیمی مثل دکمه، جعبه متن و فرم آشنا بودند.
+        ایده اصلی این بود که برنامه‌نویسی وب شبیه برنامه‌نویسی ویندوز
+        شود. برنامه‌نویس کامپوننت‌های آماده مثل دکمه و جعبه متن را می‌گذاشت
+        و فریم‌ورک خودش HTML نهایی را تولید می‌کرد. مشکل: کنترل کم روی
+        HTML و فایل‌های سنگین (به‌خاطر مفهومی به نام <bdi>ViewState</bdi>).
       </p>
 
+      <h3>نسل دوم: <bdi>ASP.NET MVC</bdi></h3>
       <p>
-        ایده <bdi>WebForms</bdi> این بود: «بیایید برنامه‌نویسی وب را شبیه
-        برنامه‌نویسی ویندوز کنیم.» یعنی به‌جای اینکه برنامه‌نویس با
-        <code>HTML</code> و پروتکل <bdi>HTTP</bdi> سر و کله بزند، فقط
-        کامپوننت‌های آماده مثل <code>Button</code> و <code>TextBox</code> را
-        استفاده کند.
+        با الهام از فریم‌ورک‌هایی مثل <bdi>Ruby on Rails</bdi>، مایکروسافت
+        الگوی <bdi>MVC</bdi> را آورد. حالا برنامه‌نویس کنترل کامل روی HTML
+        داشت و کد قابل تست بود. اما هنوز فقط روی ویندوز کار می‌کرد.
       </p>
 
+      <h3>نسل سوم: <bdi>ASP.NET Core</bdi></h3>
       <p>
-        این ایده جالب بود ولی مشکلاتی داشت:
+        بازنویسی کامل از صفر: چندسکویی، متن‌باز، سریع‌تر و مناسب
+        <bdi>Docker</bdi> و ابر. این نسخه امروز استاندارد است.
       </p>
-
-      <ul>
-        <li>
-          <strong>کنترل کم روی HTML:</strong> شما نمی‌دانستید در نهایت چه
-          HTML تولید می‌شود.
-        </li>
-        <li>
-          <strong>فایل‌های سنگین:</strong> مفهومی به نام
-          <bdi>ViewState</bdi> اختراع شد که حجم فایل‌ها را بسیار زیاد می‌کرد.
-        </li>
-        <li>
-          <strong>تست‌پذیری ضعیف:</strong> تست کردن این برنامه‌ها بسیار
-          دشوار بود.
-        </li>
-      </ul>
-
-      <p>
-        با این حال، <bdi>WebForms</bdi> در اوایل دهه ۲۰۰۰ بسیار محبوب شد،
-        چون برنامه‌نویسان ویندوزی به‌راحتی می‌توانستند سایت بسازند.
-      </p>
-
-      <h3>فصل دوم: <bdi>ASP.NET MVC</bdi> — بازگشت به اصول وب</h3>
-      <p>
-        سال ۲۰۰۹ بود. برنامه‌نویسان کمکم متوجه شدند که <bdi>WebForms</bdi>
-        مشکلات جدی دارد. حجم صفحات زیاد است، کنترل روی HTML کم است و
-        تست کردن دشوار است.
-      </p>
-
-      <p>
-        مایکروسافت تصمیم گرفت الگوی طراحی <bdi>MVC</bdi> را که در سایر
-        فریم‌ورک‌ها مثل <bdi>Ruby on Rails</bdi> موفق بود، به دنیای
-        <bdi>ASP.NET</bdi> بیاورد. نتیجه <bdi>ASP.NET MVC</bdi> بود.
-      </p>
-
-      <p>
-        مزایای <bdi>ASP.NET MVC</bdi>:
-      </p>
-
-      <ul>
-        <li>
-          <strong>کنترل کامل روی HTML:</strong> شما خودتان مشخص می‌کردید
-          چه HTML تولید شود.
-        </li>
-        <li>
-          <strong>تست‌پذیری بالا:</strong> می‌توانستید کد را بدون نیاز به
-          مرورگر تست کنید.
-        </li>
-        <li>
-          <strong>جداسازی دغدغه‌ها:</strong> Model، View و Controller جدا
-          از هم بودند.
-        </li>
-      </ul>
-
-      <p>
-        اما <bdi>ASP.NET MVC</bdi> هنوز یک مشکل بزرگ داشت: فقط روی
-        ویندوز کار می‌کرد.
-      </p>
-
-      <h3>فصل سوم: <bdi>ASP.NET Core</bdi> — بازنویسی کامل</h3>
-      <p>
-        سال ۲۰۱۶ بود. دنیای برنامه‌نویسی عوض شده بود. لینوکس سهم بزرگی از
-        سرورها را گرفته بود. ابر و <bdi>Docker</bdi> محبوب شده بودند. اما
-        <bdi>ASP.NET</bdi> هنوز محدود به ویندوز بود.
-      </p>
-
-      <p>
-        مایکروسافت تصمیم گرفت که از صفر شروع کند. نتیجه، <bdi>ASP.NET
-        Core</bdi> بود که همه محدودیت‌های قبلی را برطرف کرد:
-      </p>
-
-      <ul>
-        <li><strong>چندسکویی:</strong> روی ویندوز، لینوکس و مک.</li>
-        <li><strong>متن‌باز:</strong> کد منبع در دسترس عموم.</li>
-        <li><strong>سریع:</strong> چند برابر سریع‌تر از نسخه‌های قبلی.</li>
-        <li><strong>سبک:</strong> مصرف حافظه بسیار کم‌تر.</li>
-      </ul>
 
       <h3>جدول مقایسه سه نسل</h3>
       <div class="table-wrap">
@@ -946,24 +493,12 @@
           <tbody>
             <tr><td>سال عرضه</td><td>۲۰۰۲</td><td>۲۰۰۹</td><td>۲۰۱۶</td></tr>
             <tr><td>مدل برنامه‌نویسی</td><td>صفحه‌محور</td><td>اکشن‌محور</td><td>اکشن‌محور</td></tr>
-            <tr><td>سیستم‌عامل</td><td>فقط ویندوز</td><td>فقط ویندوز</td><td>همه سیستم‌عامل‌ها</td></tr>
+            <tr><td>سیستم‌عامل</td><td>ویندوز</td><td>ویندوز</td><td>همه</td></tr>
             <tr><td>متن‌باز</td><td>خیر</td><td>خیر</td><td>بله</td></tr>
-            <tr><td>کنترل روی HTML</td><td>ضعیف</td><td>عالی</td><td>عالی</td></tr>
             <tr><td>تست‌پذیری</td><td>ضعیف</td><td>خوب</td><td>عالی</td></tr>
-            <tr><td>عملکرد</td><td>کند</td><td>متوسط</td><td>سریع</td></tr>
-            <tr><td>وضعیت فعلی</td><td>منسوخ</td><td>قدیمی</td><td>فعال</td></tr>
+            <tr><td>وضعیت</td><td>منسوخ</td><td>قدیمی</td><td>فعال</td></tr>
           </tbody>
         </table>
-      </div>
-
-      <div class="callout warn">
-        <span class="callout-label">توجه</span>
-        <p>
-          اگر امروز می‌خواهید پروژه جدیدی شروع کنید، <strong>قطعاً
-          <bdi>ASP.NET Core</bdi></strong> را انتخاب کنید. <bdi>WebForms</bdi>
-          و <bdi>ASP.NET MVC</bdi> دیگر توصیه نمی‌شوند و فقط برای نگهداری
-          پروژه‌های قدیمی استفاده می‌شوند.
-        </p>
       </div>
     </section>
 
@@ -971,156 +506,74 @@
     <section class="section fade-in" id="s6">
       <div class="section-head">
         <span class="section-num">06</span>
-        <h2 class="section-title">آشنایی با <bdi>HTTP</bdi> و <bdi>HTTPS</bdi></h2>
+        <h2 class="section-title"><bdi>HTTP</bdi> و <bdi>HTTPS</bdi></h2>
       </div>
 
-      <h3>وقتی در مرورگر آدرس می‌زنید، چه اتفاقی می‌افتد؟</h3>
       <p>
-        فرض کنید در مرورگر خود آدرس <code>google.com</code> را وارد می‌کنید
-        و Enter را می‌زنید. در همان لحظه، پشت صحنه اتفاقاتی می‌افتد که شما
-        نمی‌بینید:
+        وقتی در مرورگر آدرس <code>google.com</code> را وارد می‌کنید، در
+        پشت صحنه این اتفاق می‌افتد: مرورگر یک <strong>درخواست</strong>
+        می‌فرستد، سرور آن را پردازش می‌کند و یک <strong>پاسخ</strong>
+        برمی‌گرداند.
       </p>
 
-      <ol class="flow">
-        <li>
-          <strong>مرورگر یک درخواست می‌سازد</strong>
-          <span>مرورگر پیامی می‌سازد که می‌گوید: «سلام سرور گوگل، لطفاً صفحه اصلی را برای من بفرست.»</span>
-        </li>
-        <li>
-          <strong>درخواست به سرور می‌رود</strong>
-          <span>این پیام از طریق اینترنت به یکی از سرورهای گوگل می‌رسد.</span>
-        </li>
-        <li>
-          <strong>سرور پاسخ می‌دهد</strong>
-          <span>سرور گوگل پیام را دریافت می‌کند، صفحه اصلی را آماده می‌کند و به مرورگر شما می‌فرستد.</span>
-        </li>
-        <li>
-          <strong>مرورگر صفحه را نمایش می‌دهد</strong>
-          <span>مرورگر پیام سرور را دریافت، آن را تفسیر و به صفحه‌ای زیبا تبدیل می‌کند.</span>
-        </li>
-      </ol>
+      <div class="diagram">
+        <svg viewBox="0 0 700 280" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="چرخه درخواست و پاسخ HTTP">
+          <defs>
+            <marker id="mk-req" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+              <polygon points="0 0, 8 3, 0 6" fill="#58a6ff"/>
+            </marker>
+            <marker id="mk-res" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+              <polygon points="0 0, 8 3, 0 6" fill="#3fb950"/>
+            </marker>
+          </defs>
 
-      <p>
-        تمام این رفت و برگشت‌ها، تحت قوانینی به نام <bdi>HTTP</bdi> انجام
-        می‌شود. <bdi>HTTP</bdi> زبان مشترکی است که مرورگر و سرور با آن با
-        هم حرف می‌زنند.
-      </p>
+          <rect x="50" y="80" width="210" height="120" rx="12" fill="#161b22" stroke="#58a6ff" stroke-width="2"/>
+          <text x="155" y="128" text-anchor="middle" fill="#e6edf3" font-family="JetBrains Mono, monospace" font-size="17" font-weight="600">Browser</text>
+          <text x="155" y="158" text-anchor="middle" fill="#8b949e" font-family="Vazirmatn, sans-serif" font-size="13">مرورگر (کاربر)</text>
+
+          <rect x="440" y="80" width="210" height="120" rx="12" fill="#161b22" stroke="#3fb950" stroke-width="2"/>
+          <text x="545" y="128" text-anchor="middle" fill="#e6edf3" font-family="JetBrains Mono, monospace" font-size="17" font-weight="600">Server</text>
+          <text x="545" y="158" text-anchor="middle" fill="#8b949e" font-family="Vazirmatn, sans-serif" font-size="13">سرور سایت</text>
+
+          <line x1="265" y1="118" x2="435" y2="118" stroke="#58a6ff" stroke-width="2.5" marker-end="url(#mk-req)"/>
+          <text x="350" y="108" text-anchor="middle" fill="#58a6ff" font-family="Vazirmatn, sans-serif" font-size="12" font-weight="600">۱. درخواست (Request)</text>
+          <text x="350" y="140" text-anchor="middle" fill="#6e7681" font-family="JetBrains Mono, monospace" font-size="10">GET /index.html</text>
+
+          <line x1="435" y1="168" x2="265" y2="168" stroke="#3fb950" stroke-width="2.5" marker-end="url(#mk-res)"/>
+          <text x="350" y="192" text-anchor="middle" fill="#3fb950" font-family="Vazirmatn, sans-serif" font-size="12" font-weight="600">۲. پاسخ (Response)</text>
+          <text x="350" y="215" text-anchor="middle" fill="#6e7681" font-family="JetBrains Mono, monospace" font-size="10">200 OK + HTML</text>
+
+          <text x="350" y="258" text-anchor="middle" fill="#8b949e" font-family="Vazirmatn, sans-serif" font-size="12">همه‌ی این رفت‌وبرگشت‌ها با قوانین HTTP انجام می‌شود</text>
+        </svg>
+        <div class="diagram-caption">مرورگر درخواست می‌فرستد، سرور پاسخ می‌دهد — همه طبق قوانین HTTP</div>
+      </div>
 
       <h3><bdi>HTTP</bdi> چیست؟</h3>
       <p>
-        <bdi>HTTP</bdi> مخفف <bdi>Hypertext Transfer Protocol</bdi> است.
-        کلمه به کلمه ترجمه‌اش می‌شود «پروتکل انتقال ابرمتن».
+        <bdi>HTTP</bdi> مخفف <bdi>Hypertext Transfer Protocol</bdi> است؛
+        یعنی «قوانین جابه‌جایی صفحات وب». یک <strong>پروتکل</strong> است —
+        مجموعه‌ای از قوانین توافق‌شده که مرورگر و سرور با آن با هم حرف
+        می‌زنند.
       </p>
 
-      <ul>
-        <li><strong>پروتکل:</strong> یعنی یک سری قوانین توافق‌شده.</li>
-        <li><strong>انتقال:</strong> یعنی جابه‌جا کردن داده.</li>
-        <li><strong>ابرمتن:</strong> یعنی متن‌هایی که می‌توانند لینک، تصویر و... داشته باشند (مثل صفحات وب).</li>
-      </ul>
-
+      <h3>ویژگی مهم: بدون حالت</h3>
       <p>
-        پس <bdi>HTTP</bdi> یعنی: «قوانین جابه‌جا کردن صفحات وب». این پروتکل
-        در سال ۱۹۹۰ توسط <bdi>Tim Berners-Lee</bdi> ابداع شد و از آن زمان
-        تاکنون پایه ارتباط در وب بوده است.
+        <bdi>HTTP</bdi> <strong>بدون حالت</strong> (<bdi>Stateless</bdi>)
+        است. یعنی هر درخواست مستقل است و سرور اطلاعات درخواست قبلی را
+        نگه نمی‌دارد. برای اینکه سایت بداند شما وارد شده‌اید، از
+        <bdi>Cookie</bdi> و <bdi>Session</bdi> استفاده می‌شود (در قسمت‌های
+        بعدی توضیح داده می‌شود).
       </p>
-
-      <h3>یک ویژگی مهم: <bdi>HTTP</bdi> بدون حالت است</h3>
-      <p>
-        یکی از ویژگی‌های جالب <bdi>HTTP</bdi> این است که
-        <strong>بدون حالت</strong> (<bdi>Stateless</bdi>) است. یعنی هر
-        درخواست مستقل است و سرور اطلاعات درخواست قبلی را نگه نمی‌دارد.
-      </p>
-
-      <p>
-        برای درک بهتر، این مثال را در نظر بگیرید: فرض کنید در یک مغازه
-        هستید. اگر مغازه‌دار بعد از هر خرید، شما را فراموش کند، دفعه بعد
-        که برگردید باید دوباره خودتان را معرفی کنید. <bdi>HTTP</bdi> هم
-        دقیقاً همین‌طور است.
-      </p>
-
-      <p>
-        حالا سؤال پیش می‌آید که اگر <bdi>HTTP</bdi> بدون حالت است، چطور
-        سایتی مثل فیسبوک می‌داند که شما وارد شده‌اید؟ پاسخ در مکانیزم‌هایی
-        مثل <bdi>Cookie</bdi> و <bdi>Session</bdi> است که در قسمت‌های
-        بعدی توضیح خواهیم داد.
-      </p>
-
-      <h3>ساختار یک درخواست <bdi>HTTP</bdi></h3>
-      <p>
-        هر درخواست <bdi>HTTP</bdi> از سه بخش تشکیل شده است:
-      </p>
-
-      <div class="code-block">
-        <div class="code-block-header">
-          <span class="code-block-lang">ساختار درخواست HTTP</span>
-        </div>
-        <pre>GET /products HTTP/1.1
-Host: example.com
-User-Agent: Mozilla/5.0
-Accept: text/html
-
-[بدنه درخواست]</pre>
-      </div>
-
-      <ul>
-        <li><strong>خط درخواست:</strong> شامل متد (<code>GET</code>)، مسیر (<code>/products</code>) و نسخه پروتکل (<code>HTTP/1.1</code>)</li>
-        <li><strong>هدرها:</strong> اطلاعات اضافی درباره درخواست</li>
-        <li><strong>بدنه:</strong> داده‌های ارسالی (اختیاری، معمولاً در <code>POST</code> استفاده می‌شود)</li>
-      </ul>
-
-      <h3>ساختار یک پاسخ <bdi>HTTP</bdi></h3>
-      <p>
-        هر پاسخ <bdi>HTTP</bdi> هم از سه بخش تشکیل شده است:
-      </p>
-
-      <div class="code-block">
-        <div class="code-block-header">
-          <span class="code-block-lang">ساختار پاسخ HTTP</span>
-        </div>
-        <pre>HTTP/1.1 200 OK
-Content-Type: text/html
-Content-Length: 1256
-
-[بدنه پاسخ: HTML صفحه]</pre>
-      </div>
-
-      <ul>
-        <li><strong>خط وضعیت:</strong> شامل نسخه پروتکل، کد وضعیت و پیام وضعیت</li>
-        <li><strong>هدرها:</strong> اطلاعات اضافی درباره پاسخ</li>
-        <li><strong>بدنه:</strong> محتوای واقعی پاسخ مثل <code>HTML</code>، <code>JSON</code> یا تصویر</li>
-      </ul>
 
       <h3><bdi>HTTPS</bdi> چیست؟</h3>
       <p>
-        حالا فرض کنید می‌خواهید در یک سایت خرید کنید و شماره کارت بانکی خود
-        را وارد کنید. اگر اطلاعات شما بدون رمزنگاری منتقل شود، هر کسی که
-        در مسیر ارتباط باشد می‌تواند آن را ببیند. اینجاست که
-        <bdi>HTTPS</bdi> وارد می‌شود.
-      </p>
-
-      <p>
-        <bdi>HTTPS</bdi> مخفف <bdi>Hypertext Transfer Protocol Secure</bdi>
-        است. یعنی نسخه <strong>امن</strong> <bdi>HTTP</bdi>. در
-        <bdi>HTTPS</bdi> تمام اطلاعات بین مرورگر و سرور
-        <strong>رمزنگاری</strong> می‌شود. حتی اگر کسی اطلاعات را رهگیری
-        کند، نمی‌تواند آن را بخواند.
-      </p>
-
-      <h3>تفاوت <bdi>HTTP</bdi> و <bdi>HTTPS</bdi></h3>
-
-      <p>
-        برای درک بهتر، این مثال را در نظر بگیرید:
+        <bdi>HTTPS</bdi> نسخه <strong>امن</strong> <bdi>HTTP</bdi> است.
+        تمام اطلاعات بین مرورگر و سرور <strong>رمزنگاری</strong> می‌شود.
       </p>
 
       <ul>
-        <li>
-          <strong><bdi>HTTP</bdi>:</strong> مثل این است که یک نامه باز
-          بفرستید. هر کسی در مسیر می‌تواند آن را بخواند.
-        </li>
-        <li>
-          <strong><bdi>HTTPS</bdi>:</strong> مثل این است که نامه را در
-          پاکت دربسته بگذارید. تنها گیرنده می‌تواند آن را باز کند.
-        </li>
+        <li><strong><bdi>HTTP</bdi>:</strong> مثل نامه باز — هر کسی در مسیر می‌تواند بخواند.</li>
+        <li><strong><bdi>HTTPS</bdi>:</strong> مثل نامه در پاکت دربسته — فقط گیرنده می‌تواند باز کند.</li>
       </ul>
 
       <div class="table-wrap">
@@ -1129,22 +582,19 @@ Content-Length: 1256
             <tr><th>ویژگی</th><th><bdi>HTTP</bdi></th><th><bdi>HTTPS</bdi></th></tr>
           </thead>
           <tbody>
-            <tr><td>پروتکل</td><td>Hypertext Transfer Protocol</td><td>HTTP + TLS/SSL</td></tr>
+            <tr><td>رمزنگاری</td><td>ندارد</td><td>دارد</td></tr>
             <tr><td>پورت پیش‌فرض</td><td>۸۰</td><td>۴۴۳</td></tr>
-            <tr><td>امنیت</td><td>بدون رمزنگاری</td><td>با رمزنگاری</td></tr>
             <tr><td>گواهی SSL</td><td>نیاز ندارد</td><td>نیاز دارد</td></tr>
-            <tr><td>نماد در مرورگر</td><td>علامت هشدار</td><td>قفل سبز</td></tr>
+            <tr><td>نماد در مرورگر</td><td>هشدار «ناامن»</td><td>قفل سبز</td></tr>
           </tbody>
         </table>
       </div>
 
       <div class="callout key">
-        <span class="callout-label">توصیه مهم</span>
+        <span class="callout-label">توصیه</span>
         <p>
-          امروزه استفاده از <bdi>HTTPS</bdi> برای همه سایت‌ها ضروری است.
-          حتی مرورگرها سایت‌های <bdi>HTTP</bdi> را «ناامن» علامت‌گذاری
-          می‌کنند. خوشبختانه برای دریافت گواهی SSL رایگان می‌توانید از
-          سرویس <bdi>Let's Encrypt</bdi> استفاده کنید.
+          امروزه برای همه سایت‌ها <bdi>HTTPS</bdi> ضروری است. برای دریافت
+          گواهی رایگان می‌توانید از <bdi>Let's Encrypt</bdi> استفاده کنید.
         </p>
       </div>
     </section>
@@ -1153,147 +603,93 @@ Content-Length: 1256
     <section class="section fade-in" id="s7">
       <div class="section-head">
         <span class="section-num">07</span>
-        <h2 class="section-title">Status Code و HTTP Method</h2>
+        <h2 class="section-title"><bdi>HTTP Method</bdi> و <bdi>Status Code</bdi></h2>
       </div>
 
-      <h3>یک مثال از زندگی روزمره</h3>
+      <h3>متد HTTP — نوع درخواست</h3>
       <p>
-        فرض کنید در رستوران یک غذا سفارش می‌دهید. به‌طور معمول چند حالت پیش
-        می‌آید:
-      </p>
-
-      <ul>
-        <li>غذا آماده می‌شود و به شما داده می‌شود — ✅ موفقیت</li>
-        <li>رستوران بسته است و نمی‌توانید سفارش دهید — ❌ خطا</li>
-        <li>غذایی که خواستید موجود نیست — ❌ خطا</li>
-        <li>غذا آماده می‌شود اما باید ۱۰ دقیقه منتظر بمانید — ⏳ در انتظار</li>
-      </ul>
-
-      <p>
-        در دنیای <bdi>HTTP</bdi> هم دقیقاً همین اتفاق می‌افتد. هر بار که
-        مرورگر درخواستی می‌فرستد، سرور علاوه بر پاسخ اصلی، یک عدد هم به
-        نام <bdi>Status Code</bdi> می‌فرستد که وضعیت درخواست را مشخص
-        می‌کند.
-      </p>
-
-      <h3><bdi>HTTP Method</bdi> چیست؟</h3>
-      <p>
-        هر درخواستی که از مرورگر به سرور فرستاده می‌شود، باید مشخص کند که
-        چه کاری می‌خواهد انجام دهد. این «نوع کار» را
-        <bdi>HTTP Method</bdi> می‌گویند.
-      </p>
-
-      <p>
-        به این مثال‌ها دقت کنید:
-      </p>
-
-      <ul>
-        <li>می‌خواهم لیست محصولات را ببینم — این یک <code>GET</code> است.</li>
-        <li>می‌خواهم یک محصول جدید ثبت کنم — این یک <code>POST</code> است.</li>
-        <li>می‌خواهم یک محصول را ویرایش کنم — این یک <code>PUT</code> است.</li>
-        <li>می‌خواهم یک محصول را حذف کنم — این یک <code>DELETE</code> است.</li>
-      </ul>
-
-      <div class="table-wrap">
-        <table>
-          <thead>
-            <tr><th>متد</th><th>معنی</th><th>کاربرد روزمره</th></tr>
-          </thead>
-          <tbody>
-            <tr><td><code>GET</code></td><td>دریافت داده</td><td>مشاهده یک صفحه، دیدن لیست محصولات</td></tr>
-            <tr><td><code>POST</code></td><td>ایجاد داده جدید</td><td>ثبت‌نام، ثبت سفارش، ارسال فرم</td></tr>
-            <tr><td><code>PUT</code></td><td>به‌روزرسانی کامل</td><td>ویرایش پروفایل کاربری</td></tr>
-            <tr><td><code>PATCH</code></td><td>به‌روزرسانی جزئی</td><td>تغییر فقط عکس پروفایل</td></tr>
-            <tr><td><code>DELETE</code></td><td>حذف داده</td><td>حذف یک محصول یا یک حساب کاربری</td></tr>
-            <tr><td><code>HEAD</code></td><td>دریافت هدر بدون بدنه</td><td>بررسی وجود یک فایل</td></tr>
-            <tr><td><code>OPTIONS</code></td><td>دریافت متدهای مجاز</td><td>درخواست‌های CORS</td></tr>
-          </tbody>
-        </table>
-      </div>
-
-      <h3><bdi>Status Code</bdi> چیست؟</h3>
-      <p>
-        همان‌طور که اشاره کردیم، سرور بعد از دریافت هر درخواست، یک
-        <bdi>Status Code</bdi> می‌فرستد. این کد یک عدد سه‌رقمی است که در
-        پنج دسته کلی قرار می‌گیرد.
+        هر درخواست باید مشخص کند چه کاری می‌خواهد انجام دهد. این «نوع
+        کار» را <bdi>HTTP Method</bdi> می‌گویند.
       </p>
 
       <div class="table-wrap">
         <table>
           <thead>
-            <tr><th>دسته</th><th>محدوده</th><th>معنی</th><th>مثال</th></tr>
+            <tr><th>متد</th><th>معنی</th><th>مثال روزمره</th></tr>
           </thead>
           <tbody>
-            <tr><td>۱xx</td><td>۱۰۰-۱۹۹</td><td>اطلاعاتی</td><td>100 Continue</td></tr>
-            <tr><td>۲xx</td><td>۲۰۰-۲۹۹</td><td>موفقیت</td><td>200 OK</td></tr>
-            <tr><td>۳xx</td><td>۳۰۰-۳۹۹</td><td>ریدایرکت</td><td>301 Moved</td></tr>
-            <tr><td>۴xx</td><td>۴۰۰-۴۹۹</td><td>خطای کلاینت</td><td>404 Not Found</td></tr>
-            <tr><td>۵xx</td><td>۵۰۰-۵۹۹</td><td>خطای سرور</td><td>500 Server Error</td></tr>
+            <tr><td><code>GET</code></td><td>دریافت داده</td><td>دیدن لیست محصولات</td></tr>
+            <tr><td><code>POST</code></td><td>ایجاد داده جدید</td><td>ثبت‌نام، ثبت سفارش</td></tr>
+            <tr><td><code>PUT</code></td><td>به‌روزرسانی کامل</td><td>ویرایش پروفایل</td></tr>
+            <tr><td><code>PATCH</code></td><td>به‌روزرسانی جزئی</td><td>فقط تغییر عکس پروفایل</td></tr>
+            <tr><td><code>DELETE</code></td><td>حذف</td><td>حذف یک محصول</td></tr>
           </tbody>
         </table>
       </div>
 
-      <h4>دسته ۱xx — اطلاعاتی</h4>
+      <h3>Status Code — وضعیت پاسخ</h3>
       <p>
-        این کدها کمتر دیده می‌شوند و معمولاً اطلاعاتی درباره مراحل انتقال
-        می‌دهند. مثلاً <code>100 Continue</code> یعنی «ادامه بده، من آماده
-        دریافت هستم».
+        سرور بعد از هر درخواست یک عدد سه‌رقمی می‌فرستد که نتیجه را مشخص
+        می‌کند. این عدد در پنج دسته کلی قرار می‌گیرد:
       </p>
 
-      <h4>دسته ۲xx — موفقیت</h4>
-      <p>
-        این کدها یعنی درخواست شما با موفقیت انجام شده. مهم‌ترین آن‌ها:
-      </p>
-      <ul>
-        <li><code>200 OK</code>: درخواست موفق بود و پاسخ در بدنه است.</li>
-        <li><code>201 Created</code>: یک منبع جدید با موفقیت ساخته شد.</li>
-        <li><code>204 No Content</code>: درخواست موفق بود ولی پاسخی برای فرستادن نیست.</li>
-      </ul>
+      <div class="diagram">
+        <svg viewBox="0 0 700 170" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="دسته‌بندی Status Code">
+          <rect x="30" y="40" width="120" height="90" rx="8" fill="rgba(88,166,255,0.12)" stroke="#58a6ff" stroke-width="1.5"/>
+          <text x="90" y="78" text-anchor="middle" fill="#58a6ff" font-family="JetBrains Mono, monospace" font-size="16" font-weight="700">1xx</text>
+          <text x="90" y="106" text-anchor="middle" fill="#e6edf3" font-family="Vazirmatn, sans-serif" font-size="12">اطلاعاتی</text>
 
-      <h4>دسته ۳xx — ریدایرکت</h4>
-      <p>
-        این کدها یعنی منبع مورد نظر شما به جای دیگری منتقل شده است.
-        مهم‌ترین آن‌ها:
-      </p>
-      <ul>
-        <li><code>301 Moved Permanently</code>: منبع برای همیشه منتقل شده.</li>
-        <li><code>302 Found</code>: منبع به‌طور موقت منتقل شده.</li>
-        <li><code>304 Not Modified</code>: منبع تغییر نکرده و از کش مرورگر استفاده کن.</li>
-      </ul>
+          <rect x="160" y="40" width="120" height="90" rx="8" fill="rgba(63,185,80,0.12)" stroke="#3fb950" stroke-width="1.5"/>
+          <text x="220" y="78" text-anchor="middle" fill="#3fb950" font-family="JetBrains Mono, monospace" font-size="16" font-weight="700">2xx</text>
+          <text x="220" y="106" text-anchor="middle" fill="#e6edf3" font-family="Vazirmatn, sans-serif" font-size="12">موفقیت</text>
 
-      <h4>دسته ۴xx — خطای کلاینت</h4>
-      <p>
-        این کدها یعنی درخواست شما مشکل دارد. مهم‌ترین آن‌ها:
-      </p>
-      <ul>
-        <li><code>400 Bad Request</code>: درخواست اشتباه یا ناقص است.</li>
-        <li><code>401 Unauthorized</code>: نیاز به ورود دارید.</li>
-        <li><code>403 Forbidden</code>: وارد شده‌اید اما دسترسی ندارید.</li>
-        <li><code>404 Not Found</code>: صفحه مورد نظر پیدا نشد.</li>
-        <li><code>429 Too Many Requests</code>: درخواست‌های زیادی فرستاده‌اید.</li>
-      </ul>
+          <rect x="290" y="40" width="120" height="90" rx="8" fill="rgba(210,153,34,0.12)" stroke="#d29922" stroke-width="1.5"/>
+          <text x="350" y="78" text-anchor="middle" fill="#d29922" font-family="JetBrains Mono, monospace" font-size="16" font-weight="700">3xx</text>
+          <text x="350" y="106" text-anchor="middle" fill="#e6edf3" font-family="Vazirmatn, sans-serif" font-size="12">ریدایرکت</text>
 
-      <h4>دسته ۵xx — خطای سرور</h4>
-      <p>
-        این کدها یعنی سرور مشکل دارد. مهم‌ترین آن‌ها:
-      </p>
-      <ul>
-        <li><code>500 Internal Server Error</code>: خطای داخلی سرور.</li>
-        <li><code>502 Bad Gateway</code>: سرور واسط پاسخ نامعتبری دریافت کرده.</li>
-        <li><code>503 Service Unavailable</code>: سرویس در دسترس نیست.</li>
-      </ul>
+          <rect x="420" y="40" width="120" height="90" rx="8" fill="rgba(248,81,73,0.12)" stroke="#f85149" stroke-width="1.5"/>
+          <text x="480" y="78" text-anchor="middle" fill="#f85149" font-family="JetBrains Mono, monospace" font-size="16" font-weight="700">4xx</text>
+          <text x="480" y="106" text-anchor="middle" fill="#e6edf3" font-family="Vazirmatn, sans-serif" font-size="12">خطای کاربر</text>
 
-      <h4>تفاوت <code>GET</code> و <code>POST</code></h4>
+          <rect x="550" y="40" width="120" height="90" rx="8" fill="rgba(139,148,158,0.12)" stroke="#8b949e" stroke-width="1.5"/>
+          <text x="610" y="78" text-anchor="middle" fill="#8b949e" font-family="JetBrains Mono, monospace" font-size="16" font-weight="700">5xx</text>
+          <text x="610" y="106" text-anchor="middle" fill="#e6edf3" font-family="Vazirmatn, sans-serif" font-size="12">خطای سرور</text>
+
+          <text x="350" y="155" text-anchor="middle" fill="#6e7681" font-family="Vazirmatn, sans-serif" font-size="11">هرچه عدد اول بزرگ‌تر، مشکل جدی‌تر</text>
+        </svg>
+        <div class="diagram-caption">پنج دسته Status Code — از «همه‌چیز خوب است» تا «سرور خراب است»</div>
+      </div>
+
+      <h3>کدهای پرکاربرد</h3>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>کد</th><th>معنی</th><th>چه وقت دیده می‌شود</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><code>200 OK</code></td><td>موفق</td><td>صفحه با موفقیت بارگذاری شد</td></tr>
+            <tr><td><code>201 Created</code></td><td>ساخته شد</td><td>ثبت‌نام موفق</td></tr>
+            <tr><td><code>301 Moved Permanently</code></td><td>منتقل شد</td><td>تغییر آدرس دائمی سایت</td></tr>
+            <tr><td><code>304 Not Modified</code></td><td>تغییر نکرده</td><td>استفاده از نسخه ذخیره‌شده</td></tr>
+            <tr><td><code>400 Bad Request</code></td><td>درخواست اشتباه</td><td>ارسال داده نامعتبر</td></tr>
+            <tr><td><code>401 Unauthorized</code></td><td>وارد نشده‌اید</td><td>نیاز به لاگین</td></tr>
+            <tr><td><code>403 Forbidden</code></td><td>دسترسی ندارید</td><td>ورود به بخش مدیریت بدون مجوز</td></tr>
+            <tr><td><code>404 Not Found</code></td><td>پیدا نشد</td><td>آدرس اشتباه</td></tr>
+            <tr><td><code>500 Server Error</code></td><td>خطای سرور</td><td>باگ یا مشکل داخلی</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>تفاوت <code>GET</code> و <code>POST</code></h3>
       <div class="table-wrap">
         <table>
           <thead>
             <tr><th>ویژگی</th><th><code>GET</code></th><th><code>POST</code></th></tr>
           </thead>
           <tbody>
-            <tr><td>داده کجا می‌رود</td><td>در آدرس URL</td><td>در بدنه درخواست</td></tr>
-            <tr><td>محدودیت حجم</td><td>محدود</td><td>بدون محدودیت عملی</td></tr>
+            <tr><td>محل داده</td><td>در آدرس URL</td><td>در بدنه درخواست</td></tr>
+            <tr><td>محدودیت حجم</td><td>دارد</td><td>ندارد</td></tr>
             <tr><td>قابل کش شدن</td><td>بله</td><td>خیر</td></tr>
-            <tr><td>در تاریخچه مرورگر</td><td>ذخیره می‌شود</td><td>ذخیره نمی‌شود</td></tr>
             <tr><td>کاربرد اصلی</td><td>دریافت داده</td><td>ارسال داده</td></tr>
           </tbody>
         </table>
@@ -1304,168 +700,121 @@ Content-Length: 1256
     <section class="section fade-in" id="s8">
       <div class="section-head">
         <span class="section-num">08</span>
-        <h2 class="section-title">HTTP Headers</h2>
+        <h2 class="section-title"><bdi>HTTP Headers</bdi></h2>
       </div>
 
-      <h3>یک مثال ساده</h3>
       <p>
-        تصور کنید می‌خواهید برای دوستتان یک بسته پستی بفرستید. روی بسته
-        می‌نویسید: نام گیرنده، آدرس، وزن، محتویات و... . این اطلاعات به
-        پست کمک می‌کند تا بسته را درست به مقصد برساند.
+        وقتی بسته پستی می‌فرستید، روی آن می‌نویسید: نام گیرنده، آدرس، وزن،
+        محتویات. <bdi>HTTP Header</bdi> هم همین نقش را دارد — اطلاعات
+        اضافی همراه درخواست یا پاسخ که به سرور و مرورگر کمک می‌کند بفهمند
+        با چه چیزی سر و کار دارند.
       </p>
 
-      <p>
-        در دنیای <bdi>HTTP</bdi> هم همین‌طور است. وقتی یک درخواست یا پاسخ
-        ارسال می‌شود، اطلاعات اضافی به آن ضمیمه می‌شود که به آن
-        <bdi>HTTP Header</bdi> می‌گویند. این اطلاعات به سرور و کلاینت کمک
-        می‌کند تا بفهمند با چه نوع درخواستی سر و کار دارند.
-      </p>
+      <h3>ساختار یک درخواست</h3>
 
-      <h3><bdi>HTTP Header</bdi> چیست؟</h3>
-      <p>
-        <bdi>HTTP Header</bdi> یک <strong>اطلاعات اضافی</strong> است که
-        همراه با درخواست یا پاسخ <bdi>HTTP</bdi> ارسال می‌شود. این اطلاعات
-        معمولاً به‌صورت جفت‌های <code>نام: مقدار</code> هستند.
-      </p>
+      <div class="diagram">
+        <svg viewBox="0 0 700 240" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="ساختار درخواست HTTP">
+          <text x="350" y="28" text-anchor="middle" fill="#e6edf3" font-family="Vazirmatn, sans-serif" font-size="14" font-weight="700">درخواست HTTP از سه بخش ساخته شده</text>
 
-      <p>
-        برای مثال:
-      </p>
+          <rect x="60" y="50" width="580" height="52" rx="8" fill="#161b22" stroke="#58a6ff" stroke-width="1.5"/>
+          <text x="620" y="82" text-anchor="end" fill="#58a6ff" font-family="Vazirmatn, sans-serif" font-size="12.5" font-weight="600">خط درخواست</text>
+          <text x="80" y="82" fill="#e6edf3" font-family="JetBrains Mono, monospace" font-size="12">GET /products HTTP/1.1</text>
 
-      <div class="code-block">
-        <div class="code-block-header">
-          <span class="code-block-lang">نمونه هدرها</span>
-        </div>
-        <pre>Content-Type: text/html
-Content-Length: 1256
-User-Agent: Mozilla/5.0</pre>
+          <rect x="60" y="112" width="580" height="52" rx="8" fill="#161b22" stroke="#3fb950" stroke-width="1.5"/>
+          <text x="620" y="144" text-anchor="end" fill="#3fb950" font-family="Vazirmatn, sans-serif" font-size="12.5" font-weight="600">هدرها</text>
+          <text x="80" y="144" fill="#e6edf3" font-family="JetBrains Mono, monospace" font-size="12">Host · User-Agent · Accept ...</text>
+
+          <rect x="60" y="174" width="580" height="52" rx="8" fill="#161b22" stroke="#d29922" stroke-width="1.5"/>
+          <text x="620" y="206" text-anchor="end" fill="#d29922" font-family="Vazirmatn, sans-serif" font-size="12.5" font-weight="600">بدنه (اختیاری)</text>
+          <text x="80" y="206" fill="#6e7681" font-family="Vazirmatn, sans-serif" font-size="12">داده‌های ارسالی (در POST و PUT)</text>
+        </svg>
+        <div class="diagram-caption">سه لایه: خط درخواست، هدرها، بدنه</div>
       </div>
 
-      <h3>دسته‌بندی <bdi>HTTP Header</bdi>ها</h3>
-      <p>
-        هدرها بر اساس جایگاه و کاربردشان به چهار دسته تقسیم می‌شوند:
-      </p>
+      <h3>ساختار یک پاسخ</h3>
 
-      <h4>۱. هدرهای عمومی</h4>
-      <p>
-        این هدرها هم در درخواست و هم در پاسخ استفاده می‌شوند. یعنی
-        می‌توانند در هر دو طرف ظاهر شوند.
-      </p>
+      <div class="diagram">
+        <svg viewBox="0 0 700 240" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="ساختار پاسخ HTTP">
+          <text x="350" y="28" text-anchor="middle" fill="#e6edf3" font-family="Vazirmatn, sans-serif" font-size="14" font-weight="700">پاسخ HTTP هم سه بخش دارد</text>
 
-      <h4>۲. هدرهای درخواست</h4>
-      <p>
-        این هدرها فقط توسط کلاینت (مرورگر) فرستاده می‌شوند. اطلاعاتی
-        درباره درخواست و کلاینت در اختیار سرور می‌گذارند.
-      </p>
+          <rect x="60" y="50" width="580" height="52" rx="8" fill="#161b22" stroke="#58a6ff" stroke-width="1.5"/>
+          <text x="620" y="82" text-anchor="end" fill="#58a6ff" font-family="Vazirmatn, sans-serif" font-size="12.5" font-weight="600">خط وضعیت</text>
+          <text x="80" y="82" fill="#e6edf3" font-family="JetBrains Mono, monospace" font-size="12">HTTP/1.1 200 OK</text>
 
-      <h4>۳. هدرهای پاسخ</h4>
-      <p>
-        این هدرها فقط توسط سرور فرستاده می‌شوند. اطلاعاتی درباره پاسخ و
-        سرور در اختیار کلاینت می‌گذارند.
-      </p>
+          <rect x="60" y="112" width="580" height="52" rx="8" fill="#161b22" stroke="#3fb950" stroke-width="1.5"/>
+          <text x="620" y="144" text-anchor="end" fill="#3fb950" font-family="Vazirmatn, sans-serif" font-size="12.5" font-weight="600">هدرها</text>
+          <text x="80" y="144" fill="#e6edf3" font-family="JetBrains Mono, monospace" font-size="12">Content-Type · Content-Length ...</text>
 
-      <h4>۴. هدرهای محتوا</h4>
-      <p>
-        این هدرها اطلاعاتی درباره بدنه درخواست یا پاسخ می‌دهند. مثلاً
-        نوع محتوا یا حجم آن.
-      </p>
+          <rect x="60" y="174" width="580" height="52" rx="8" fill="#161b22" stroke="#d29922" stroke-width="1.5"/>
+          <text x="620" y="206" text-anchor="end" fill="#d29922" font-family="Vazirmatn, sans-serif" font-size="12.5" font-weight="600">بدنه</text>
+          <text x="80" y="206" fill="#6e7681" font-family="Vazirmatn, sans-serif" font-size="12">محتوای واقعی (HTML، JSON، تصویر ...)</text>
+        </svg>
+        <div class="diagram-caption">خط وضعیت، هدرها و بدنه پاسخ</div>
+      </div>
 
       <h3>مهم‌ترین هدرهای درخواست</h3>
-      <ul>
-        <li>
-          <code>Host</code> — دامنه و پورت سرور مقصد. مثلاً
-          <code>example.com:443</code>
-        </li>
-        <li>
-          <code>User-Agent</code> — اطلاعات مرورگر و سیستم‌عامل کاربر.
-          مثلاً <code>Mozilla/5.0 (Windows NT 10.0)</code>
-        </li>
-        <li>
-          <code>Accept</code> — نوع داده‌هایی که کلاینت می‌تواند دریافت
-          کند. مثلاً <code>text/html</code>
-        </li>
-        <li>
-          <code>Accept-Language</code> — زبان‌های مورد قبول کاربر. مثلاً
-          <code>fa-IR</code>
-        </li>
-        <li>
-          <code>Cookie</code> — کوکی‌های ذخیره‌شده ارسال‌شده به سرور.
-        </li>
-        <li>
-          <code>Authorization</code> — اطلاعات احراز هویت. مثلاً
-          <code>Bearer TOKEN</code>
-        </li>
-        <li>
-          <code>Referer</code> — آدرس صفحه‌ای که درخواست از آن آمده.
-        </li>
-      </ul>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>هدر</th><th>کاربرد</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><code>Host</code></td><td>دامنه و پورت سرور مقصد</td></tr>
+            <tr><td><code>User-Agent</code></td><td>اطلاعات مرورگر و سیستم‌عامل کاربر</td></tr>
+            <tr><td><code>Accept</code></td><td>نوع داده‌ای که کلاینت می‌تواند دریافت کند</td></tr>
+            <tr><td><code>Accept-Language</code></td><td>زبان‌های مورد قبول کاربر</td></tr>
+            <tr><td><code>Cookie</code></td><td>کوکی‌های ذخیره‌شده</td></tr>
+            <tr><td><code>Authorization</code></td><td>اطلاعات احراز هویت</td></tr>
+          </tbody>
+        </table>
+      </div>
 
       <h3>مهم‌ترین هدرهای پاسخ</h3>
-      <ul>
-        <li>
-          <code>Content-Type</code> — نوع محتوای پاسخ. مثلاً
-          <code>text/html; charset=utf-8</code>
-        </li>
-        <li>
-          <code>Content-Length</code> — حجم بدنه پاسخ به بایت.
-        </li>
-        <li>
-          <code>Set-Cookie</code> — ارسال کوکی از سرور به کلاینت.
-        </li>
-        <li>
-          <code>Cache-Control</code> — تنظیمات مربوط به کش کردن پاسخ.
-        </li>
-        <li>
-          <code>Location</code> — آدرس جدید در ریدایرکت‌ها.
-        </li>
-        <li>
-          <code>Server</code> — اطلاعات سرور.
-        </li>
-        <li>
-          <code>Date</code> — تاریخ و ساعت ارسال پاسخ.
-        </li>
-      </ul>
-
-      <h3>مثال کامل از هدرهای یک درخواست</h3>
-      <div class="code-block">
-        <div class="code-block-header">
-          <span class="code-block-lang">HTTP Request</span>
-        </div>
-        <pre>GET /products HTTP/1.1
-Host: example.com
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64)
-Accept: text/html,application/xhtml+xml
-Accept-Language: fa-IR,fa;q=0.9
-Accept-Encoding: gzip, deflate, br
-Cookie: sessionId=abc123
-Referer: https://example.com/home
-Connection: keep-alive</pre>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>هدر</th><th>کاربرد</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><code>Content-Type</code></td><td>نوع محتوای پاسخ</td></tr>
+            <tr><td><code>Content-Length</code></td><td>حجم بدنه پاسخ</td></tr>
+            <tr><td><code>Set-Cookie</code></td><td>ارسال کوکی از سرور به مرورگر</td></tr>
+            <tr><td><code>Cache-Control</code></td><td>تنظیمات کش</td></tr>
+            <tr><td><code>Location</code></td><td>آدرس جدید در ریدایرکت‌ها</td></tr>
+            <tr><td><code>Date</code></td><td>تاریخ و ساعت ارسال پاسخ</td></tr>
+          </tbody>
+        </table>
       </div>
 
-      <h3>مثال کامل از هدرهای یک پاسخ</h3>
-      <div class="code-block">
-        <div class="code-block-header">
-          <span class="code-block-lang">HTTP Response</span>
-        </div>
-        <pre>HTTP/1.1 200 OK
-Content-Type: text/html; charset=utf-8
-Content-Length: 12560
-Cache-Control: max-age=3600
-Set-Cookie: sessionId=xyz789; HttpOnly
-Date: Fri, 16 Oct 2026 12:00:00 GMT
-Server: nginx/1.20.0</pre>
-      </div>
-
-      <div class="callout key">
+      <div class="callout note">
         <span class="callout-label">نکته</span>
         <p>
-          هدرها در <bdi>HTTP/1.X</bdi> به بزرگی و کوچکی حروف حساس نیستند.
-          یعنی <code>Content-Type</code> با <code>content-type</code> یکی
-          است. اما در <bdi>HTTP/2</bdi> به‌صورت اجباری با حروف کوچک نوشته
+          در <bdi>HTTP/1.X</bdi> بزرگی و کوچکی حروف در هدرها مهم نیست
+          (<code>Content-Type</code> و <code>content-type</code> یکی
+          هستند). در <bdi>HTTP/2</bdi> هدرها همیشه با حروف کوچک نوشته
           می‌شوند.
         </p>
       </div>
     </section>
+
+    <!-- ============ EXERCISES ============ -->
+    <div class="exercise-box">
+      <div class="exercise-title">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M2 3.5V12a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V3.5"/>
+          <path d="M2 3.5a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1"/>
+          <path d="M5 2v2M11 2v2M5 7h6M5 10h4"/>
+        </svg>
+        تمرین‌های پایان قسمت
+      </div>
+      <ol class="exercise-list">
+        <li>سه لایه اصلی <bdi>.NET</bdi> را نام ببرید و نقش هر کدام را در یک جمله توضیح دهید.</li>
+        <li>سه تفاوت اصلی <bdi>.NET Framework</bdi> و <bdi>.NET Core</bdi> را بنویسید.</li>
+        <li>در یک رستوران، نقش Model، View و Controller را با اجزای واقعی رستوران تطبیق دهید.</li>
+        <li>وقتی در مرورگر آدرس <code>google.com</code> را باز می‌کنید، چه اتفاقی در سطح <bdi>HTTP</bdi> می‌افتد؟</li>
+        <li>تفاوت <code>GET</code> و <code>POST</code> را در حد سه خط توضیح دهید.</li>
+      </ol>
+    </div>
 
     <nav class="part-nav">
       <span class="part-nav-btn disabled">
@@ -1511,4 +860,4 @@ Server: nginx/1.20.0</pre>
 <script src="assets/app.js"></script>
 
 </body>
-    </html>
+          </html>
