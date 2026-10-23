@@ -4,9 +4,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="theme-color" content="#0d1117">
-<meta name="description" content="قسمت اول آموزش ASP.NET Core — آشنایی کامل و ساده با .NET، ASP.NET Core، MVC و HTTP">
+<meta name="description" content="قسمت اول آموزش ASP.NET Core — آشنایی کامل و ساده با مفاهیم پایه، الگوی MVC و پروتکل HTTP">
 <meta name="author" content="مهران غلامی مقدم">
-<title>قسمت ۰۱ — آشنایی با .NET، ASP.NET Core و MVC</title>
+<title>قسمت ۰۱ — آشنایی با ASP.NET Core و MVC</title>
 <link rel="icon" href="mehran-favicon.ico" sizes="any">
 <link rel="canonical" href="https://mehran00programmer.github.io/ASP.NET-Core-Learning/part-01.html">
 <link rel="stylesheet" href="assets/style.css">
@@ -95,11 +95,11 @@
 
       <div class="diagram">
         <svg viewBox="0 0 700 400" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="اجزای پلتفرم دات‌نت">
-          <text x="350" y="28" text-anchor="middle" fill="#e6edf3" font-family="Vazirmatn, sans-serif" font-size="15" font-weight="700">پلتفرم .NET از سه لایه ساخته شده است</text>
+          <text x="350" y="28" text-anchor="middle" fill="#e6edf3" font-family="Vazirmatn, sans-serif" font-size="15" font-weight="700">پلتفرم <tspan direction="ltr" unicode-bidi="isolate">.NET</tspan> از سه لایه ساخته شده است</text>
 
           <rect x="80" y="50" width="540" height="88" rx="10" fill="#161b22" stroke="#58a6ff" stroke-width="2"/>
           <text x="350" y="82" text-anchor="middle" fill="#58a6ff" font-family="Vazirmatn, sans-serif" font-size="14" font-weight="700">لایه ۱ — زبان‌های برنامه‌نویسی</text>
-          <text x="350" y="112" text-anchor="middle" fill="#e6edf3" font-family="JetBrains Mono, monospace" font-size="14">C#    ·    VB.NET    ·    F#</text>
+          <text x="350" y="112" text-anchor="middle" fill="#e6edf3" font-family="JetBrains Mono, monospace" font-size="14" direction="ltr">C#    ·    VB.NET    ·    F#</text>
 
           <rect x="80" y="158" width="540" height="88" rx="10" fill="#161b22" stroke="#3fb950" stroke-width="2"/>
           <text x="350" y="190" text-anchor="middle" fill="#3fb950" font-family="Vazirmatn, sans-serif" font-size="14" font-weight="700">لایه ۲ — کتابخانه کلاس پایه (BCL)</text>
@@ -109,7 +109,7 @@
           <text x="350" y="298" text-anchor="middle" fill="#d29922" font-family="Vazirmatn, sans-serif" font-size="14" font-weight="700">لایه ۳ — CLR (محیط اجرا)</text>
           <text x="350" y="328" text-anchor="middle" fill="#e6edf3" font-family="Vazirmatn, sans-serif" font-size="13">اجرای کد روی سیستم، مدیریت حافظه و امنیت</text>
 
-          <text x="350" y="386" text-anchor="middle" fill="#6e7681" font-family="Vazirmatn, sans-serif" font-size="12">این سه لایه روی هم، پلتفرم .NET را می‌سازند</text>
+          <text x="350" y="386" text-anchor="middle" fill="#6e7681" font-family="Vazirmatn, sans-serif" font-size="12">این سه لایه روی هم، پلتفرم <tspan direction="ltr" unicode-bidi="isolate">.NET</tspan> را می‌سازند</text>
         </svg>
         <div class="diagram-caption">
           زبان‌ها روی کتابخانه و CLR سوار هستند؛ همه با هم یک پلتفرم واحد می‌سازند
@@ -277,19 +277,19 @@
 
       <div class="diagram">
         <svg viewBox="0 0 700 380" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="جایگاه ASP.NET Core در پلتفرم دات‌نت">
-          <text x="350" y="26" text-anchor="middle" fill="#e6edf3" font-family="Vazirmatn, sans-serif" font-size="14" font-weight="700">جایگاه ASP.NET Core در پلتفرم .NET</text>
+          <text x="350" y="26" text-anchor="middle" fill="#e6edf3" font-family="Vazirmatn, sans-serif" font-size="14" font-weight="700">جایگاه <tspan direction="ltr" unicode-bidi="isolate">ASP.NET Core</tspan> در پلتفرم <tspan direction="ltr" unicode-bidi="isolate">.NET</tspan></text>
 
           <rect x="60" y="48" width="580" height="310" rx="14" fill="#161b22" stroke="#6e7681" stroke-width="2"/>
-          <text x="82" y="82" fill="#e6edf3" font-family="JetBrains Mono, monospace" font-size="16" font-weight="700">.NET</text>
+          <text x="82" y="82" fill="#e6edf3" font-family="JetBrains Mono, monospace" font-size="16" font-weight="700" direction="ltr" text-anchor="start" unicode-bidi="isolate">.NET</text>
 
           <rect x="100" y="100" width="500" height="240" rx="12" fill="#0d1117" stroke="#58a6ff" stroke-width="2"/>
-          <text x="122" y="134" fill="#58a6ff" font-family="JetBrains Mono, monospace" font-size="14" font-weight="700">.NET Core</text>
+          <text x="122" y="134" fill="#58a6ff" font-family="JetBrains Mono, monospace" font-size="14" font-weight="700" direction="ltr" text-anchor="start" unicode-bidi="isolate">.NET Core</text>
 
           <rect x="140" y="152" width="420" height="168" rx="10" fill="#161b22" stroke="#3fb950" stroke-width="2"/>
-          <text x="162" y="186" fill="#3fb950" font-family="JetBrains Mono, monospace" font-size="14" font-weight="700">ASP.NET Core</text>
+          <text x="162" y="186" fill="#3fb950" font-family="JetBrains Mono, monospace" font-size="14" font-weight="700" direction="ltr" text-anchor="start" unicode-bidi="isolate">ASP.NET Core</text>
 
           <rect x="180" y="204" width="340" height="98" rx="8" fill="#0d1117" stroke="#d29922" stroke-width="2"/>
-          <text x="202" y="238" fill="#d29922" font-family="JetBrains Mono, monospace" font-size="14" font-weight="700">MVC</text>
+          <text x="202" y="238" fill="#d29922" font-family="JetBrains Mono, monospace" font-size="14" font-weight="700" direction="ltr" text-anchor="start" unicode-bidi="isolate">MVC</text>
 
           <rect x="205" y="252" width="80" height="36" rx="6" fill="#161b22" stroke="#3fb950" stroke-width="1.5"/>
           <text x="245" y="276" text-anchor="middle" fill="#e6edf3" font-family="JetBrains Mono, monospace" font-size="13" font-weight="600">M</text>
@@ -301,7 +301,7 @@
           <text x="455" y="276" text-anchor="middle" fill="#e6edf3" font-family="JetBrains Mono, monospace" font-size="13" font-weight="600">C</text>
         </svg>
         <div class="diagram-caption">
-          هر چه به داخل می‌رویم، تخصصی‌تر می‌شود — از پلتفرم .NET تا الگوی طراحی MVC
+          هر چه به داخل می‌رویم، تخصصی‌تر می‌شود — از پلتفرم <bdi>.NET</bdi> تا الگوی طراحی <bdi>MVC</bdi>
         </div>
       </div>
 
@@ -463,7 +463,7 @@
         می‌کند.
       </p>
 
-      <h3>یک درخواست در MVC چطور پردازش می‌شود؟</h3>
+      <h3>یک درخواست در <bdi>MVC</bdi> چطور پردازش می‌شود؟</h3>
       <p>
         فرض کنید کاربری وارد سایت فروشگاهی می‌شود و می‌خواهد لیست محصولات
         را ببیند. این فرآیند شش مرحله دارد:
@@ -496,7 +496,7 @@
         </li>
       </ol>
 
-      <h3>چرا MVC برای پروژه‌های بزرگ مناسب است؟</h3>
+      <h3>چرا <bdi>MVC</bdi> برای پروژه‌های بزرگ مناسب است؟</h3>
       <p>
         مهم‌ترین مزیت <bdi>MVC</bdi> این است که <strong>وظایف را از هم
         جدا می‌کند</strong>. طراح UI فقط روی View کار می‌کند، برنامه‌نویس
@@ -542,20 +542,20 @@
 
           <circle cx="140" cy="120" r="11" fill="#58a6ff"/>
           <text x="140" y="80" text-anchor="middle" fill="#e6edf3" font-family="JetBrains Mono, monospace" font-size="14" font-weight="700">2002</text>
-          <text x="140" y="160" text-anchor="middle" fill="#e6edf3" font-family="Vazirmatn, sans-serif" font-size="13" font-weight="600">WebForms</text>
+          <text x="140" y="160" text-anchor="middle" fill="#e6edf3" font-family="JetBrains Mono, monospace" font-size="13" font-weight="600">WebForms</text>
           <text x="140" y="182" text-anchor="middle" fill="#8b949e" font-family="Vazirmatn, sans-serif" font-size="11">شبیه ویندوز</text>
 
           <circle cx="350" cy="120" r="11" fill="#58a6ff"/>
           <text x="350" y="80" text-anchor="middle" fill="#e6edf3" font-family="JetBrains Mono, monospace" font-size="14" font-weight="700">2009</text>
-          <text x="350" y="160" text-anchor="middle" fill="#e6edf3" font-family="Vazirmatn, sans-serif" font-size="13" font-weight="600">ASP.NET MVC</text>
+          <text x="350" y="160" text-anchor="middle" fill="#e6edf3" font-family="JetBrains Mono, monospace" font-size="13" font-weight="600">ASP.NET MVC</text>
           <text x="350" y="182" text-anchor="middle" fill="#8b949e" font-family="Vazirmatn, sans-serif" font-size="11">بازگشت به اصول وب</text>
 
           <circle cx="560" cy="120" r="11" fill="#3fb950"/>
           <text x="560" y="80" text-anchor="middle" fill="#e6edf3" font-family="JetBrains Mono, monospace" font-size="14" font-weight="700">2016</text>
-          <text x="560" y="160" text-anchor="middle" fill="#e6edf3" font-family="Vazirmatn, sans-serif" font-size="13" font-weight="600">ASP.NET Core</text>
+          <text x="560" y="160" text-anchor="middle" fill="#e6edf3" font-family="JetBrains Mono, monospace" font-size="13" font-weight="600">ASP.NET Core</text>
           <text x="560" y="182" text-anchor="middle" fill="#8b949e" font-family="Vazirmatn, sans-serif" font-size="11">چندسکویی و متن‌باز</text>
         </svg>
-        <div class="diagram-caption">سه نسل ASP.NET، هر کدام با درس‌گرفتن از نسل قبل</div>
+        <div class="diagram-caption">سه نسل <bdi>ASP.NET</bdi>، هر کدام با درس‌گرفتن از نسل قبل</div>
       </div>
 
       <h3>نسل اول: <bdi>WebForms</bdi></h3>
@@ -657,9 +657,9 @@
           <text x="350" y="192" text-anchor="middle" fill="#3fb950" font-family="Vazirmatn, sans-serif" font-size="12" font-weight="600">۲. پاسخ (Response)</text>
           <text x="350" y="215" text-anchor="middle" fill="#6e7681" font-family="JetBrains Mono, monospace" font-size="10">200 OK + HTML</text>
 
-          <text x="350" y="258" text-anchor="middle" fill="#8b949e" font-family="Vazirmatn, sans-serif" font-size="12">همه‌ی این رفت‌وبرگشت‌ها با قوانین HTTP انجام می‌شود</text>
+          <text x="350" y="258" text-anchor="middle" fill="#8b949e" font-family="Vazirmatn, sans-serif" font-size="12">همه‌ی این رفت‌وبرگشت‌ها با قوانین <tspan direction="ltr" unicode-bidi="isolate">HTTP</tspan> انجام می‌شود</text>
         </svg>
-        <div class="diagram-caption">مرورگر درخواست می‌فرستد، سرور پاسخ می‌دهد — همه طبق قوانین HTTP</div>
+        <div class="diagram-caption">مرورگر درخواست می‌فرستد، سرور پاسخ می‌دهد — همه طبق قوانین <bdi>HTTP</bdi></div>
       </div>
 
       <p>
@@ -735,7 +735,7 @@
         <h2 class="section-title"><bdi>HTTP Method</bdi> و <bdi>Status Code</bdi></h2>
       </div>
 
-      <h3>متد HTTP — نوع درخواست</h3>
+      <h3>متد <bdi>HTTP</bdi> — نوع درخواست</h3>
       <p>
         هر درخواستی که به سرور می‌رود باید مشخص کند چه کاری می‌خواهد
         انجام دهد. این «نوع کار» را <bdi>HTTP Method</bdi> می‌گویند.
@@ -874,21 +874,21 @@
 
       <div class="diagram">
         <svg viewBox="0 0 700 320" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="ساختار درخواست HTTP">
-          <text x="350" y="26" text-anchor="middle" fill="#e6edf3" font-family="Vazirmatn, sans-serif" font-size="14" font-weight="700">درخواست HTTP از سه بخش ساخته شده</text>
+          <text x="350" y="26" text-anchor="middle" fill="#e6edf3" font-family="Vazirmatn, sans-serif" font-size="14" font-weight="700">درخواست <tspan direction="ltr" unicode-bidi="isolate">HTTP</tspan> از سه بخش ساخته شده</text>
 
           <text x="350" y="64" text-anchor="middle" fill="#58a6ff" font-family="Vazirmatn, sans-serif" font-size="12.5" font-weight="700">خط درخواست</text>
           <rect x="60" y="74" width="580" height="46" rx="8" fill="#161b22" stroke="#58a6ff" stroke-width="1.5"/>
-          <text x="80" y="102" fill="#e6edf3" font-family="JetBrains Mono, monospace" font-size="13">GET /products HTTP/1.1</text>
+          <text x="350" y="102" text-anchor="middle" fill="#e6edf3" font-family="JetBrains Mono, monospace" font-size="13" direction="ltr" unicode-bidi="isolate">GET /products HTTP/1.1</text>
 
           <text x="350" y="154" text-anchor="middle" fill="#3fb950" font-family="Vazirmatn, sans-serif" font-size="12.5" font-weight="700">هدرها</text>
           <rect x="60" y="164" width="580" height="46" rx="8" fill="#161b22" stroke="#3fb950" stroke-width="1.5"/>
-          <text x="80" y="192" fill="#e6edf3" font-family="JetBrains Mono, monospace" font-size="13">Host · User-Agent · Accept · Cookie ...</text>
+          <text x="350" y="192" text-anchor="middle" fill="#e6edf3" font-family="JetBrains Mono, monospace" font-size="13" direction="ltr" unicode-bidi="isolate">Host · User-Agent · Accept · Cookie ...</text>
 
           <text x="350" y="244" text-anchor="middle" fill="#d29922" font-family="Vazirmatn, sans-serif" font-size="12.5" font-weight="700">بدنه (اختیاری)</text>
           <rect x="60" y="254" width="580" height="46" rx="8" fill="#161b22" stroke="#d29922" stroke-width="1.5"/>
-          <text x="80" y="282" fill="#6e7681" font-family="Vazirmatn, sans-serif" font-size="13">داده‌های ارسالی (فقط در POST و PUT)</text>
+          <text x="350" y="282" text-anchor="middle" fill="#6e7681" font-family="Vazirmatn, sans-serif" font-size="13">داده‌های ارسالی (فقط در <tspan direction="ltr" unicode-bidi="isolate">POST</tspan> و <tspan direction="ltr" unicode-bidi="isolate">PUT</tspan>)</text>
         </svg>
-        <div class="diagram-caption">خط درخواست، هدرها، بدنه — سه بخش اصلی هر درخواست HTTP</div>
+        <div class="diagram-caption">خط درخواست، هدرها، بدنه — سه بخش اصلی هر درخواست <bdi>HTTP</bdi></div>
       </div>
 
       <h3>ساختار یک پاسخ</h3>
@@ -902,21 +902,21 @@
 
       <div class="diagram">
         <svg viewBox="0 0 700 320" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="ساختار پاسخ HTTP">
-          <text x="350" y="26" text-anchor="middle" fill="#e6edf3" font-family="Vazirmatn, sans-serif" font-size="14" font-weight="700">پاسخ HTTP هم سه بخش دارد</text>
+          <text x="350" y="26" text-anchor="middle" fill="#e6edf3" font-family="Vazirmatn, sans-serif" font-size="14" font-weight="700">پاسخ <tspan direction="ltr" unicode-bidi="isolate">HTTP</tspan> هم سه بخش دارد</text>
 
           <text x="350" y="64" text-anchor="middle" fill="#58a6ff" font-family="Vazirmatn, sans-serif" font-size="12.5" font-weight="700">خط وضعیت</text>
           <rect x="60" y="74" width="580" height="46" rx="8" fill="#161b22" stroke="#58a6ff" stroke-width="1.5"/>
-          <text x="80" y="102" fill="#e6edf3" font-family="JetBrains Mono, monospace" font-size="13">HTTP/1.1 200 OK</text>
+          <text x="350" y="102" text-anchor="middle" fill="#e6edf3" font-family="JetBrains Mono, monospace" font-size="13" direction="ltr" unicode-bidi="isolate">HTTP/1.1 200 OK</text>
 
           <text x="350" y="154" text-anchor="middle" fill="#3fb950" font-family="Vazirmatn, sans-serif" font-size="12.5" font-weight="700">هدرها</text>
           <rect x="60" y="164" width="580" height="46" rx="8" fill="#161b22" stroke="#3fb950" stroke-width="1.5"/>
-          <text x="80" y="192" fill="#e6edf3" font-family="JetBrains Mono, monospace" font-size="13">Content-Type · Content-Length · Date ...</text>
+          <text x="350" y="192" text-anchor="middle" fill="#e6edf3" font-family="JetBrains Mono, monospace" font-size="13" direction="ltr" unicode-bidi="isolate">Content-Type · Content-Length · Date ...</text>
 
           <text x="350" y="244" text-anchor="middle" fill="#d29922" font-family="Vazirmatn, sans-serif" font-size="12.5" font-weight="700">بدنه</text>
           <rect x="60" y="254" width="580" height="46" rx="8" fill="#161b22" stroke="#d29922" stroke-width="1.5"/>
-          <text x="80" y="282" fill="#6e7681" font-family="Vazirmatn, sans-serif" font-size="13">محتوای واقعی (HTML، JSON، تصویر ...)</text>
+          <text x="350" y="282" text-anchor="middle" fill="#6e7681" font-family="Vazirmatn, sans-serif" font-size="13">محتوای واقعی (<tspan direction="ltr" unicode-bidi="isolate">HTML</tspan>، <tspan direction="ltr" unicode-bidi="isolate">JSON</tspan>، تصویر ...)</text>
         </svg>
-        <div class="diagram-caption">خط وضعیت، هدرها، بدنه — سه بخش اصلی هر پاسخ HTTP</div>
+        <div class="diagram-caption">خط وضعیت، هدرها، بدنه — سه بخش اصلی هر پاسخ <bdi>HTTP</bdi></div>
       </div>
 
       <h3>مهم‌ترین هدرهای درخواست</h3>
@@ -1019,4 +1019,4 @@
 <script src="assets/app.js"></script>
 
 </body>
-        </html>
+            </html>
