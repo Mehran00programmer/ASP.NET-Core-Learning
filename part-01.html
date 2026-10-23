@@ -6,7 +6,7 @@
 <meta name="theme-color" content="#0d1117">
 <meta name="description" content="قسمت اول آموزش ASP.NET Core — آشنایی کامل و ساده با مفاهیم پایه، الگوی MVC و پروتکل HTTP">
 <meta name="author" content="مهران غلامی مقدم">
-<title>قسمت ۰۱ — آشنایی با ASP.NET Core و MVC</title>
+<title>قسمت 01 — آشنایی با ASP.NET Core و MVC</title>
 <link rel="icon" href="mehran-favicon.ico" sizes="any">
 <link rel="canonical" href="https://mehran00programmer.github.io/ASP.NET-Core-Learning/part-01.html">
 <link rel="stylesheet" href="assets/style.css">
@@ -19,7 +19,7 @@
 
 <header class="doc-header">
   <div class="page">
-    <div class="hero-badge" style="display:inline-block;font-family:var(--mono);font-size:11px;color:var(--accent);letter-spacing:1.5px;background:rgba(88,166,255,0.08);border:1px solid rgba(88,166,255,0.2);padding:4px 12px;border-radius:20px;margin-bottom:14px;">قسمت ۰۱</div>
+    <div class="hero-badge">قسمت 01</div>
     <h1 class="doc-title">آشنایی با <bdi>.NET</bdi>، <bdi>ASP.NET Core</bdi> و <bdi>MVC</bdi></h1>
     <p class="doc-subtitle">
       در این قسمت ابتدا می‌فهمیم <bdi>.NET</bdi> چیست و از چه بخش‌هایی
@@ -76,9 +76,8 @@
       </p>
 
       <p>
-        نکته‌ای که خیلی از مبتدی‌ها با آن اشتباه می‌کنند این است که
-        <bdi>.NET</bdi> یک <strong>زبان برنامه‌نویسی نیست</strong>، بلکه
-        یک <strong>پلتفرم</strong> است. تفاوت این دو مثل تفاوت کارگاه با
+        <bdi>.NET</bdi> یک <strong>زبان برنامه‌نویسی نیست</strong>؛ یک
+        <strong>پلتفرم</strong> است. تفاوت این دو مثل تفاوت کارگاه با
         زبانی است که کارگرها با آن حرف می‌زنند. روی پلتفرم <bdi>.NET</bdi>
         می‌توانید با چندین زبان مختلف برنامه بنویسید. معروف‌ترین این
         زبان‌ها <code>C#</code> است، اما زبان‌های دیگری مثل
@@ -651,11 +650,11 @@
 
           <line x1="265" y1="118" x2="435" y2="118" stroke="#58a6ff" stroke-width="2.5" marker-end="url(#mk-req)"/>
           <text x="350" y="108" text-anchor="middle" fill="#58a6ff" font-family="Vazirmatn, sans-serif" font-size="12" font-weight="600">۱. درخواست (Request)</text>
-          <text x="350" y="140" text-anchor="middle" fill="#6e7681" font-family="JetBrains Mono, monospace" font-size="10">GET /index.html</text>
+          <text x="350" y="140" text-anchor="middle" fill="#6e7681" font-family="JetBrains Mono, monospace" font-size="10" direction="ltr" unicode-bidi="isolate">GET /index.html</text>
 
           <line x1="435" y1="168" x2="265" y2="168" stroke="#3fb950" stroke-width="2.5" marker-end="url(#mk-res)"/>
           <text x="350" y="192" text-anchor="middle" fill="#3fb950" font-family="Vazirmatn, sans-serif" font-size="12" font-weight="600">۲. پاسخ (Response)</text>
-          <text x="350" y="215" text-anchor="middle" fill="#6e7681" font-family="JetBrains Mono, monospace" font-size="10">200 OK + HTML</text>
+          <text x="350" y="215" text-anchor="middle" fill="#6e7681" font-family="JetBrains Mono, monospace" font-size="10" direction="ltr" unicode-bidi="isolate">200 OK + HTML</text>
 
           <text x="350" y="258" text-anchor="middle" fill="#8b949e" font-family="Vazirmatn, sans-serif" font-size="12">همه‌ی این رفت‌وبرگشت‌ها با قوانین <tspan direction="ltr" unicode-bidi="isolate">HTTP</tspan> انجام می‌شود</text>
         </svg>
@@ -994,9 +993,12 @@
 
 <footer class="doc-footer">
   <div class="footer-name">مهران غلامی مقدم</div>
-  <div>
-    <a class="footer-link" href="https://github.com/Mehran00programmer" target="_blank" rel="noopener noreferrer">github.com/Mehran00programmer</a>
-  </div>
+  <a class="author-link" href="https://github.com/Mehran00programmer" target="_blank" rel="noopener noreferrer" aria-label="گیت‌هاب مهران غلامی مقدم">
+    <svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
+      <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z"/>
+    </svg>
+    github.com/Mehran00programmer
+  </a>
 </footer>
 
 <button class="back-to-top" type="button" aria-label="بازگشت به بالا">
@@ -1019,4 +1021,4 @@
 <script src="assets/app.js"></script>
 
 </body>
-            </html>
+          </html>
