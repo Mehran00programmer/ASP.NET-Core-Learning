@@ -1,0 +1,747 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#0d1117">
+<meta name="description" content="قسمت دوم آموزش ASP.NET Core — ساخت اولین پروژه، شناخت ساختار MVC، Controller، View، Model، انتقال داده، Model Binding و دیباگ">
+<meta name="author" content="مهران غلامی مقدم">
+<title>قسمت 02 — ساخت پروژه، Controller، View، Model و Model Binding</title>
+<link rel="icon" href="mehran-favicon.ico" sizes="any">
+<link rel="canonical" href="https://mehran00programmer.github.io/ASP.NET-Core-Learning/part-02.html">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+
+<div class="reading-progress">
+  <div class="reading-progress-bar"></div>
+</div>
+
+<header class="doc-header">
+  <div class="page">
+    <div class="hero-badge">قسمت 02</div>
+    <h1 class="doc-title">ساخت اولین پروژه و آشنایی عملی با <bdi>MVC</bdi></h1>
+    <p class="doc-subtitle">
+      در قسمت قبل فهمیدیم <bdi>.NET</bdi> چیست و الگوی <bdi>MVC</bdi> چطور کار می‌کند.
+      حالا وقت عمل است: پروژه می‌سازیم، ساختار پوشه‌ها را می‌شناسیم، اولین
+      <bdi>Controller</bdi> و <bdi>View</bdi> را می‌نویسیم، <bdi>Model</bdi> تعریف
+      می‌کنیم، داده را بین آن‌ها جابه‌جا می‌کنیم، و در پایان با
+      <bdi>Model Binding</bdi> و دیباگ آشنا می‌شویم.
+    </p>
+
+    <div class="author-card">
+      <div class="author-name">مهران غلامی مقدم</div>
+      <a class="author-link" href="https://github.com/Mehran00programmer" target="_blank" rel="noopener noreferrer" aria-label="گیت‌هاب مهران غلامی مقدم">
+        <svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
+          <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z"/>
+        </svg>
+        github.com/Mehran00programmer
+      </a>
+    </div>
+  </div>
+</header>
+
+<div class="page">
+
+  <aside class="toc-wrap fade-in">
+    <div class="toc-header">فهرست مطالب این قسمت</div>
+    <ul class="toc-list">
+      <li><a class="toc-link" href="#s1"><span class="num">01</span><span>ساخت اولین اپلیکیشن <bdi>ASP.NET Core</bdi></span></a></li>
+      <li><a class="toc-link" href="#s2"><span class="num">02</span><span>ساختار پروژه <bdi>MVC</bdi></span></a></li>
+      <li><a class="toc-link" href="#s3"><span class="num">03</span><span>ساخت اولین <bdi>Controller</bdi> و <bdi>View</bdi></span></a></li>
+      <li><a class="toc-link" href="#s4"><span class="num">04</span><span>اتریبیوت‌های <bdi>Controller</bdi></span></a></li>
+      <li><a class="toc-link" href="#s5"><span class="num">05</span><span><bdi>Action Selector</bdi> و <bdi>Action Verb</bdi></span></a></li>
+      <li><a class="toc-link" href="#s6"><span class="num">06</span><span>ساخت اولین <bdi>Model</bdi></span></a></li>
+      <li><a class="toc-link" href="#s7"><span class="num">07</span><span><bdi>ViewBag</bdi> و <bdi>ViewData</bdi></span></a></li>
+      <li><a class="toc-link" href="#s8"><span class="num">08</span><span><bdi>TempData</bdi></span></a></li>
+      <li><a class="toc-link" href="#s9"><span class="num">09</span><span><bdi>Query String</bdi></span></a></li>
+      <li><a class="toc-link" href="#s10"><span class="num">10</span><span><bdi>Model Binding</bdi></span></a></li>
+      <li><a class="toc-link" href="#s11"><span class="num">11</span><span>اتریبیوت‌های <bdi>Model Binding</bdi></span></a></li>
+      <li><a class="toc-link" href="#s12"><span class="num">12</span><span>دیباگ و <bdi>Breakpoint</bdi></span></a></li>
+    </ul>
+  </aside>
+
+  <main>
+
+    <section class="section fade-in" id="s1">
+      <div class="section-head">
+        <span class="section-num">01</span>
+        <h2 class="section-title">ساخت اولین اپلیکیشن <bdi>ASP.NET Core</bdi></h2>
+      </div>
+
+      <p>
+        قبل از نوشتن کد، باید یک پروژه جدید بسازیم. در <bdi>Visual Studio</bdi>
+        گزینه <strong>Create a new project</strong> را انتخاب کنید، سپس از
+        فهرست قالب‌ها <strong>ASP.NET Core Web App (Model-View-Controller)</strong>
+        را پیدا کنید[reference:6]. به این قالب دقت کنید؛ چون قالب
+        <bdi>Razor Pages</bdi> هم شبیه است اما ساختار متفاوتی دارد.
+      </p>
+
+      <p>
+        در پنجره بعدی نام پروژه را وارد کنید (مثلاً <code>MvcMovie</code>)
+        و محل ذخیره را انتخاب کنید[reference:7]. در آخرین مرحله، نسخه
+        <bdi>.NET</bdi> را انتخاب کنید. پیشنهاد می‌کنم جدیدترین نسخه
+        <bdi>LTS</bdi> (پشتیبانی بلندمدت) را انتخاب کنید تا تا مدت‌ها
+        پشتیبانی شود. بعد از زدن دکمه <strong>Create</strong>، پروژه ساخته
+        می‌شود و آماده اجراست.
+      </p>
+
+      <p>
+        برای اجرای پروژه کافی است کلید <code>F5</code> را بزنید یا روی
+        دکمه سبز <strong>Run</strong> کلیک کنید. مرورگر باز می‌شود و صفحه
+        پیش‌فرض <bdi>ASP.NET Core</bdi> را می‌بینید. اگر این صفحه را دیدید،
+        یعنی همه‌چیز درست کار می‌کند و آماده ادامه مسیر هستیم.
+      </p>
+
+      <div class="callout note">
+        <span class="callout-label">نکته</span>
+        <p>
+          اگر با <bdi>Visual Studio Code</bdi> کار می‌کنید، می‌توانید از
+          دستور <code>dotnet new mvc -n MvcMovie</code> در ترمینال استفاده
+          کنید. سپس با <code>dotnet run</code> پروژه را اجرا کنید.
+        </p>
+      </div>
+    </section>
+
+    <section class="section fade-in" id="s2">
+      <div class="section-head">
+        <span class="section-num">02</span>
+        <h2 class="section-title">ساختار پروژه <bdi>MVC</bdi></h2>
+      </div>
+
+      <p>
+        وقتی پروژه ساخته می‌شود، مجموعه‌ای از پوشه‌ها و فایل‌ها می‌بینید که
+        هر کدام جای مشخصی دارند. این ساختار تصادفی نیست؛ دقیقاً بر اساس
+        الگوی <bdi>MVC</bdi> چیده شده است[reference:8]. سه پوشه اصلی
+        <code>Controllers</code>، <code>Models</code> و <code>Views</code>
+        هستند که به ترتیب کنترل‌کننده‌ها، مدل‌ها و نمایش‌ها را در خود
+        نگه می‌دارند[reference:9].
+      </p>
+
+      <div class="ft-tree">
+        <ul>
+          <li>
+            <div class="ft-node ft-dir">
+              <svg class="ft-ico" viewBox="0 0 16 16" fill="currentColor"><path d="M1.75 1A1.75 1.75 0 0 0 0 2.75v10.5C0 14.216.784 15 1.75 15h12.5A1.75 1.75 0 0 0 16 13.25v-8.5A1.75 1.75 0 0 0 14.25 3H7.5a.25.25 0 0 1-.2-.1l-.9-1.2C6.07 1.26 5.55 1 5 1H1.75Z"/></svg>
+              <span class="ft-name">MvcMovie/</span>
+            </div>
+            <ul>
+              <li>
+                <div class="ft-node ft-dir">
+                  <svg class="ft-ico" viewBox="0 0 16 16" fill="currentColor"><path d="M1.75 1A1.75 1.75 0 0 0 0 2.75v10.5C0 14.216.784 15 1.75 15h12.5A1.75 1.75 0 0 0 16 13.25v-8.5A1.75 1.75 0 0 0 14.25 3H7.5a.25.25 0 0 1-.2-.1l-.9-1.2C6.07 1.26 5.55 1 5 1H1.75Z"/></svg>
+                  <span class="ft-name">Controllers/</span>
+                  <span class="ft-cmt">کنترل‌کننده‌ها</span>
+                </div>
+              </li>
+              <li>
+                <div class="ft-node ft-dir">
+                  <svg class="ft-ico" viewBox="0 0 16 16" fill="currentColor"><path d="M1.75 1A1.75 1.75 0 0 0 0 2.75v10.5C0 14.216.784 15 1.75 15h12.5A1.75 1.75 0 0 0 16 13.25v-8.5A1.75 1.75 0 0 0 14.25 3H7.5a.25.25 0 0 1-.2-.1l-.9-1.2C6.07 1.26 5.55 1 5 1H1.75Z"/></svg>
+                  <span class="ft-name">Models/</span>
+                  <span class="ft-cmt">مدل‌ها</span>
+                </div>
+              </li>
+              <li>
+                <div class="ft-node ft-dir">
+                  <svg class="ft-ico" viewBox="0 0 16 16" fill="currentColor"><path d="M1.75 1A1.75 1.75 0 0 0 0 2.75v10.5C0 14.216.784 15 1.75 15h12.5A1.75 1.75 0 0 0 16 13.25v-8.5A1.75 1.75 0 0 0 14.25 3H7.5a.25.25 0 0 1-.2-.1l-.9-1.2C6.07 1.26 5.55 1 5 1H1.75Z"/></svg>
+                  <span class="ft-name">Views/</span>
+                  <span class="ft-cmt">نمایش‌ها</span>
+                </div>
+                <ul>
+                  <li>
+                    <div class="ft-node ft-dir">
+                      <svg class="ft-ico" viewBox="0 0 16 16" fill="currentColor"><path d="M1.75 1A1.75 1.75 0 0 0 0 2.75v10.5C0 14.216.784 15 1.75 15h12.5A1.75 1.75 0 0 0 16 13.25v-8.5A1.75 1.75 0 0 0 14.25 3H7.5a.25.25 0 0 1-.2-.1l-.9-1.2C6.07 1.26 5.55 1 5 1H1.75Z"/></svg>
+                      <span class="ft-name">Home/</span>
+                      <span class="ft-cmt">Viewهای HomeController</span>
+                    </div>
+                  </li>
+                  <li>
+                    <div class="ft-node ft-dir">
+                      <svg class="ft-ico" viewBox="0 0 16 16" fill="currentColor"><path d="M1.75 1A1.75 1.75 0 0 0 0 2.75v10.5C0 14.216.784 15 1.75 15h12.5A1.75 1.75 0 0 0 16 13.25v-8.5A1.75 1.75 0 0 0 14.25 3H7.5a.25.25 0 0 1-.2-.1l-.9-1.2C6.07 1.26 5.55 1 5 1H1.75Z"/></svg>
+                      <span class="ft-name">Shared/</span>
+                      <span class="ft-cmt">Viewهای مشترک</span>
+                    </div>
+                  </li>
+                </ul>
+              </li>
+              <li>
+                <div class="ft-node ft-dir">
+                  <svg class="ft-ico" viewBox="0 0 16 16" fill="currentColor"><path d="M1.75 1A1.75 1.75 0 0 0 0 2.75v10.5C0 14.216.784 15 1.75 15h12.5A1.75 1.75 0 0 0 16 13.25v-8.5A1.75 1.75 0 0 0 14.25 3H7.5a.25.25 0 0 1-.2-.1l-.9-1.2C6.07 1.26 5.55 1 5 1H1.75Z"/></svg>
+                  <span class="ft-name">wwwroot/</span>
+                  <span class="ft-cmt">فایل‌های استاتیک</span>
+                </div>
+              </li>
+              <li>
+                <div class="ft-node ft-file">
+                  <svg class="ft-ico" viewBox="0 0 16 16" fill="currentColor"><path d="M2 1.75C2 .784 2.784 0 3.75 0h6.586c.464 0 .909.184 1.237.513l2.914 2.914c.329.328.513.773.513 1.237v9.586A1.75 1.75 0 0 1 13.25 16h-9.5A1.75 1.75 0 0 1 2 14.25Zm1.75-.25a.25.25 0 0 0-.25.25v12.5c0 .138.112.25.25.25h9.5a.25.25 0 0 0 .25-.25V6h-2.75A1.75 1.75 0 0 1 9 4.25V1.5Zm6.75.062V4.25c0 .138.112.25.25.25h2.688l-.011-.013-2.914-2.914-.013-.011Z"/></svg>
+                  <span class="ft-name">Program.cs</span>
+                  <span class="ft-cmt">نقطه شروع برنامه</span>
+                </div>
+              </li>
+              <li>
+                <div class="ft-node ft-file">
+                  <svg class="ft-ico" viewBox="0 0 16 16" fill="currentColor"><path d="M2 1.75C2 .784 2.784 0 3.75 0h6.586c.464 0 .909.184 1.237.513l2.914 2.914c.329.328.513.773.513 1.237v9.586A1.75 1.75 0 0 1 13.25 16h-9.5A1.75 1.75 0 0 1 2 14.25Zm1.75-.25a.25.25 0 0 0-.25.25v12.5c0 .138.112.25.25.25h9.5a.25.25 0 0 0 .25-.25V6h-2.75A1.75 1.75 0 0 1 9 4.25V1.5Zm6.75.062V4.25c0 .138.112.25.25.25h2.688l-.011-.013-2.914-2.914-.013-.011Z"/></svg>
+                  <span class="ft-name">appsettings.json</span>
+                  <span class="ft-cmt">تنظیمات</span>
+                </div>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+
+      <p>
+        پوشه <code>Controllers</code> تمام کلاس‌های کنترل‌کننده را نگه
+        می‌دارد. یک قانون نام‌گذاری مهم وجود دارد: نام هر کنترل‌کننده باید
+        به <strong>Controller</strong> ختم شود (مثلاً
+        <code>HomeController</code>)[reference:10]. پوشه <code>Models</code>
+        کلاس‌های داده را در خود دارد. پوشه <code>Views</code> فایل‌های
+        نمایشی <bdi>Razor</bdi> (با پسوند <code>.cshtml</code>) را نگه
+        می‌دارد و معمولاً برای هر کنترل‌کننده یک زیرپوشه هم‌نام دارد
+        [reference:11]. پوشه <code>wwwroot</code> محل فایل‌های استاتیک مثل
+        <bdi>CSS</bdi>، <bdi>JavaScript</bdi> و تصاویر است[reference:12].
+        فایل <code>Program.cs</code> هم نقطه شروع برنامه و محل پیکربندی
+        سرویس‌ها و میان‌افزارهاست.
+      </p>
+    </section>
+
+    <section class="section fade-in" id="s3">
+      <div class="section-head">
+        <span class="section-num">03</span>
+        <h2 class="section-title">ساخت اولین <bdi>Controller</bdi> و <bdi>View</bdi></h2>
+      </div>
+
+      <p>
+        حالا یک کنترل‌کننده جدید به نام <code>HelloWorldController</code>
+        می‌سازیم. روی پوشه <code>Controllers</code> راست‌کلیک کنید، گزینه
+        <strong>Add → Controller</strong> را انتخاب کنید و قالب
+        <strong>MVC Controller - Empty</strong> را بزنید. نام آن را
+        <code>HelloWorldController</code> بگذارید.
+      </p>
+
+      <p>
+        داخل کلاس، یک متد به نام <code>Index</code> اضافه کنید که یک
+        رشته برمی‌گرداند:
+      </p>
+
+      <div class="code-block">
+        <div class="code-block-header">
+          <span class="code-block-lang">C# — HelloWorldController.cs</span>
+        </div>
+        <pre><span class="kw">public</span> <span class="cls">IActionResult</span> Index()
+{
+    <span class="kw">return</span> Content(<span class="str">"سلام از HelloWorldController!"</span>);
+}</pre>
+      </div>
+
+      <p>
+        پروژه را اجرا کنید و به آدرس <code>/HelloWorld</code> بروید. متن
+        «سلام از HelloWorldController!» را می‌بینید. اما برگرداندن رشته
+        خام زیاد جالب نیست؛ بهتر است یک صفحه واقعی <bdi>HTML</bdi>
+        داشته باشیم. برای این کار باید <bdi>View</bdi> بسازیم.
+      </p>
+
+      <p>
+        متد <code>Index</code> را طوری تغییر دهید که به‌جای
+        <code>Content</code> از <code>View()</code> استفاده کند:
+      </p>
+
+      <div class="code-block">
+        <div class="code-block-header">
+          <span class="code-block-lang">C# — HelloWorldController.cs</span>
+        </div>
+        <pre><span class="kw">public</span> <span class="cls">IActionResult</span> Index()
+{
+    <span class="kw">return</span> View();
+}</pre>
+      </div>
+
+      <p>
+        حالا روی پوشه <code>Views</code> راست‌کلیک کنید، پوشه‌ای به نام
+        <code>HelloWorld</code> بسازید (هم‌نام کنترل‌کننده) و داخل آن یک
+        <bdi>Razor View</bdi> به نام <code>Index.cshtml</code> اضافه
+        کنید[reference:13]. محتوای آن را به این شکل بنویسید:
+      </p>
+
+      <div class="code-block">
+        <div class="code-block-header">
+          <span class="code-block-lang">HTML — Views/HelloWorld/Index.cshtml</span>
+        </div>
+        <pre>&lt;h2&gt;صفحه Index از HelloWorld&lt;/h2&gt;
+&lt;p&gt;این اولین View ما در ASP.NET Core است.&lt;/p&gt;</pre>
+      </div>
+
+      <p>
+        دوباره پروژه را اجرا کنید و به <code>/HelloWorld</code> بروید.
+        حالا صفحه <bdi>HTML</bdi> واقعی را می‌بینید. نکته مهم این است که
+        نام فایل <bdi>View</bdi> باید با نام متد اکشن یکی باشد
+        (<code>Index.cshtml</code> برای متد <code>Index</code>) و پوشه
+        آن هم باید هم‌نام کنترل‌کننده باشد. این همان قانون «قرارداد بر
+        پیکربندی» است که <bdi>ASP.NET Core</bdi> را ساده نگه می‌دارد.
+      </p>
+    </section>
+
+    <section class="section fade-in" id="s4">
+      <div class="section-head">
+        <span class="section-num">04</span>
+        <h2 class="section-title">اتریبیوت‌های <bdi>Controller</bdi></h2>
+      </div>
+
+      <p>
+        اتریبیوت‌ها برچسب‌هایی هستند که بالای کلاس یا متد می‌نویسید و به
+        فریم‌ورک می‌گویند چطور رفتار کند. مهم‌ترین اتریبیوت‌های
+        <bdi>Controller</bdi> در <bdi>ASP.NET Core</bdi> این‌ها هستند:
+        <code>[Route]</code>، <code>[HttpGet]</code>، <code>[HttpPost]</code>،
+        <code>[HttpPut]</code>، <code>[HttpDelete]</code>، و
+        <code>[ApiController]</code>[reference:14][reference:15].
+      </p>
+
+      <p>
+        اتریبیوت <code>[Route]</code> مسیر URL را تعیین می‌کند. می‌توانید
+        آن را بالای کلاس بگذارید تا پیشوند همه اکشن‌ها را تعیین کند، یا
+        بالای یک اکشن خاص. اتریبیوت‌های <code>[HttpGet]</code> و مشابه‌هایش
+        مشخص می‌کنند که اکشن فقط به درخواست‌های <bdi>HTTP</bdi> با آن متد
+        پاسخ دهد[reference:16]. این‌ها همان چیزی هستند که در قسمت اول درباره
+        <bdi>HTTP Method</bdi> یاد گرفتیم، حالا در کد پیاده می‌شوند.
+      </p>
+
+      <div class="callout key">
+        <span class="callout-label">چرا اتریبیوت مهم است؟</span>
+        <p>
+          بدون اتریبیوت، یک اکشن به همه نوع درخواست‌ها پاسخ می‌دهد. با
+          گذاشتن <code>[HttpGet]</code> مطمئن می‌شوید این اکشن فقط برای
+          نمایش صفحه است، نه برای ارسال فرم. این کار امنیت و خوانایی کد
+          را بالا می‌برد.
+        </p>
+      </div>
+    </section>
+
+    <section class="section fade-in" id="s5">
+      <div class="section-head">
+        <span class="section-num">05</span>
+        <h2 class="section-title"><bdi>Action Selector</bdi> و <bdi>Action Verb</bdi></h2>
+      </div>
+
+      <p>
+        وقتی درخواستی به یک کنترل‌کننده می‌رسد، <bdi>ASP.NET Core</bdi>
+        باید تصمیم بگیرد کدام متد (اکشن) را اجرا کند. به این فرآیند
+        <strong>Action Selection</strong> می‌گویند. اکشن‌ها بر اساس نام،
+        اتریبیوت <bdi>HTTP</bdi> و پارامترها انتخاب می‌شوند
+        [reference:17].
+      </p>
+
+      <p>
+        <bdi>Action Verb</bdi> یا فعل اکشن همان <bdi>HTTP Method</bdi>
+        است که اکشن به آن محدود شده. مثلاً اگر متدی اتریبیوت
+        <code>[HttpPost]</code> داشته باشد، فقط با درخواست
+        <code>POST</code> اجرا می‌شود. اگر متدی هیچ اتریبیوتی نداشته باشد،
+        به‌طور پیش‌فرض با <code>GET</code> مطابقت داده می‌شود.
+      </p>
+
+      <p>
+        یک نکته مهم: اگر دو اکشن با یک نام و یک مسیر داشته باشید اما
+        یکی <code>[HttpGet]</code> و دیگری <code>[HttpPost]</code> باشد،
+        تداخلی پیش نمی‌آید چون <bdi>Action Selector</bdi> بر اساس
+        <bdi>HTTP Method</bdi> آن‌ها را از هم تفکیک می‌کند
+        [reference:18].
+      </p>
+    </section>
+
+    <section class="section fade-in" id="s6">
+      <div class="section-head">
+        <span class="section-num">06</span>
+        <h2 class="section-title">ساخت اولین <bdi>Model</bdi></h2>
+      </div>
+
+      <p>
+        تا اینجا فقط متن نمایش دادیم. اما برنامه واقعی با داده کار می‌کند.
+        <bdi>Model</bdi> کلاسی است که ساختار داده را تعریف می‌کند. مثلاً
+        یک مدل ساده برای «فیلم»:
+      </p>
+
+      <div class="code-block">
+        <div class="code-block-header">
+          <span class="code-block-lang">C# — Models/Movie.cs</span>
+        </div>
+        <pre><span class="kw">public class</span> <span class="cls">Movie</span>
+{
+    <span class="kw">public int</span> Id { <span class="kw">get</span>; <span class="kw">set</span>; }
+    <span class="kw">public string</span> Title { <span class="kw">get</span>; <span class="kw">set</span>; } = <span class="str">""</span>;
+    <span class="kw">public string</span> Genre { <span class="kw">get</span>; <span class="kw">set</span>; } = <span class="str">""</span>;
+    <span class="kw">public decimal</span> Price { <span class="kw">get</span>; <span class="kw">set</span>; }
+}</pre>
+      </div>
+
+      <p>
+        این کلاس هیچ منطقی ندارد؛ فقط ظرفی برای نگه‌داری داده است. در
+        قسمت‌های بعدی یاد می‌گیریم چطور این مدل را به دیتابیس وصل کنیم.
+        فعلاً همین اندازه کافی است تا داده را به <bdi>View</bdi> بفرستیم.
+      </p>
+    </section>
+
+    <section class="section fade-in" id="s7">
+      <div class="section-head">
+        <span class="section-num">07</span>
+        <h2 class="section-title"><bdi>ViewBag</bdi> و <bdi>ViewData</bdi></h2>
+      </div>
+
+      <p>
+        <bdi>Controller</bdi> باید داده را به <bdi>View</bdi> برساند.
+        دو راه ساده برای این کار وجود دارد: <bdi>ViewData</bdi> و
+        <bdi>ViewBag</bdi>. هر دو فقط در طول یک درخواست زنده‌اند و بعد از
+        رندر شدن <bdi>View</bdi> از بین می‌روند[reference:19].
+      </p>
+
+      <h4><bdi>ViewData</bdi></h4>
+      <p>
+        <bdi>ViewData</bdi> یک دیکشنری از جفت‌های کلید-مقدار است. در
+        <bdi>Controller</bdi> می‌نویسید:
+      </p>
+
+      <div class="code-block">
+        <div class="code-block-header">
+          <span class="code-block-lang">C# — Controller</span>
+        </div>
+        <pre>ViewData[<span class="str">"Message"</span>] = <span class="str">"سلام از ViewData"</span>;
+ViewData[<span class="str">"Count"</span>] = <span class="kw">5</span>;</pre>
+      </div>
+
+      <p>
+        و در <bdi>View</bdi>:
+      </p>
+
+      <div class="code-block">
+        <div class="code-block-header">
+          <span class="code-block-lang">HTML — View</span>
+        </div>
+        <pre>&lt;p&gt;@ViewData["Message"]&lt;/p&gt;
+&lt;p&gt;تعداد: @ViewData["Count"]&lt;/p&gt;</pre>
+      </div>
+
+      <p>
+        چون <bdi>ViewData</bdi> از نوع <code>object</code> است، برای
+        استفاده از مقادیر غیر رشته‌ای باید تبدیل نوع انجام دهید.
+      </p>
+
+      <h4><bdi>ViewBag</bdi></h4>
+      <p>
+        <bdi>ViewBag</bdi> در واقع همان <bdi>ViewData</bdi> است اما با
+        یک پوسته <code>dynamic</code>. این یعنی می‌توانید به‌جای
+        <code>ViewData["Message"]</code> بنویسید <code>ViewBag.Message</code>.
+        کد تمیزتر به نظر می‌رسد، اما چون <code>dynamic</code> است، خطاهای
+        نام‌گذاری در زمان کامپایل گرفته نمی‌شوند و ممکن است در زمان اجرا
+        به مشکل بخورید[reference:20].
+      </p>
+
+      <div class="code-block">
+        <div class="code-block-header">
+          <span class="code-block-lang">C# — Controller</span>
+        </div>
+        <pre>ViewBag.Message = <span class="str">"سلام از ViewBag"</span>;
+ViewBag.Count = <span class="kw">5</span>;</pre>
+      </div>
+
+      <div class="code-block">
+        <div class="code-block-header">
+          <span class="code-block-lang">HTML — View</span>
+        </div>
+        <pre>&lt;p&gt;@ViewBag.Message&lt;/p&gt;
+&lt;p&gt;تعداد: @ViewBag.Count&lt;/p&gt;</pre>
+      </div>
+
+      <div class="callout warn">
+        <span class="callout-label">توصیه</span>
+        <p>
+          برای پروژه‌های جدی، به‌جای <bdi>ViewBag</bdi> و
+          <bdi>ViewData</bdi> از یک <bdi>ViewModel</bdi> قوی‌تایپ
+          (کلاس مدل مخصوص <bdi>View</bdi>) استفاده کنید. این کار خطاها
+          را در زمان کامپایل نشان می‌دهد.
+        </p>
+      </div>
+    </section>
+
+    <section class="section fade-in" id="s8">
+      <div class="section-head">
+        <span class="section-num">08</span>
+        <h2 class="section-title"><bdi>TempData</bdi></h2>
+      </div>
+
+      <p>
+        فرض کنید کاربر فرمی را پر می‌کند و بعد از ثبت موفق، به صفحه دیگری
+        redirect می‌شود. <bdi>ViewBag</bdi> و <bdi>ViewData</bdi> در
+        redirect از بین می‌روند. اینجاست که <bdi>TempData</bdi> وارد
+        می‌شود. <bdi>TempData</bdi> داده را برای <strong>یک درخواست
+        بعدی</strong> نگه می‌دارد[reference:21][reference:22].
+      </p>
+
+      <div class="code-block">
+        <div class="code-block-header">
+          <span class="code-block-lang">C# — Controller</span>
+        </div>
+        <pre>TempData[<span class="str">"Success"</span>] = <span class="str">"عملیات با موفقیت انجام شد."</span>;
+<span class="kw">return</span> RedirectToAction(<span class="str">"Index"</span>);</pre>
+      </div>
+
+      <div class="code-block">
+        <div class="code-block-header">
+          <span class="code-block-lang">HTML — View</span>
+        </div>
+        <pre>@if (TempData["Success"] != null)
+{
+    &lt;div class="alert"&gt;@TempData["Success"]&lt;/div&gt;
+}</pre>
+      </div>
+
+      <p>
+        یک رفتار مهم: به‌طور پیش‌فرض، <bdi>TempData</bdi> وقتی خوانده شود
+        پاک می‌شود[reference:23]. اگر می‌خواهید بعد از خواندن هم باقی
+        بماند، از <code>TempData.Keep()</code> استفاده کنید.
+      </p>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>ویژگی</th><th><bdi>ViewData</bdi></th><th><bdi>ViewBag</bdi></th><th><bdi>TempData</bdi></th></tr>
+          </thead>
+          <tbody>
+            <tr><td>نوع</td><td>دیکشنری</td><td><code>dynamic</code></td><td>دیکشنری</td></tr>
+            <tr><td>ماندگاری</td><td>یک درخواست</td><td>یک درخواست</td><td>تا درخواست بعدی</td></tr>
+            <tr><td>در Redirect</td><td>از بین می‌رود</td><td>از بین می‌رود</td><td>باقی می‌ماند</td></tr>
+            <tr><td>بررسی خطا</td><td>زمان اجرا</td><td>زمان اجرا</td><td>زمان اجرا</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="section fade-in" id="s9">
+      <div class="section-head">
+        <span class="section-num">09</span>
+        <h2 class="section-title"><bdi>Query String</bdi></h2>
+      </div>
+
+      <p>
+        <bdi>Query String</bdi> بخشی از URL است که بعد از علامت سؤال
+        <code>?</code> می‌آید و شامل جفت‌های کلید-مقدار است. مثلاً در
+        آدرس <code>/HelloWorld/Welcome?name=Mehran&amp;numtimes=3</code>،
+        دو پارامتر <code>name</code> و <code>numtimes</code> در
+        <bdi>Query String</bdi> قرار دارند[reference:24].
+      </p>
+
+      <p>
+        <bdi>ASP.NET Core</bdi> به‌طور خودکار این پارامترها را با
+        پارامترهای متد اکشن تطبیق می‌دهد. اگر متد شما این‌طور باشد:
+      </p>
+
+      <div class="code-block">
+        <div class="code-block-header">
+          <span class="code-block-lang">C# — Controller</span>
+        </div>
+        <pre><span class="kw">public</span> <span class="cls">IActionResult</span> Welcome(<span class="kw">string</span> name, <span class="kw">int</span> numtimes = <span class="kw">1</span>)
+{
+    ViewData[<span class="str">"Name"</span>] = name;
+    ViewData[<span class="str">"NumTimes"</span>] = numtimes;
+    <span class="kw">return</span> View();
+}</pre>
+      </div>
+
+      <p>
+        با آدرس <code>/HelloWorld/Welcome?name=Mehran&amp;numtimes=3</code>،
+        مقدار <code>name</code> برابر «Mehran» و <code>numtimes</code>
+        برابر ۳ خواهد بود. اگر پارامتری در URL نباشد، مقدار پیش‌فرض
+        (در اینجا ۱) استفاده می‌شود.
+      </p>
+
+      <div class="callout note">
+        <span class="callout-label">نکته امنیتی</span>
+        <p>
+          هرگز داده حساس (مثل رمز عبور یا توکن) را در <bdi>Query String</bdi>
+          نفرستید، چون در تاریخچه مرورگر، لاگ سرور و هدر <code>Referer</code>
+          ذخیره می‌شود.
+        </p>
+      </div>
+    </section>
+
+    <section class="section fade-in" id="s10">
+      <div class="section-head">
+        <span class="section-num">10</span>
+        <h2 class="section-title"><bdi>Model Binding</bdi></h2>
+      </div>
+
+      <p>
+        <bdi>Model Binding</bdi> مکانیزمی است که داده‌های یک درخواست
+        <bdi>HTTP</bdi> را می‌گیرد و به پارامترهای متد اکشن تبدیل
+        می‌کند[reference:25]. بدون <bdi>Model Binding</bdi> باید خودتان
+        دستی از <code>Request.Query</code> یا <code>Request.Form</code>
+        مقدار می‌خواندید. اما <bdi>ASP.NET Core</bdi> این کار را خودکار
+        انجام می‌دهد.
+      </p>
+
+      <p>
+        منابعی که <bdi>Model Binding</bdi> از آن‌ها داده می‌خواند
+        عبارت‌اند از: <strong>فرم‌ها</strong>، <strong>داده مسیر
+        (<bdi>Route Data</bdi>)</strong>، <strong><bdi>Query String</bdi></strong>،
+        و <strong>بدنه درخواست</strong> (برای <bdi>JSON</bdi> و
+        <bdi>XML</bdi>)[reference:26]. ترتیب اولویت پیش‌فرض به این شکل
+        است که فرم‌ها اول بررسی می‌شوند، سپس داده مسیر، سپس
+        <bdi>Query String</bdi> و در آخر بدنه.
+      </p>
+
+      <p>
+        یک نکته مهم: <bdi>Model Binding</bdi> برای <strong>انواع ساده</strong>
+        (مثل <code>int</code>، <code>string</code>، <code>DateTime</code>)
+        از داده مسیر و <bdi>Query String</bdi> استفاده می‌کند، اما برای
+        <strong>انواع پیچیده</strong> (کلاس‌ها) باید منبع داده را با
+        اتریبیوت مشخص کنید[reference:27].
+      </p>
+    </section>
+
+    <section class="section fade-in" id="s11">
+      <div class="section-head">
+        <span class="section-num">11</span>
+        <h2 class="section-title">اتریبیوت‌های <bdi>Model Binding</bdi></h2>
+      </div>
+
+      <p>
+        وقتی نمی‌خواهید <bdi>Model Binding</bdi> حدس بزند داده را از کجا
+        بخواند، از این اتریبیوت‌ها استفاده می‌کنید. مهم‌ترین‌ها
+        <code>[FromQuery]</code>، <code>[FromRoute]</code>،
+        <code>[FromForm]</code>، <code>[FromBody]</code> و
+        <code>[FromHeader]</code> هستند[reference:28][reference:29].
+      </p>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>اتریبیوت</th><th>منبع داده</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><code>[FromQuery]</code></td><td><bdi>Query String</bdi> در URL</td></tr>
+            <tr><td><code>[FromRoute]</code></td><td>داده مسیر (مثل <code>/products/5</code>)</td></tr>
+            <tr><td><code>[FromForm]</code></td><td>داده فرم <bdi>HTML</bdi></td></tr>
+            <tr><td><code>[FromBody]</code></td><td>بدنه درخواست (<bdi>JSON</bdi> / <bdi>XML</bdi>)</td></tr>
+            <tr><td><code>[FromHeader]</code></td><td>هدرهای <bdi>HTTP</bdi></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p>
+        مثال استفاده از <code>[FromQuery]</code>:
+      </p>
+
+      <div class="code-block">
+        <div class="code-block-header">
+          <span class="code-block-lang">C# — Controller</span>
+        </div>
+        <pre><span class="kw">public</span> <span class="cls">IActionResult</span> Search([FromQuery] <span class="kw">string</span> term)
+{
+    <span class="kw">return</span> Content(<span class="str">$"جستجو برای: {term}"</span>);
+}</pre>
+      </div>
+
+      <p>
+        استفاده از <code>[FromBody]</code> برای دریافت <bdi>JSON</bdi>:
+      </p>
+
+      <div class="code-block">
+        <div class="code-block-header">
+          <span class="code-block-lang">C# — Controller</span>
+        </div>
+        <pre>[<span class="cls">HttpPost</span>]
+<span class="kw">public</span> <span class="cls">IActionResult</span> Create([FromBody] <span class="cls">Movie</span> movie)
+{
+    <span class="kw">return</span> Ok(movie);
+}</pre>
+      </div>
+
+      <div class="callout key">
+        <span class="callout-label">بهترین تمرین</span>
+        <p>
+          همیشه از اتریبیوت‌های صریح استفاده کنید. این کار کد را
+          خودمستند می‌کند و جلوی حدس‌های نادرست <bdi>Model Binding</bdi>
+          را می‌گیرد.
+        </p>
+      </div>
+    </section>
+
+    <section class="section fade-in" id="s12">
+      <div class="section-head">
+        <span class="section-num">12</span>
+        <h2 class="section-title">دیباگ و <bdi>Breakpoint</bdi></h2>
+      </div>
+
+      <p>
+        وقتی کد درست کار نمی‌کند، اولین ابزار شما <bdi>Breakpoint</bdi>
+        است. روی حاشیه سمت چپ خط مورد نظر در <bdi>Visual Studio</bdi>
+        کلیک کنید تا یک نقطه قرمز ظاهر شود. سپس <code>F5</code> را
+        بزنید تا برنامه در حالت دیباگ اجرا شود. وقتی اجرا به آن خط
+        برسد، متوقف می‌شود و می‌توانید مقدار متغیرها را ببینید
+        [reference:31][reference:32].
+      </p>
+
+      <p>
+        چند نکته کاربردی: با <code>F10</code> خط به خط جلو می‌روید
+        (<bdi>Step Over</bdi>)، با <code>F11</code> وارد متد می‌شوید
+        (<bdi>Step Into</bdi>)، و با <code>F5</code> ادامه می‌دهید تا
+        به <bdi>Breakpoint</bdi> بعدی برسید. پنجره‌های
+        <bdi>Locals</bdi>، <bdi>Watch</bdi> و <bdi>Autos</bdi> مقادیر
+        متغیرها را نشان می‌دهند.
+      </p>
+
+      <p>
+        اگر <bdi>Breakpoint</bdi> فعال نمی‌شود، بررسی کنید که در حالت
+        <bdi>Debug</bdi> اجرا می‌کنید (نه <bdi>Release</bdi>) و گزینه
+        <bdi>Just My Code</bdi> در تنظیمات دیباگ درست تنظیم شده
+        است[reference:33]. برای اکشن‌های <bdi>ASP.NET Core</bdi>،
+        <bdi>Breakpoint</bdi> را داخل متد اکشن یا هر جای زنجیره
+        درخواست بگذارید و از مرورگر یا یک کلاینت <bdi>HTTP</bdi> برای
+        تحریک درخواست استفاده کنید[reference:34].
+      </p>
+    </section>
+
+    <nav class="part-nav">
+      <a class="part-nav-btn" href="part-01.html">
+        <span class="arrow">&#8594;</span>
+        قسمت قبلی
+      </a>
+      <a class="part-nav-btn home" href="index.html">
+        فهرست مطالب
+      </a>
+      <a class="part-nav-btn" href="part-03.html">
+        قسمت بعدی
+        <span class="arrow">&#8592;</span>
+      </a>
+    </nav>
+
+  </main>
+</div>
+
+<footer class="doc-footer">
+  <div class="footer-name">مهران غلامی مقدم</div>
+  <a class="author-link" href="https://github.com/Mehran00programmer" target="_blank" rel="noopener noreferrer" aria-label="گیت‌هاب مهران غلامی مقدم">
+    <svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
+      <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z"/>
+    </svg>
+    github.com/Mehran00programmer
+  </a>
+</footer>
+
+<button class="back-to-top" type="button" aria-label="بازگشت به بالا">
+  <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M8 13V3"/>
+    <polyline points="3 8 8 3 13 8"/>
+  </svg>
+</button>
+
+<button class="theme-toggle" type="button" aria-label="تغییر تم">
+  <svg class="icon-moon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M14 9.5A6 6 0 0 1 6.5 2 6 6 0 1 0 14 9.5z"/>
+  </svg>
+  <svg class="icon-sun" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="8" cy="8" r="3"/>
+    <path d="M8 1v2M8 13v2M1 8h2M13 8h2M3 3l1.5 1.5M11.5 11.5L13 13M13 3l-1.5 1.5M4.5 11.5L3 13"/>
+  </svg>
+</button>
+
+<script src="assets/app.js"></script>
+
+</body>
+</html>
