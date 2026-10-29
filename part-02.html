@@ -73,13 +73,13 @@
         قبل از نوشتن کد، باید یک پروژه جدید بسازیم. در <bdi>Visual Studio</bdi>
         گزینه <strong>Create a new project</strong> را انتخاب کنید، سپس از
         فهرست قالب‌ها <strong>ASP.NET Core Web App (Model-View-Controller)</strong>
-        را پیدا کنید[reference:6]. به این قالب دقت کنید؛ چون قالب
+        را پیدا کنید. به این قالب دقت کنید؛ چون قالب
         <bdi>Razor Pages</bdi> هم شبیه است اما ساختار متفاوتی دارد.
       </p>
 
       <p>
         در پنجره بعدی نام پروژه را وارد کنید (مثلاً <code>MvcMovie</code>)
-        و محل ذخیره را انتخاب کنید[reference:7]. در آخرین مرحله، نسخه
+        و محل ذخیره را انتخاب کنید. در آخرین مرحله، نسخه
         <bdi>.NET</bdi> را انتخاب کنید. پیشنهاد می‌کنم جدیدترین نسخه
         <bdi>LTS</bdi> (پشتیبانی بلندمدت) را انتخاب کنید تا تا مدت‌ها
         پشتیبانی شود. بعد از زدن دکمه <strong>Create</strong>، پروژه ساخته
@@ -112,10 +112,10 @@
       <p>
         وقتی پروژه ساخته می‌شود، مجموعه‌ای از پوشه‌ها و فایل‌ها می‌بینید که
         هر کدام جای مشخصی دارند. این ساختار تصادفی نیست؛ دقیقاً بر اساس
-        الگوی <bdi>MVC</bdi> چیده شده است[reference:8]. سه پوشه اصلی
+        الگوی <bdi>MVC</bdi> چیده شده است. سه پوشه اصلی
         <code>Controllers</code>، <code>Models</code> و <code>Views</code>
         هستند که به ترتیب کنترل‌کننده‌ها، مدل‌ها و نمایش‌ها را در خود
-        نگه می‌دارند[reference:9].
+        نگه می‌دارند.
       </p>
 
       <div class="ft-tree">
@@ -193,12 +193,12 @@
         پوشه <code>Controllers</code> تمام کلاس‌های کنترل‌کننده را نگه
         می‌دارد. یک قانون نام‌گذاری مهم وجود دارد: نام هر کنترل‌کننده باید
         به <strong>Controller</strong> ختم شود (مثلاً
-        <code>HomeController</code>)[reference:10]. پوشه <code>Models</code>
+        <code>HomeController</code>). پوشه <code>Models</code>
         کلاس‌های داده را در خود دارد. پوشه <code>Views</code> فایل‌های
         نمایشی <bdi>Razor</bdi> (با پسوند <code>.cshtml</code>) را نگه
-        می‌دارد و معمولاً برای هر کنترل‌کننده یک زیرپوشه هم‌نام دارد
-        [reference:11]. پوشه <code>wwwroot</code> محل فایل‌های استاتیک مثل
-        <bdi>CSS</bdi>، <bdi>JavaScript</bdi> و تصاویر است[reference:12].
+        می‌دارد و معمولاً برای هر کنترل‌کننده یک زیرپوشه هم‌نام دارد.
+        پوشه <code>wwwroot</code> محل فایل‌های استاتیک مثل
+        <bdi>CSS</bdi>، <bdi>JavaScript</bdi> و تصاویر است.
         فایل <code>Program.cs</code> هم نقطه شروع برنامه و محل پیکربندی
         سرویس‌ها و میان‌افزارهاست.
       </p>
@@ -259,7 +259,7 @@
         حالا روی پوشه <code>Views</code> راست‌کلیک کنید، پوشه‌ای به نام
         <code>HelloWorld</code> بسازید (هم‌نام کنترل‌کننده) و داخل آن یک
         <bdi>Razor View</bdi> به نام <code>Index.cshtml</code> اضافه
-        کنید[reference:13]. محتوای آن را به این شکل بنویسید:
+        کنید. محتوای آن را به این شکل بنویسید:
       </p>
 
       <div class="code-block">
@@ -292,7 +292,7 @@
         <bdi>Controller</bdi> در <bdi>ASP.NET Core</bdi> این‌ها هستند:
         <code>[Route]</code>، <code>[HttpGet]</code>، <code>[HttpPost]</code>،
         <code>[HttpPut]</code>، <code>[HttpDelete]</code>، و
-        <code>[ApiController]</code>[reference:14][reference:15].
+        <code>[ApiController]</code>.
       </p>
 
       <p>
@@ -300,7 +300,7 @@
         آن را بالای کلاس بگذارید تا پیشوند همه اکشن‌ها را تعیین کند، یا
         بالای یک اکشن خاص. اتریبیوت‌های <code>[HttpGet]</code> و مشابه‌هایش
         مشخص می‌کنند که اکشن فقط به درخواست‌های <bdi>HTTP</bdi> با آن متد
-        پاسخ دهد[reference:16]. این‌ها همان چیزی هستند که در قسمت اول درباره
+        پاسخ دهد. این‌ها همان چیزی هستند که در قسمت اول درباره
         <bdi>HTTP Method</bdi> یاد گرفتیم، حالا در کد پیاده می‌شوند.
       </p>
 
@@ -325,8 +325,7 @@
         وقتی درخواستی به یک کنترل‌کننده می‌رسد، <bdi>ASP.NET Core</bdi>
         باید تصمیم بگیرد کدام متد (اکشن) را اجرا کند. به این فرآیند
         <strong>Action Selection</strong> می‌گویند. اکشن‌ها بر اساس نام،
-        اتریبیوت <bdi>HTTP</bdi> و پارامترها انتخاب می‌شوند
-        [reference:17].
+        اتریبیوت <bdi>HTTP</bdi> و پارامترها انتخاب می‌شوند.
       </p>
 
       <p>
@@ -341,8 +340,7 @@
         یک نکته مهم: اگر دو اکشن با یک نام و یک مسیر داشته باشید اما
         یکی <code>[HttpGet]</code> و دیگری <code>[HttpPost]</code> باشد،
         تداخلی پیش نمی‌آید چون <bdi>Action Selector</bdi> بر اساس
-        <bdi>HTTP Method</bdi> آن‌ها را از هم تفکیک می‌کند
-        [reference:18].
+        <bdi>HTTP Method</bdi> آن‌ها را از هم تفکیک می‌کند.
       </p>
     </section>
 
@@ -388,7 +386,7 @@
         <bdi>Controller</bdi> باید داده را به <bdi>View</bdi> برساند.
         دو راه ساده برای این کار وجود دارد: <bdi>ViewData</bdi> و
         <bdi>ViewBag</bdi>. هر دو فقط در طول یک درخواست زنده‌اند و بعد از
-        رندر شدن <bdi>View</bdi> از بین می‌روند[reference:19].
+        رندر شدن <bdi>View</bdi> از بین می‌روند.
       </p>
 
       <h4><bdi>ViewData</bdi></h4>
@@ -429,7 +427,7 @@ ViewData[<span class="str">"Count"</span>] = <span class="kw">5</span>;</pre>
         <code>ViewData["Message"]</code> بنویسید <code>ViewBag.Message</code>.
         کد تمیزتر به نظر می‌رسد، اما چون <code>dynamic</code> است، خطاهای
         نام‌گذاری در زمان کامپایل گرفته نمی‌شوند و ممکن است در زمان اجرا
-        به مشکل بخورید[reference:20].
+        به مشکل بخورید.
       </p>
 
       <div class="code-block">
@@ -470,7 +468,7 @@ ViewBag.Count = <span class="kw">5</span>;</pre>
         redirect می‌شود. <bdi>ViewBag</bdi> و <bdi>ViewData</bdi> در
         redirect از بین می‌روند. اینجاست که <bdi>TempData</bdi> وارد
         می‌شود. <bdi>TempData</bdi> داده را برای <strong>یک درخواست
-        بعدی</strong> نگه می‌دارد[reference:21][reference:22].
+        بعدی</strong> نگه می‌دارد.
       </p>
 
       <div class="code-block">
@@ -493,7 +491,7 @@ ViewBag.Count = <span class="kw">5</span>;</pre>
 
       <p>
         یک رفتار مهم: به‌طور پیش‌فرض، <bdi>TempData</bdi> وقتی خوانده شود
-        پاک می‌شود[reference:23]. اگر می‌خواهید بعد از خواندن هم باقی
+        پاک می‌شود. اگر می‌خواهید بعد از خواندن هم باقی
         بماند، از <code>TempData.Keep()</code> استفاده کنید.
       </p>
 
@@ -523,7 +521,7 @@ ViewBag.Count = <span class="kw">5</span>;</pre>
         <code>?</code> می‌آید و شامل جفت‌های کلید-مقدار است. مثلاً در
         آدرس <code>/HelloWorld/Welcome?name=Mehran&amp;numtimes=3</code>،
         دو پارامتر <code>name</code> و <code>numtimes</code> در
-        <bdi>Query String</bdi> قرار دارند[reference:24].
+        <bdi>Query String</bdi> قرار دارند.
       </p>
 
       <p>
@@ -569,7 +567,7 @@ ViewBag.Count = <span class="kw">5</span>;</pre>
       <p>
         <bdi>Model Binding</bdi> مکانیزمی است که داده‌های یک درخواست
         <bdi>HTTP</bdi> را می‌گیرد و به پارامترهای متد اکشن تبدیل
-        می‌کند[reference:25]. بدون <bdi>Model Binding</bdi> باید خودتان
+        می‌کند. بدون <bdi>Model Binding</bdi> باید خودتان
         دستی از <code>Request.Query</code> یا <code>Request.Form</code>
         مقدار می‌خواندید. اما <bdi>ASP.NET Core</bdi> این کار را خودکار
         انجام می‌دهد.
@@ -580,7 +578,7 @@ ViewBag.Count = <span class="kw">5</span>;</pre>
         عبارت‌اند از: <strong>فرم‌ها</strong>، <strong>داده مسیر
         (<bdi>Route Data</bdi>)</strong>، <strong><bdi>Query String</bdi></strong>،
         و <strong>بدنه درخواست</strong> (برای <bdi>JSON</bdi> و
-        <bdi>XML</bdi>)[reference:26]. ترتیب اولویت پیش‌فرض به این شکل
+        <bdi>XML</bdi>). ترتیب اولویت پیش‌فرض به این شکل
         است که فرم‌ها اول بررسی می‌شوند، سپس داده مسیر، سپس
         <bdi>Query String</bdi> و در آخر بدنه.
       </p>
@@ -590,7 +588,7 @@ ViewBag.Count = <span class="kw">5</span>;</pre>
         (مثل <code>int</code>، <code>string</code>، <code>DateTime</code>)
         از داده مسیر و <bdi>Query String</bdi> استفاده می‌کند، اما برای
         <strong>انواع پیچیده</strong> (کلاس‌ها) باید منبع داده را با
-        اتریبیوت مشخص کنید[reference:27].
+        اتریبیوت مشخص کنید.
       </p>
     </section>
 
@@ -605,7 +603,7 @@ ViewBag.Count = <span class="kw">5</span>;</pre>
         بخواند، از این اتریبیوت‌ها استفاده می‌کنید. مهم‌ترین‌ها
         <code>[FromQuery]</code>، <code>[FromRoute]</code>،
         <code>[FromForm]</code>، <code>[FromBody]</code> و
-        <code>[FromHeader]</code> هستند[reference:28][reference:29].
+        <code>[FromHeader]</code> هستند.
       </p>
 
       <div class="table-wrap">
@@ -673,8 +671,7 @@ ViewBag.Count = <span class="kw">5</span>;</pre>
         است. روی حاشیه سمت چپ خط مورد نظر در <bdi>Visual Studio</bdi>
         کلیک کنید تا یک نقطه قرمز ظاهر شود. سپس <code>F5</code> را
         بزنید تا برنامه در حالت دیباگ اجرا شود. وقتی اجرا به آن خط
-        برسد، متوقف می‌شود و می‌توانید مقدار متغیرها را ببینید
-        [reference:31][reference:32].
+        برسد، متوقف می‌شود و می‌توانید مقدار متغیرها را ببینید.
       </p>
 
       <p>
@@ -690,10 +687,10 @@ ViewBag.Count = <span class="kw">5</span>;</pre>
         اگر <bdi>Breakpoint</bdi> فعال نمی‌شود، بررسی کنید که در حالت
         <bdi>Debug</bdi> اجرا می‌کنید (نه <bdi>Release</bdi>) و گزینه
         <bdi>Just My Code</bdi> در تنظیمات دیباگ درست تنظیم شده
-        است[reference:33]. برای اکشن‌های <bdi>ASP.NET Core</bdi>،
+        است. برای اکشن‌های <bdi>ASP.NET Core</bdi>،
         <bdi>Breakpoint</bdi> را داخل متد اکشن یا هر جای زنجیره
         درخواست بگذارید و از مرورگر یا یک کلاینت <bdi>HTTP</bdi> برای
-        تحریک درخواست استفاده کنید[reference:34].
+        تحریک درخواست استفاده کنید.
       </p>
     </section>
 
@@ -744,4 +741,4 @@ ViewBag.Count = <span class="kw">5</span>;</pre>
 <script src="assets/app.js"></script>
 
 </body>
-</html>
+  </html>
